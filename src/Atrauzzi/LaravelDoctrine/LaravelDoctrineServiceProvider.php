@@ -3,8 +3,11 @@
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Artisan;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+
+use Atrauzzi\LaravelDoctrine\Console\CreateCommand;
 
 class LaravelDoctrineServiceProvider extends ServiceProvider {
 
@@ -38,6 +41,11 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 		$this->app['doctrine'] = $this->app->share(function () use ($entityManager) {
 			return $entityManager;
 		});
+
+		//
+		// ToDo: Move this to some package-specific-artisan-specific bootstrap
+		//
+		Artisan::add(new CreateCommand());
 
 	}
 
