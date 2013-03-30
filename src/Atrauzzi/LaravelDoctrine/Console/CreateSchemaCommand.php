@@ -3,24 +3,23 @@
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand as DoctrineCreateCommand;
 
 
-class CreateCommand extends Command {
+class CreateSchemaCommand extends Command {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'doctrine:create';
+	protected $name = 'doctrine:schema:create';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Create schema.';
+	protected $description = 'The schema based on your configuration.';
 
 	/**
 	 * Create a new command instance.
@@ -38,6 +37,26 @@ class CreateCommand extends Command {
 	 */
 	public function fire() {
 		echo "arararf!";
+	}
+
+	/**
+	 * Get the console command arguments.
+	 *
+	 * @return array
+	 */
+	protected function getArguments() {
+		return array(
+		);
+	}
+
+	/**
+	 * Get the console command options.
+	 *
+	 * @return array
+	 */
+	protected function getOptions()	{
+		return array(
+		);
 	}
 
 }

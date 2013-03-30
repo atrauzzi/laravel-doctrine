@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
-use Atrauzzi\LaravelDoctrine\Console\CreateCommand;
+use Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand;
 
 class LaravelDoctrineServiceProvider extends ServiceProvider {
 
@@ -42,11 +42,6 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 			return $entityManager;
 		});
 
-		//
-		// ToDo: Move this to some package-specific-artisan-specific bootstrap
-		//
-		Artisan::add(new CreateCommand());
-
 	}
 
 	/**
@@ -55,6 +50,15 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function register() {
+
+		$this->app['doctrine.schema.create'] = $this->app->share(function($app) {
+			return new CreateSchemaCommand($app);
+		});
+
+		$this->commands(
+			'doctrine.schema.create'
+		);
+
 	}
 
 	/**
