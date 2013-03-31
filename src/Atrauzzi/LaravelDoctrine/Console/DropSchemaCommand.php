@@ -6,21 +6,21 @@ use Symfony\Component\Console\Input\InputArgument;
 
 use Illuminate\Support\Facades\App;
 
-class CreateSchemaCommand extends Command {
+class DropSchemaCommand extends Command {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'doctrine:schema:create';
+	protected $name = 'doctrine:schema:drop';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Creates your database schema according to your models.';
+	protected $description = 'Drop the complete database schema of EntityManager Storage Connection.';
 
 	/**
 	 * Create a new command instance.
@@ -38,13 +38,31 @@ class CreateSchemaCommand extends Command {
 	 */
 	public function fire() {
 
+		$sqlOnly = $this->option('sql');
+
 		$this->comment('ATTENTION: This operation should not be executed in a production environment.');
 
-		$this->info('Obtaining metadata...');
+		$this->info('Obtaining metadata from your models...');
 		$metadata = App::make('doctrine.metadata');
-		$this->info('Creating database schema...');
-		App::make('doctrine.schema-tool')->createSchema($metadata);
-		$this->info('Database schema created successfully!');
+
+		$schemaTool = App::make('doctrine.schema-tool');
+
+		$sqlToRun = $schemaTool->getDropSchemaSql($metadata);
+
+		if(!count($sqlToRun)) {
+			$this->info('None of your current models exist in the schema.');
+			return;
+		}
+
+		if($sqlOnly) {
+			$this->info('Here\'s the SQL to drop your models from the schema:');
+			$this->info(implode(';' . PHP_EOL, $sqlToRun));
+		}
+		else {
+			$this->info('Dropping all models from the current schema...');
+			$schemaTool->dropSchema($metadata);
+			$this->info('Database schema updated successfully!');
+		}
 
 	}
 
@@ -65,6 +83,7 @@ class CreateSchemaCommand extends Command {
 	 */
 	protected function getOptions()	{
 		return array(
+			array('sql', null, InputOption::VALUE_NONE, 'Dumps the generated SQL statements to the screen (does not execute them).')
 		);
 	}
 

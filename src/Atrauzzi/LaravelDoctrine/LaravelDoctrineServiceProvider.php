@@ -8,8 +8,6 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 
-use Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand;
-
 class LaravelDoctrineServiceProvider extends ServiceProvider {
 
 	/**
@@ -25,24 +23,7 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function boot() {
-
 		$this->package('atrauzzi/laravel-doctrine');
-
-		// Assign our EntityManager to the 'doctrine' key in the IoC container.
-		App::singleton('doctrine', function ($app) {
-
-			// Retrieve our configuration.
-			$connection = Config::get('laravel-doctrine::doctrine.connection');
-			$config = Setup::createAnnotationMetadataConfiguration(
-				Config::get('laravel-doctrine::doctrine.metadata'),
-				App::environment() == 'development'
-			);
-
-			// Obtain an EntityManager from Doctrine.
-			return EntityManager::create($connection, $config);
-
-		});
-
 	}
 
 	/**
@@ -52,17 +33,49 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 	 */
 	public function register() {
 
+		//
+		// Doctrine
+		//
+		App::singleton('doctrine', function ($app) {
+			// Retrieve our configuration.
+			$connection = Config::get('laravel-doctrine::doctrine.connection');
+			$config = Setup::createAnnotationMetadataConfiguration(
+				Config::get('laravel-doctrine::doctrine.metadata'),
+				App::environment() == 'development'
+			);
+			// Obtain an EntityManager from Doctrine.
+			return EntityManager::create($connection, $config);
+		});
+
+		//
 		// Utilities
+		//
+		App::singleton('doctrine.metadata-factory', function ($app) {
+			return App::make('doctrine')->getMetadataFactory();
+		});
+		App::singleton('doctrine.metadata', function ($app) {
+			return App::make('doctrine.metadata-factory')->getAllMetadata();
+		});
 		App::bind('doctrine.schema-tool', function ($app) {
 			return new SchemaTool(App::make('doctrine'));
 		});
 
+		//
 		// Commands
+		//
 		App::bind('doctrine.schema.create', function ($app) {
-			return new CreateSchemaCommand(App::make('doctrine'));
+			return new \Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand(App::make('doctrine'));
+		});
+		App::bind('doctrine.schema.update', function ($app) {
+			return new \Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand(App::make('doctrine'));
+		});
+		App::bind('doctrine.schema.drop', function ($app) {
+			return new \Atrauzzi\LaravelDoctrine\Console\DropSchemaCommand(App::make('doctrine'));
 		});
 		$this->commands(
-			'doctrine.schema.create'
+			'doctrine.schema.create',
+			'doctrine.schema.update',
+			'doctrine.schema.drop'
 		);
 
 	}
