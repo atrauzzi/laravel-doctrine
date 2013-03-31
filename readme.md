@@ -4,9 +4,7 @@
 
 Laravel's Eloquent ORM is nice for lightweight use, however there's little out there that can beat Doctrine when you need a more full-featured ORM.
 
-This is an integration of Doctrine 2.x to Laravel 4.x as a composer package.
-
-Doctrine's `EntityManager` instance is accessible through a facade named `Doctrine`.
+This is an integration of Doctrine 2.x to Laravel 4.x as a composer package. Doctrine's `EntityManager` instance is accessible through a facade named `Doctrine`.
 
 #### Installation
 
@@ -16,9 +14,15 @@ Add the service provider to your Laravel application in `app/config/app.php`. In
 
     'Atrauzzi\LaravelDoctrine\LaravelDoctrineServiceProvider',
 
-Add the following to your `facades` array in the same file:
+Then add the following to your `facades` array in the same file:
 
     'Doctrine' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
+
+You'll likely want to configure the database, you can override the bundle's default configuration using the following command:
+
+    ./artisan config:publish atrauzzi/laravel-doctrine
+    
+This should get you a fresh copy of the configuration file in the directory `app/config/packages/vendor/atrauzzi/laravel-doctrine`.
 
 ### License
 
