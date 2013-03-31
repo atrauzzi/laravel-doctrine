@@ -34,7 +34,7 @@ This should get you a fresh copy of the configuration file in the directory `app
 
 Most of Doctrine's functionality derives from defining your schema (via annotations in your model classes in this case), performing manipulations on instances and then persisting them through the `EntityManager`.  You can obtain the `EntityManager` instance for your connection simply by using the `Doctrine` facade:
 
-    // Adapted from [http://goo.gl/XQ3qg](http://goo.gl/XQ3qg)
+    // Adapted from http://goo.gl/XQ3qg
     <?php
     $user = new User;
     $user->setName('Mr.Right');
