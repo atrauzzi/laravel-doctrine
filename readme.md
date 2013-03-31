@@ -6,6 +6,8 @@ Laravel's Eloquent ORM is nice for lightweight use, however there's little out t
 
 This is an integration of Doctrine 2.x to Laravel 4.x as a composer package. Doctrine's `EntityManager` instance is accessible through a facade named `Doctrine`.
 
+Metadata is currently obtained via the annotation driver.
+
 #### Installation
 
 Installation is the usual process for Laravel packages.
