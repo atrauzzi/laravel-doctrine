@@ -2,15 +2,19 @@
 
 ### An ORM for a Framework for Web Artisans
 
-Laravel's Eloquent ORM is nice for lightweight use, however there's little out there that can beat Doctrine when you need a more full-featured ORM.
+Laravel's Eloquent ORM is nice for lightweight use, however there's little out there that can beat [Doctrine](http://www.doctrine-project.org/projects/orm.html) when you need a more full-featured ORM.
 
-This is an integration of Doctrine 2.x to Laravel 4.x as a composer package. Doctrine's `EntityManager` instance is accessible through a facade named `Doctrine`.
+This is an integration of Doctrine 2.x to Laravel 4.x as a [composer](http://getcomposer.org) package. Doctrine's `EntityManager` instance is accessible through a facade named `Doctrine`.
 
-Metadata is currently obtained via the annotation driver.
+Metadata is currently obtained via the [annotation driver](http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/annotations.html).
 
 #### Installation
 
 Installation is the usual process for Laravel packages.
+
+Insert the following to the packages section of your `composer.json` file and run an update:
+
+    "atrauzzi/laravel-doctrine": "dev-master",
 
 Add the service provider to your Laravel application in `app/config/app.php`. In the `providers` array add:
 
