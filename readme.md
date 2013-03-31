@@ -2,11 +2,11 @@
 
 ### An ORM for a Framework for Web Artisans
 
-Laravel's Eloquent ORM is nice for lightweight use, however there's little out there that can beat [Doctrine](http://www.doctrine-project.org/projects/orm.html) when you need a more full-featured ORM.
+Laravel's Eloquent ORM is nice for lightweight use, however there's little out there that can beat [Doctrine](http://goo.gl/oWVD3) when you need a more full-featured ORM.
 
-This is an integration of Doctrine 2.x to Laravel 4.x as a [composer](http://getcomposer.org) package. Doctrine's `EntityManager` instance is accessible through a facade named `Doctrine`.
+This is an integration of Doctrine 2.x to Laravel 4.x as a [composer](http://goo.gl/gp9HO) package. Doctrine's `EntityManager` instance is accessible through a facade named `Doctrine`.
 
-Metadata is currently obtained via the [annotation driver](http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/annotations.html).
+Metadata is currently obtained via the [annotation driver](http://goo.gl/tuwnQ).
 
 #### Installation
 
@@ -42,25 +42,25 @@ Adapted from [Doctrine's documentation](http://goo.gl/XQ3qg):
     Doctrine::persist($user);
     Doctrine::flush();
 
-It is recommended that you read through all of the [ORM documentation](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/index.html).  Try using Laravel's console to experiment and go through the tutorials.
+It is recommended that you read through all of the [ORM documentation](http://goo.gl/kpAeX).  Try using Laravel's console to experiment and go through the tutorials.
 
 Enjoy!
 
 
 ### License
 
-The Laravel framework is open-sourced software license under the [MIT license](http://opensource.org/licenses/MIT)
+The Laravel framework is open-sourced software license under the [MIT license](http://goo.gl/tuwnQ)
 
 This project is too to ensure maximum compatibility.
 
 ### Meta
 
-I'm interested in hearing feedback and suggestions about this package.  Please feel free to [submit a ticket](https://github.com/atrauzzi/laravel-doctrine/issues) at any time.
+I'm interested in hearing feedback and suggestions about this package.  Please feel free to [submit a ticket](http://goo.gl/KU6B8) at any time.
 
 Visit laravel-doctrine:
 
-* ...[on packagist](https://packagist.org/packages/atrauzzi/laravel-doctrine)
+* ...[on packagist](http://goo.gl/YH4C0)
 
-* ...[at Sensio Labs Connect](https://connect.sensiolabs.com/profile/omega/project/laravel-doctrine)
+* ...[at Sensio Labs Connect](http://goo.gl/IL6Em)
 
-laravel-doctrine is made by [Alexander Trauzzi](http://profiles.google.com/atrauzzi)
+laravel-doctrine is made by [Alexander Trauzzi](http://goo.gl/QabWv)
