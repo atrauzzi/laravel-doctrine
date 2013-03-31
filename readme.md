@@ -18,7 +18,7 @@ Add the service provider to your Laravel application in `app/config/app.php`. In
 
 Add the following to your `facades` array in the same file:
 
-    'Doctrine'        => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
+    'Doctrine' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
 
 ### License
 
