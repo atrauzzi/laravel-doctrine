@@ -30,6 +30,17 @@ You'll likely want to configure the database connection, which you can do by ove
     
 This should get you a fresh copy of the configuration file in the directory `app/config/packages/vendor/atrauzzi/laravel-doctrine`.
 
+#### Usage
+
+Most of Doctrine's functionality derives from defining your schema (via annotations in your model classes in this case), performing manipulations on instances and then persisting them through the `EntityManager`.
+
+It is recommended that you read through the [ORM documentation](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/index.html).
+
+Try using Laravel's console to experiment and go through tutorials!
+
+Enjoy!
+
+
 ### License
 
 The Laravel framework is open-sourced software license under the [MIT license](http://opensource.org/licenses/MIT)
@@ -37,6 +48,8 @@ The Laravel framework is open-sourced software license under the [MIT license](h
 This project is too to ensure maximum compatibility.
 
 ### Meta
+
+I'm interested in hearing feedback and suggestions about this package.  Please feel free to [submit a ticket](https://github.com/atrauzzi/laravel-doctrine/issues) at any time.
 
 Visit laravel-doctrine:
 
