@@ -18,7 +18,7 @@ Then add the following to your `facades` array in the same file:
 
     'Doctrine' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
 
-You'll likely want to configure the database, you can override the bundle's default configuration using the following command:
+You'll likely want to configure the database connection, which you can do by overriding the bundle's defaults with the following command:
 
     ./artisan config:publish atrauzzi/laravel-doctrine
     
