@@ -10,9 +10,9 @@ Metadata is currently obtained via the [annotation driver](http://docs.doctrine-
 
 #### Installation
 
-Installation is the usual process for Laravel packages.
+Installation is the usual for Laravel packages.
 
-Insert the following to the packages section of your `composer.json` file and run an update:
+Insert the following in the packages section of your `composer.json` file and run an update:
 
     "atrauzzi/laravel-doctrine": "dev-master",
 
