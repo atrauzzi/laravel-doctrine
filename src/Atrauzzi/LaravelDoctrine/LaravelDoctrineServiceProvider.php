@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\SchemaTool;
 
 class LaravelDoctrineServiceProvider extends ServiceProvider {
 
@@ -57,7 +56,7 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 			return App::make('doctrine.metadata-factory')->getAllMetadata();
 		});
 		App::bind('doctrine.schema-tool', function ($app) {
-			return new SchemaTool(App::make('doctrine'));
+			return new \Doctrine\ORM\Tools\SchemaTool\SchemaTool(App::make('doctrine'));
 		});
 
 		//
