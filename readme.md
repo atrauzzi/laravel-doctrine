@@ -33,7 +33,9 @@ This project is too to ensure maximum compatibility.
 ### Meta
 
 Visit laravel-doctrine:
-...[on packagist](https://packagist.org/packages/atrauzzi/laravel-doctrine).
-...[at Sensio Labs Connect](https://connect.sensiolabs.com/profile/omega/project/laravel-doctrine)
 
-laravel-doctrine is put together by [Alexander Trauzzi](http://profiles.google.com/atrauzzi)
+* ...[on packagist](https://packagist.org/packages/atrauzzi/laravel-doctrine).
+
+* ...[at Sensio Labs Connect](https://connect.sensiolabs.com/profile/omega/project/laravel-doctrine)
+
+laravel-doctrine is made by [Alexander Trauzzi](http://profiles.google.com/atrauzzi)
