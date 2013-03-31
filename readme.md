@@ -29,3 +29,7 @@ This should get you a fresh copy of the configuration file in the directory `app
 The Laravel framework is open-sourced software license under the [MIT license](http://opensource.org/licenses/MIT)
 
 This project is too to ensure maximum compatibility.
+
+### Meta
+
+Visit [laravel-doctrine on packagist](https://packagist.org/packages/atrauzzi/laravel-doctrine).
