@@ -32,7 +32,14 @@ This should get you a fresh copy of the configuration file in the directory `app
 
 #### Usage
 
-Most of Doctrine's functionality derives from defining your schema (via annotations in your model classes in this case), performing manipulations on instances and then persisting them through the `EntityManager`.
+Most of Doctrine's functionality derives from defining your schema (via annotations in your model classes in this case), performing manipulations on instances and then persisting them through the `EntityManager`.  You can obtain the `EntityManager` instance for your connection simply by using the `Doctrine` facade:
+
+    // Adapted from http://goo.gl/XQ3qg
+    <?php
+    $user = new User;
+    $user->setName('Mr.Right');
+    Doctrine::persist($user);
+    Doctrine::flush();
 
 It is recommended that you read through the [ORM documentation](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/index.html).
 
