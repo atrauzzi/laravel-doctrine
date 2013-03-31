@@ -60,7 +60,7 @@ I'm interested in hearing feedback and suggestions about this package.  Please f
 
 Visit laravel-doctrine:
 
-* ...[on packagist](https://packagist.org/packages/atrauzzi/laravel-doctrine).
+* ...[on packagist](https://packagist.org/packages/atrauzzi/laravel-doctrine)
 
 * ...[at Sensio Labs Connect](https://connect.sensiolabs.com/profile/omega/project/laravel-doctrine)
 
