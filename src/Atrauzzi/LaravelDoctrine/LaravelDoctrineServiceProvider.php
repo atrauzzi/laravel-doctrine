@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\SchemaTool;
 
 use Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand;
 
@@ -27,19 +28,19 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 
 		$this->package('atrauzzi/laravel-doctrine');
 
-		// Retrieve our configuration.
-		$connection = Config::get('laravel-doctrine::doctrine.connection');
-		$config = Setup::createAnnotationMetadataConfiguration(
-			Config::get('laravel-doctrine::doctrine.metadata'),
-			App::environment() == 'development'
-		);
-
-		// Obtain an EntityManager from Doctrine.
-		$entityManager = EntityManager::create($connection, $config);
-
 		// Assign our EntityManager to the 'doctrine' key in the IoC container.
-		$this->app['doctrine'] = $this->app->share(function () use ($entityManager) {
-			return $entityManager;
+		App::singleton('doctrine', function ($app) {
+
+			// Retrieve our configuration.
+			$connection = Config::get('laravel-doctrine::doctrine.connection');
+			$config = Setup::createAnnotationMetadataConfiguration(
+				Config::get('laravel-doctrine::doctrine.metadata'),
+				App::environment() == 'development'
+			);
+
+			// Obtain an EntityManager from Doctrine.
+			return EntityManager::create($connection, $config);
+
 		});
 
 	}
@@ -51,10 +52,15 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 	 */
 	public function register() {
 
-		$this->app['doctrine.schema.create'] = $this->app->share(function($app) {
-			return new CreateSchemaCommand($app);
+		// Utilities
+		App::bind('doctrine.schema-tool', function ($app) {
+			return new SchemaTool(App::make('doctrine'));
 		});
 
+		// Commands
+		App::bind('doctrine.schema.create', function ($app) {
+			return new CreateSchemaCommand(App::make('doctrine'));
+		});
 		$this->commands(
 			'doctrine.schema.create'
 		);

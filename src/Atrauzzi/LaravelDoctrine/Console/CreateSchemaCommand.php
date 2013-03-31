@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
+use Illuminate\Support\Facades\App;
 
 class CreateSchemaCommand extends Command {
 
@@ -19,7 +20,7 @@ class CreateSchemaCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'The schema based on your configuration.';
+	protected $description = 'Automatically updates your database schema to match your models without a migration.';
 
 	/**
 	 * Create a new command instance.
@@ -36,7 +37,15 @@ class CreateSchemaCommand extends Command {
 	 * @return void
 	 */
 	public function fire() {
-		echo "arararf!";
+
+		$this->comment('ATTENTION: This operation should not be executed in a production environment.');
+
+		$this->info('Obtaining metadata...');
+		$metadata = App::make('doctrine')->getMetadataFactory()->getAllMetadata();
+		$this->info('Creating database schema...');
+		App::make('doctrine.schema-tool')->createSchema($metadata);
+		$this->info('Database schema created successfully!');
+
 	}
 
 	/**
