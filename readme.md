@@ -42,9 +42,7 @@ Adapted from [Doctrine's documentation](http://goo.gl/XQ3qg):
     Doctrine::persist($user);
     Doctrine::flush();
 
-It is recommended that you read through all of the [ORM documentation](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/index.html).
-
-Try using Laravel's console to experiment and go through tutorials, enjoy!
+It is recommended that you read through all of the [ORM documentation](http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/index.html).  Try using Laravel's console to experiment and go through tutorials, enjoy!
 
 
 ### License
