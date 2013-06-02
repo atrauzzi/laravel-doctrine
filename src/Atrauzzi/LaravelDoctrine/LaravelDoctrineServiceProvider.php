@@ -56,7 +56,7 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 			return App::make('doctrine.metadata-factory')->getAllMetadata();
 		});
 		App::bind('doctrine.schema-tool', function ($app) {
-			return new \Doctrine\ORM\Tools\SchemaTool\SchemaTool(App::make('doctrine'));
+			return new \Doctrine\ORM\Tools\SchemaTool(App::make('doctrine'));
 		});
 
 		//
