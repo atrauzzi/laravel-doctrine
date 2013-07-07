@@ -37,4 +37,18 @@ return array(
 		__DIR__.'/../../../../../app/models'
 	),
 
+	/*
+	|--------------------------------------------------------------------------
+	| Sets the directory where Doctrine generates any proxy classes, including
+	| with which namespace.
+	|--------------------------------------------------------------------------
+	|
+	| http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/configuration.html
+	|
+	*/
+	'proxy_classes' => array(
+		'directory' => null,
+		'namespace' => null,
+	),
+
 );
