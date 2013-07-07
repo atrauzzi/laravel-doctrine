@@ -40,8 +40,15 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 			$connection = Config::get('laravel-doctrine::doctrine.connection');
 			$config = Setup::createAnnotationMetadataConfiguration(
 				Config::get('laravel-doctrine::doctrine.metadata'),
-				App::environment() == 'development'
+				App::environment() == 'development',
+				Config::get('laravel-doctrine::doctrine.proxy_classes.directory')
 			);
+			
+			$proxy_class_namespace = Config::get('laravel-doctrine::doctrine.proxy_classes.namespace');
+			if ($proxy_class_namespace !== null) {
+				$config->setProxyNamespace($proxy_class_namespace);
+			}
+			
 			// Obtain an EntityManager from Doctrine.
 			return EntityManager::create($connection, $config);
 		});
