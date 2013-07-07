@@ -44,6 +44,10 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 				Config::get('laravel-doctrine::doctrine.proxy_classes.directory')
 			);
 			
+			$config->setAutoGenerateProxyClasses(
+				Config::get('laravel-doctrine::doctrine.proxy_classes.auto_generate')
+			);
+			
 			$proxy_class_namespace = Config::get('laravel-doctrine::doctrine.proxy_classes.namespace');
 			if ($proxy_class_namespace !== null) {
 				$config->setProxyNamespace($proxy_class_namespace);
