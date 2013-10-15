@@ -20,6 +20,7 @@ return array(
 		'password'	=> '',
 		'dbname'	=> 'database',
 		'host'		=> 'localhost',
+		'prefix'	=> ''
 
 	),
 
@@ -51,5 +52,25 @@ return array(
 		'directory' => null,
 		'namespace' => null,
 	),
+ 
+ 	/*
+	|--------------------------------------------------------------------------
+	| Cache providers, supports apc, xcache, memcache, redis
+	| Only redis and memcache have additionals configurations
+	|--------------------------------------------------------------------------
+	*/
+	'cache' => array(
+		'provider' => 'redis',
 
+		'redis' => array(
+			'host'     => '127.0.0.1',
+			'port'     => 6379,
+			'database' => 1
+		),
+
+		'memcache' => array(
+			'host' => '127.0.0.1', 
+			'port' => 11211
+		)
+	)
 );
