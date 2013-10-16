@@ -26,10 +26,6 @@
         }
     },
 
-    "config": {
-        "bin-dir": "../"
-    },
-
     "bin": ["bin/doctrine-laravel", "bin/doctrine-laravel.php"],
 
     "minimum-stability": "dev"
