@@ -25,7 +25,7 @@
         "bin-dir": "../"
     },
 
-    "bin": ["bin/doctrine", "bin/doctrine.php"],
+    "bin": ["bin/doctrine-laravel", "bin/doctrine-laravel.php"],
 
     "minimum-stability": "dev"
 }
