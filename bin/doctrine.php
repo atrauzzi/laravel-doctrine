@@ -33,8 +33,8 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
 
 (@include_once __DIR__ . '/../vendor/autoload.php') || @include_once __DIR__ . '/../../../autoload.php';
 
-require __DIR__.'/../../../../bootstrap/autoload.php';
-$app = require_once __DIR__.'/../../../../bootstrap/start.php';
+require __DIR__.'/../../../bootstrap/autoload.php';
+$app = require_once __DIR__.'/../../../bootstrap/start.php';
 
 $env = getenv('LARAVEL_ENV');
 
