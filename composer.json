@@ -1,5 +1,5 @@
 {
-    "name": "atrauzzi/laravel-doctrine",
+    "name": "vittee/laravel-doctrine",
     "description": "An ORM for a Framework for Web Artisans",
     "keywords": ["doctrine", "laravel", "orm"],
     "license": "MIT",
@@ -7,6 +7,11 @@
         {
             "name": "Alexander Trauzzi",
             "email": "atrauzzi@gmail.com"
+        },
+
+        {
+            "name": "Wittawas Nakkasem",
+            "email": "vittee.n@gmail.com"
         }
     ],
     "require": {
