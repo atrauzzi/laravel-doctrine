@@ -4,7 +4,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
+use Doctrine\Common\EventManager;
 use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\Events;
 use Doctrine\ORM\EntityManager;
 
 class LaravelDoctrineServiceProvider extends ServiceProvider {
@@ -38,10 +40,60 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 		App::singleton('doctrine', function ($app) {
 			// Retrieve our configuration.
 			$connection = Config::get('laravel-doctrine::doctrine.connection');
+			$isDevMode = in_array(App::environment(), array('development', 'local'));
+
+			$cache = null; // default, Let Doctrine decide
+
+			if (!$isDevMode) {
+				$cache_config = Config::get('laravel-doctrine::doctrine.cache');
+				$cache_provider = $cache_config['provider'];
+				$cache_provider_config = $cache_config[$cache_provider];
+
+				switch ($cache_provider) {
+					case 'apc':
+						if (extension_loaded('apc')) {
+							$cache = new \Doctrine\Common\Cache\ApcCache();
+						}						
+						break;
+
+					case 'xcache':
+						if (extension_loaded('xcache')) {
+							$cache = new \Doctrine\Common\Cache\XcacheCache();
+						}
+						break;
+
+					case 'memcache':
+						if (extension_loaded('memcache')) {
+							$memcache = new \Memcache();
+							$memcache->connect('127.0.0.1');
+							$cache = new \Doctrine\Common\Cache\MemcacheCache();
+							$cache->setMemcache($memcache);
+						}
+						break;
+
+					case 'redis':
+						if (extension_loaded('redis')) {
+							$redis = new \Redis();
+							$redis->connect($cache_provider_config['host'], $cache_provider_config['port']);
+
+							if ($cache_provider_config['database']) {
+								$redis->select($cache_provider_config['database']);
+							}
+
+							$cache = new \Doctrine\Common\Cache\RedisCache();
+							$cache->setRedis($redis);
+
+						}
+						break;
+				}
+			}
+			
+
 			$config = Setup::createAnnotationMetadataConfiguration(
 				Config::get('laravel-doctrine::doctrine.metadata'),
-				App::environment() == 'development',
-				Config::get('laravel-doctrine::doctrine.proxy_classes.directory')
+				$isDevMode,
+				Config::get('laravel-doctrine::doctrine.proxy_classes.directory'),
+				$cache
 			);
 			
 			$config->setAutoGenerateProxyClasses(
@@ -52,9 +104,16 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 			if ($proxy_class_namespace !== null) {
 				$config->setProxyNamespace($proxy_class_namespace);
 			}
+
+			// Trap doctrine event, to support entity table prefix
+			$evm = new EventManager();
+
+			if (isset($connection['prefix']) && !empty($connection['prefix'])) {		
+				$evm->addEventListener(Events::loadClassMetadata, new Listener\Metadata\TablePrefix($connection['prefix']));
+			}
 			
 			// Obtain an EntityManager from Doctrine.
-			return EntityManager::create($connection, $config);
+			return EntityManager::create($connection, $config, $evm);
 		});
 
 		//

@@ -1,5 +1,5 @@
 {
-    "name": "atrauzzi/laravel-doctrine",
+    "name": "vittee/laravel-doctrine",
     "description": "An ORM for a Framework for Web Artisans",
     "keywords": ["doctrine", "laravel", "orm"],
     "license": "MIT",
@@ -7,17 +7,27 @@
         {
             "name": "Alexander Trauzzi",
             "email": "atrauzzi@gmail.com"
+        },
+
+        {
+            "name": "Wittawas Nakkasem",
+            "email": "vittee.n@gmail.com"
         }
     ],
     "require": {
         "php": ">=5.3.0",
         "illuminate/support": "4.0.x",
-	    "doctrine/orm": "2.*"
+	    "doctrine/orm": "2.*",
+        "doctrine/migrations": "dev-master"
     },
     "autoload": {
         "psr-0": {
-            "Atrauzzi\\LaravelDoctrine": "src/"
+            "Atrauzzi\\LaravelDoctrine": "src/",
+            "Vittee\\LaravelDoctrine": "src/"
         }
     },
+
+    "bin": ["bin/doctrine-laravel", "bin/doctrine-laravel.php"],
+
     "minimum-stability": "dev"
 }

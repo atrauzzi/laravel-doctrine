@@ -14,11 +14,11 @@ Installation is the usual for Laravel packages.
 
 Insert the following in the packages section of your `composer.json` file and run an update:
 
-    "atrauzzi/laravel-doctrine": "dev-master",
+    "vittee/laravel-doctrine": "dev-master",
 
 Add the service provider to your Laravel application in `app/config/app.php`. In the `providers` array add:
 
-    'Atrauzzi\LaravelDoctrine\LaravelDoctrineServiceProvider',
+    'Vittee\LaravelDoctrine\ServiceProvider',
 
 Then add the following to your `facades` array in the same file:
 
@@ -26,9 +26,9 @@ Then add the following to your `facades` array in the same file:
 
 You'll likely want to configure the database connection, which you can do by overriding the bundle's defaults with the following command:
 
-    ./artisan config:publish atrauzzi/laravel-doctrine
+    ./artisan config:publish vittee/laravel-doctrine
     
-This should get you a fresh copy of the configuration file in the directory `app/config/packages/vendor/atrauzzi/laravel-doctrine`.
+This should get you a fresh copy of the configuration file in the directory `app/config/packages/vendor/vittee/laravel-doctrine`.
 
 #### Usage
 
