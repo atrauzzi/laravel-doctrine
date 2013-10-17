@@ -33,13 +33,6 @@ use Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand;
 
 require __DIR__.'/../../../../bootstrap/autoload.php';
 $app = require_once __DIR__.'/../../../../bootstrap/start.php';
-
-$env = getenv('LARAVEL_ENV');
-
-if (!empty($env)) {
-	App::instance('env', $env);
-}
-
 $app->boot();
 
 $em = App::make('doctrine');
