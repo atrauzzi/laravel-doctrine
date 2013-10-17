@@ -72,5 +72,10 @@ return array(
 			'host' => '127.0.0.1', 
 			'port' => 11211
 		)
+	),
+
+	'migrations' => array(
+		'directory' => '/database/doctrine-migrations',
+		'table_name' => 'doctrine_migration_versions'
 	)
 );

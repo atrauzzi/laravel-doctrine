@@ -43,13 +43,11 @@ $helperSet = new HelperSet(array(
 	'dialog' => new DialogHelper(),
 ));
 
-$migration_directory = App::make('path').'/database/doctrine-migrations';
-
 $migrations_config = new Configuration($em->getConnection());
 $migrations_config->setName('Doctrine Sandbox Migrations');
 $migrations_config->setMigrationsNamespace('DoctrineMigrations');
-$migrations_config->setMigrationsTableName('doctrine_migration_versions');
-$migrations_config->setMigrationsDirectory($migration_directory);
+$migrations_config->setMigrationsTableName(Config::get('laravel-doctrine::doctrine.migrations.table_name', 'doctrine_migration_versions'));
+$migrations_config->setMigrationsDirectory(App::make('path').Config::get('laravel-doctrine::doctrine.migrations.directory', '/database/doctrine-migrations'));
 
 
 $commands = array(
