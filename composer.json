@@ -12,12 +12,16 @@
     "require": {
         "php": ">=5.3.0",
         "illuminate/support": "4.0.x",
-	    "doctrine/orm": "2.*"
+	    "doctrine/orm": "2.*",
+        "doctrine/migrations": "dev-master"
     },
     "autoload": {
         "psr-0": {
             "Atrauzzi\\LaravelDoctrine": "src/"
         }
     },
+
+    "bin": ["bin/doctrine-laravel", "bin/doctrine-laravel.php"],
+
     "minimum-stability": "dev"
 }
