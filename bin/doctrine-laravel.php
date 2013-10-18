@@ -47,7 +47,10 @@ $migrations_config = new Configuration($em->getConnection());
 $migrations_config->setName('Doctrine Sandbox Migrations');
 $migrations_config->setMigrationsNamespace('DoctrineMigrations');
 $migrations_config->setMigrationsTableName(Config::get('laravel-doctrine::doctrine.migrations.table_name', 'doctrine_migration_versions'));
-$migrations_config->setMigrationsDirectory(App::make('path').Config::get('laravel-doctrine::doctrine.migrations.directory', '/database/doctrine-migrations'));
+
+$migrations_directory = App::make('path').Config::get('laravel-doctrine::doctrine.migrations.directory', '/database/doctrine-migrations');
+$migrations_config->setMigrationsDirectory($migrations_directory);
+$migrations_config->registerMigrationsFromDirectory($migrations_directory);
 
 
 $commands = array(
