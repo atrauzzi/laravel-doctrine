@@ -39,13 +39,14 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 		//
 		App::singleton('doctrine', function ($app) {
 			// Retrieve our configuration.
-			$connection = Config::get('laravel-doctrine::doctrine.connection');
-			$isDevMode = in_array(App::environment(), array('development', 'local'));
+			$config = $app['config'];
+			$connection = $config->get('laravel-doctrine::doctrine.connection');
+			$isDevMode = $config->get('app.debug');
 
 			$cache = null; // default, Let Doctrine decide
 
 			if (!$isDevMode) {
-				$cache_config = Config::get('laravel-doctrine::doctrine.cache');
+				$cache_config = $config->get('laravel-doctrine::doctrine.cache');
 				$cache_provider = $cache_config['provider'];
 				$cache_provider_config = $cache_config[$cache_provider];
 
@@ -65,7 +66,7 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 					case 'memcache':
 						if (extension_loaded('memcache')) {
 							$memcache = new \Memcache();
-							$memcache->connect('127.0.0.1');
+							$memcache->connect($cache_provider_config['host'], $cache_provider_config['port']);
 							$cache = new \Doctrine\Common\Cache\MemcacheCache();
 							$cache->setMemcache($memcache);
 						}
@@ -89,23 +90,23 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 			}
 			
 
-			$config = Setup::createAnnotationMetadataConfiguration(
-				Config::get('laravel-doctrine::doctrine.metadata'),
+			$doctrine_config = Setup::createAnnotationMetadataConfiguration(
+				$config->get('laravel-doctrine::doctrine.metadata'),
 				$isDevMode,
-				Config::get('laravel-doctrine::doctrine.proxy_classes.directory'),
+				$config->get('laravel-doctrine::doctrine.proxy_classes.directory'),
 				$cache
 			);
 			
-			$config->setAutoGenerateProxyClasses(
-				Config::get('laravel-doctrine::doctrine.proxy_classes.auto_generate')
+			$doctrine_config->setAutoGenerateProxyClasses(
+				$config->get('laravel-doctrine::doctrine.proxy_classes.auto_generate')
 			);
 			
-			$proxy_class_namespace = Config::get('laravel-doctrine::doctrine.proxy_classes.namespace');
+			$proxy_class_namespace = $config->get('laravel-doctrine::doctrine.proxy_classes.namespace');
 			if ($proxy_class_namespace !== null) {
-				$config->setProxyNamespace($proxy_class_namespace);
+				$doctrine_config->setProxyNamespace($proxy_class_namespace);
 			}
 
-			// Trap doctrine event, to support entity table prefix
+			// Trap doctrine events, to support entity table prefix
 			$evm = new EventManager();
 
 			if (isset($connection['prefix']) && !empty($connection['prefix'])) {		
@@ -113,7 +114,7 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 			}
 			
 			// Obtain an EntityManager from Doctrine.
-			return EntityManager::create($connection, $config, $evm);
+			return EntityManager::create($connection, $doctrine_config, $evm);
 		});
 
 		//
