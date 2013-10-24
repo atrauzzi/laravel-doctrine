@@ -1,13 +1,12 @@
 <?php namespace Atrauzzi\LaravelDoctrine;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Artisan;
 use Doctrine\Common\EventManager;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\EntityManager;
+use Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand;
+
 
 class LaravelDoctrineServiceProvider extends ServiceProvider {
 
@@ -37,43 +36,46 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 		//
 		// Doctrine
 		//
-		App::singleton('doctrine', function ($app) {
+		$this->app->singleton('Doctrine\ORM\EntityManager', function ($app) {
+
 			// Retrieve our configuration.
 			$config = $app['config'];
 			$connection = $config->get('laravel-doctrine::doctrine.connection');
-			$isDevMode = $config->get('app.debug');
+			$devMode = $config->get('app.debug');
 
-			$cache = null; // default, Let Doctrine decide
+			$cache = null; // Default, let Doctrine decide.
 
-			if (!$isDevMode) {
+			if(!$devMode) {
+
 				$cache_config = $config->get('laravel-doctrine::doctrine.cache');
 				$cache_provider = $cache_config['provider'];
 				$cache_provider_config = $cache_config[$cache_provider];
 
-				switch ($cache_provider) {
+				switch($cache_provider) {
+
 					case 'apc':
-						if (extension_loaded('apc')) {
+						if(extension_loaded('apc')) {
 							$cache = new \Doctrine\Common\Cache\ApcCache();
-						}						
-						break;
+						}
+					break;
 
 					case 'xcache':
-						if (extension_loaded('xcache')) {
+						if(extension_loaded('xcache')) {
 							$cache = new \Doctrine\Common\Cache\XcacheCache();
 						}
-						break;
+					break;
 
 					case 'memcache':
-						if (extension_loaded('memcache')) {
+						if(extension_loaded('memcache')) {
 							$memcache = new \Memcache();
 							$memcache->connect($cache_provider_config['host'], $cache_provider_config['port']);
 							$cache = new \Doctrine\Common\Cache\MemcacheCache();
 							$cache->setMemcache($memcache);
 						}
-						break;
+					break;
 
 					case 'redis':
-						if (extension_loaded('redis')) {
+						if(extension_loaded('redis')) {
 							$redis = new \Redis();
 							$redis->connect($cache_provider_config['host'], $cache_provider_config['port']);
 
@@ -83,24 +85,24 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 
 							$cache = new \Doctrine\Common\Cache\RedisCache();
 							$cache->setRedis($redis);
-
 						}
-						break;
+					break;
+
 				}
+
 			}
-			
 
 			$doctrine_config = Setup::createAnnotationMetadataConfiguration(
 				$config->get('laravel-doctrine::doctrine.metadata'),
-				$isDevMode,
+				$devMode,
 				$config->get('laravel-doctrine::doctrine.proxy_classes.directory'),
 				$cache
 			);
-			
+
 			$doctrine_config->setAutoGenerateProxyClasses(
 				$config->get('laravel-doctrine::doctrine.proxy_classes.auto_generate')
 			);
-			
+
 			$proxy_class_namespace = $config->get('laravel-doctrine::doctrine.proxy_classes.namespace');
 			if ($proxy_class_namespace !== null) {
 				$doctrine_config->setProxyNamespace($proxy_class_namespace);
@@ -109,43 +111,49 @@ class LaravelDoctrineServiceProvider extends ServiceProvider {
 			// Trap doctrine events, to support entity table prefix
 			$evm = new EventManager();
 
-			if (isset($connection['prefix']) && !empty($connection['prefix'])) {		
+			if (isset($connection['prefix']) && !empty($connection['prefix'])) {
 				$evm->addEventListener(Events::loadClassMetadata, new Listener\Metadata\TablePrefix($connection['prefix']));
 			}
-			
+
 			// Obtain an EntityManager from Doctrine.
 			return EntityManager::create($connection, $doctrine_config, $evm);
+
 		});
 
 		//
 		// Utilities
 		//
-		App::singleton('doctrine.metadata-factory', function ($app) {
-			return App::make('doctrine')->getMetadataFactory();
+
+		$this->app->singleton('Doctrine\ORM\Mapping\ClassMetadataFactory', function ($app) {
+			return $app['Doctrine\ORM\EntityManager']->getMetadataFactory();
 		});
-		App::singleton('doctrine.metadata', function ($app) {
-			return App::make('doctrine.metadata-factory')->getAllMetadata();
+
+
+		//
+		// String name re-bindings.
+		//
+
+		$this->app->singleton('doctrine', function ($app) {
+			return $app['Doctrine\ORM\EntityManager'];
 		});
-		App::bind('doctrine.schema-tool', function ($app) {
-			return new \Doctrine\ORM\Tools\SchemaTool(App::make('doctrine'));
+
+		$this->app->singleton('doctrine.metadata-factory', function ($app) {
+			return $app['Doctrine\ORM\Mapping\ClassMetadataFactory'];
 		});
+
+		// After binding EntityManager, the DIC can inject this via the constructor type hint!
+		$this->app->singleton('doctrine.schema-tool', function ($app) {
+			return $app['Doctrine\ORM\Tools\SchemaTool'];
+		});
+
 
 		//
 		// Commands
 		//
-		App::bind('doctrine.schema.create', function ($app) {
-			return new \Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand(App::make('doctrine'));
-		});
-		App::bind('doctrine.schema.update', function ($app) {
-			return new \Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand(App::make('doctrine'));
-		});
-		App::bind('doctrine.schema.drop', function ($app) {
-			return new \Atrauzzi\LaravelDoctrine\Console\DropSchemaCommand(App::make('doctrine'));
-		});
 		$this->commands(
-			'doctrine.schema.create',
-			'doctrine.schema.update',
-			'doctrine.schema.drop'
+			'Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand'
+			'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
+			'Atrauzzi\LaravelDoctrine\Console\DropSchemaCommand',
 		);
 
 	}

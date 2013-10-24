@@ -27,7 +27,7 @@ Then add the following to your `facades` array in the same file:
 You'll likely want to configure the database connection, which you can do by overriding the bundle's defaults with the following command:
 
     ./artisan config:publish vittee/laravel-doctrine
-    
+
 This should get you a fresh copy of the configuration file in the directory `app/config/packages/vendor/vittee/laravel-doctrine`.
 
 #### Usage
@@ -63,4 +63,4 @@ Visit laravel-doctrine:
 
 * ...[at Sensio Labs Connect](http://goo.gl/IL6Em)
 
-laravel-doctrine is made by [Alexander Trauzzi](http://goo.gl/QabWv)
+laravel-doctrine is made by [Alexander Trauzzi](http://goo.gl/QabWv) with help from all the people in `contributors.md`!
