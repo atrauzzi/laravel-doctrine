@@ -150,9 +150,9 @@ class ServiceProvider extends Base {
 		// Commands
 		//
 		$this->commands(
-			'Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand'
+			array('Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand',
 			'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
-			'Atrauzzi\LaravelDoctrine\Console\DropSchemaCommand',
+			'Atrauzzi\LaravelDoctrine\Console\DropSchemaCommand')
 		);
 
 	}
