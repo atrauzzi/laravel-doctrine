@@ -139,7 +139,11 @@ class ServiceProvider extends Base {
 		$this->app->singleton('doctrine.metadata-factory', function ($app) {
 			return $app['Doctrine\ORM\Mapping\ClassMetadataFactory'];
 		});
-
+		
+		$this->app->singleton('doctrine.metadata', function($app) {
+			return $app['doctrine.metadata-factory']->getAllMetadata();
+		});
+		
 		// After binding EntityManager, the DIC can inject this via the constructor type hint!
 		$this->app->singleton('doctrine.schema-tool', function ($app) {
 			return $app['Doctrine\ORM\Tools\SchemaTool'];
