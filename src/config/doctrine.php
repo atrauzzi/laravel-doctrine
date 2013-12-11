@@ -77,5 +77,14 @@ return array(
 	'migrations' => array(
 		'directory' => '/database/doctrine-migrations',
 		'table_name' => 'doctrine_migration_versions'
-	)
+	),
+
+ 	/*
+	|--------------------------------------------------------------------------
+	| Use only if you want to specify the default repository
+   | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.7
+	|--------------------------------------------------------------------------
+	*/
+   //'defaultRepository' => 'Repository\DefaultRepository'
+
 );
