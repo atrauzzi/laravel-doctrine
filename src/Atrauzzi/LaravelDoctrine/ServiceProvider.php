@@ -102,10 +102,9 @@ class ServiceProvider extends Base {
 				$config->get('laravel-doctrine::doctrine.proxy_classes.auto_generate')
 			);
 
-         $default_repository = $config->get('laravel-doctrine::doctrine.defaultRepository');
-         if($default_repository !== null) {
-           $doctrine_config->setDefaultRepositoryClassName($default_repository);
-         }
+            $doctrine_config->setDefaultRepositoryClassName($config->get('laravel-doctrine::doctrine.defaultRepository'));
+
+            $doctrine_config->setSQLLogger($config->get('laravel-doctrine::doctrine.sqlLogger'));
 
 			$proxy_class_namespace = $config->get('laravel-doctrine::doctrine.proxy_classes.namespace');
 			if ($proxy_class_namespace !== null) {
