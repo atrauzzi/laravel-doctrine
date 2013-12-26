@@ -77,5 +77,23 @@ return array(
 	'migrations' => array(
 		'directory' => '/database/doctrine-migrations',
 		'table_name' => 'doctrine_migration_versions'
-	)
+	),
+
+ 	/*
+	|--------------------------------------------------------------------------
+	| Use to specify the default repository
+    | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.7
+	|--------------------------------------------------------------------------
+	*/
+   'defaultRepository' => '\Doctrine\ORM\EntityRepository',
+
+ 	/*
+	|--------------------------------------------------------------------------
+	| Use to specify the SQL Logger
+    | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.2.6
+    | To use with \Doctrine\DBAL\Logging\EchoSQLLogger, do:
+    | 'sqlLogger' => new \Doctrine\DBAL\Logging\EchoSQLLogger();
+	|--------------------------------------------------------------------------
+	*/
+   'sqlLogger' => null,
 );
