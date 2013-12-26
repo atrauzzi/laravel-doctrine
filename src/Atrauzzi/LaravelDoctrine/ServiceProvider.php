@@ -31,6 +31,7 @@ class ServiceProvider extends Base {
 	 * @return void
 	 */
 	public function register() {
+		$this->package('atrauzzi/laravel-doctrine');
 
 		//
 		// Doctrine
