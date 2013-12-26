@@ -11,8 +11,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "4.*.x",
-	    "doctrine/orm": "2.*",
+        "illuminate/support": "4.*",
+	"doctrine/orm": "2.*",
         "doctrine/migrations": "dev-master"
     },
     "autoload": {
