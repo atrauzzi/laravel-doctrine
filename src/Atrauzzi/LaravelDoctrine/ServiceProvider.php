@@ -132,6 +132,12 @@ class ServiceProvider extends Base {
 			return $app['Doctrine\ORM\EntityManager']->getMetadataFactory();
 		});
 
+    $this->app->singleton('doctrine.registry', function ($app) {
+      $connections = array('doctrine.connection');
+      $managers = array('doctrine' => 'doctrine');
+      $proxy = 'Doctrine\Common\Persistence\Proxy';
+      return new DoctrineRegistry('doctrine', $connections, $managers, $connections[0], $managers['doctrine'], $proxy);
+    });
 
 		//
 		// String name re-bindings.
@@ -154,6 +160,10 @@ class ServiceProvider extends Base {
 			return $app['Doctrine\ORM\Tools\SchemaTool'];
 		});
 
+    // Registering the doctrine connection to the IoC container.
+    $this->app->singleton('doctrine.connection', function ($app) {
+      return $app['doctrine']->getConnection();
+    });
 
 		//
 		// Commands
@@ -172,7 +182,16 @@ class ServiceProvider extends Base {
 	 * @return array
 	 */
 	public function provides() {
-		return array();
+    return array(
+      'doctrine',
+      'Doctrine\ORM\EntityManager',
+      'doctrine.metadata-factory',
+      'Doctrine\ORM\Mapping\ClassMetadataFactory',
+      'doctrine.metadata',
+      'doctrine.schema-tool',
+      'Doctrine\ORM\Tools\SchemaTool',
+      'doctrine.registry'
+    );
 	}
 
 }
