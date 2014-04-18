@@ -74,6 +74,20 @@ class ServiceProvider extends Base {
 						}
 					break;
 
+                    case 'couchbase':
+                        if(extension_loaded('couchbase')) {
+                            $couchbase = new \Couchbase(
+                                $cache_provider_config['hosts'],
+                                $cache_provider_config['user'],
+                                $cache_provider_config['password'],
+                                $cache_provider_config['bucket'],
+                                $cache_provider_config['persistent']
+                            );
+                            $cache = new \Doctrine\Common\Cache\CouchbaseCache();
+                            $cache->setCouchbase($couchbase);
+                        }
+                    break;
+
 					case 'redis':
 						if(extension_loaded('redis')) {
 							$redis = new \Redis();
