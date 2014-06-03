@@ -124,7 +124,11 @@ class ServiceProvider extends Base {
 
 		});
 
-		//
+        $this->app->singleton('Doctrine\ORM\Tools\SchemaTool', function ($app) {
+            return new SchemaTool($app['Doctrine\ORM\EntityManager']);
+        });
+
+        //
 		// Utilities
 		//
 
