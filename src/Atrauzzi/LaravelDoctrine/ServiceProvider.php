@@ -5,6 +5,7 @@ use Doctrine\Common\EventManager;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\SchemaTool;
 
 
 class ServiceProvider extends Base {
