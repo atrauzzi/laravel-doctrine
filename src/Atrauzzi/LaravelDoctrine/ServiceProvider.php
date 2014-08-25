@@ -107,6 +107,10 @@ class ServiceProvider extends Base {
 
 			}
 
+            if (isset($cache_provider_config['namespace'])) {
+                $cache->setNamespace($cache_provider_config['namespace']);
+            }
+
 			$doctrine_config = Setup::createAnnotationMetadataConfiguration(
 				$config->get('laravel-doctrine::doctrine.metadata'),
 				$devMode,
