@@ -103,10 +103,16 @@ class ServiceProvider extends Base {
 						}
 					break;
 
+                    default:
+                        $cache = new \Doctrine\Common\Cache\ArrayCache();
+                        break;
 				}
 
+                // optionally set cache namespace
                 if (isset($cache_provider_config['namespace'])) {
-                    $cache->setNamespace($cache_provider_config['namespace']);
+                    if ($cache instanceof \Doctrine\Common\Cache\CacheProvider) {
+                        $cache->setNamespace($cache_provider_config['namespace']);
+                    }
                 }
 			}
 
