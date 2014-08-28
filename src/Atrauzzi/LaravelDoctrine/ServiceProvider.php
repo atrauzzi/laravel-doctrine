@@ -119,9 +119,13 @@ class ServiceProvider extends Base {
 			$doctrine_config = Setup::createAnnotationMetadataConfiguration(
 				$config->get('laravel-doctrine::doctrine.metadata'),
 				$devMode,
-				$config->get('laravel-doctrine::doctrine.proxy_classes.directory'),
-				$cache
+				$config->get('laravel-doctrine::doctrine.proxy_classes.directory')
 			);
+
+            // set cache implementations (required in order to set custom namespaces properly)
+            $doctrine_config->setMetadataCacheImpl($cache);
+            $doctrine_config->setQueryCacheImpl($cache);
+            $doctrine_config->setResultCacheImpl($cache);
 
 			$doctrine_config->setAutoGenerateProxyClasses(
 				$config->get('laravel-doctrine::doctrine.proxy_classes.auto_generate')
