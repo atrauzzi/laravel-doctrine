@@ -58,13 +58,13 @@ class ServiceProvider extends Base {
 						if(extension_loaded('apc')) {
 							$cache = new \Doctrine\Common\Cache\ApcCache();
 						}
-					break;
+						break;
 
 					case 'xcache':
 						if(extension_loaded('xcache')) {
 							$cache = new \Doctrine\Common\Cache\XcacheCache();
 						}
-					break;
+						break;
 
 					case 'memcache':
 						if(extension_loaded('memcache')) {
@@ -73,7 +73,21 @@ class ServiceProvider extends Base {
 							$cache = new \Doctrine\Common\Cache\MemcacheCache();
 							$cache->setMemcache($memcache);
 						}
-					break;
+						break;
+
+					case 'couchbase':
+						if(extension_loaded('couchbase')) {
+							$couchbase = new \Couchbase(
+								$cache_provider_config['hosts'],
+								$cache_provider_config['user'],
+								$cache_provider_config['password'],
+								$cache_provider_config['bucket'],
+								$cache_provider_config['persistent']
+							);
+							$cache = new \Doctrine\Common\Cache\CouchbaseCache();
+							$cache->setCouchbase($couchbase);
+						}
+						break;
 
 					case 'redis':
 						if(extension_loaded('redis')) {
@@ -87,26 +101,44 @@ class ServiceProvider extends Base {
 							$cache = new \Doctrine\Common\Cache\RedisCache();
 							$cache->setRedis($redis);
 						}
-					break;
+						break;
 
+					default:
+						$cache = new \Doctrine\Common\Cache\ArrayCache();
+						break;
 				}
 
+				// optionally set cache namespace
+				if (isset($cache_provider_config['namespace'])) {
+					if ($cache instanceof \Doctrine\Common\Cache\CacheProvider) {
+						$cache->setNamespace($cache_provider_config['namespace']);
+					}
+				}
 			}
 
 			$doctrine_config = Setup::createAnnotationMetadataConfiguration(
 				$config->get('laravel-doctrine::doctrine.metadata'),
 				$devMode,
-				$config->get('laravel-doctrine::doctrine.proxy_classes.directory'),
-				$cache
+				$config->get('laravel-doctrine::doctrine.proxy_classes.directory')
 			);
+
+			/*
+			 * set cache implementations
+			 * must occur after Setup::createAnnotationMetadataConfiguration() in order to set custom namespaces properly
+			 */
+			if ($cache !== null) {
+				$doctrine_config->setMetadataCacheImpl($cache);
+				$doctrine_config->setQueryCacheImpl($cache);
+				$doctrine_config->setResultCacheImpl($cache);
+			}
 
 			$doctrine_config->setAutoGenerateProxyClasses(
 				$config->get('laravel-doctrine::doctrine.proxy_classes.auto_generate')
 			);
 
-            $doctrine_config->setDefaultRepositoryClassName($config->get('laravel-doctrine::doctrine.defaultRepository'));
+			$doctrine_config->setDefaultRepositoryClassName($config->get('laravel-doctrine::doctrine.defaultRepository'));
 
-            $doctrine_config->setSQLLogger($config->get('laravel-doctrine::doctrine.sqlLogger'));
+			$doctrine_config->setSQLLogger($config->get('laravel-doctrine::doctrine.sqlLogger'));
 
 			$proxy_class_namespace = $config->get('laravel-doctrine::doctrine.proxy_classes.namespace');
 			if ($proxy_class_namespace !== null) {
@@ -125,11 +157,11 @@ class ServiceProvider extends Base {
 
 		});
 
-        $this->app->singleton('Doctrine\ORM\Tools\SchemaTool', function ($app) {
-            return new SchemaTool($app['Doctrine\ORM\EntityManager']);
-        });
+		$this->app->singleton('Doctrine\ORM\Tools\SchemaTool', function ($app) {
+			return new SchemaTool($app['Doctrine\ORM\EntityManager']);
+		});
 
-        //
+		//
 		// Utilities
 		//
 
@@ -137,12 +169,12 @@ class ServiceProvider extends Base {
 			return $app['Doctrine\ORM\EntityManager']->getMetadataFactory();
 		});
 
-    $this->app->singleton('doctrine.registry', function ($app) {
-      $connections = array('doctrine.connection');
-      $managers = array('doctrine' => 'doctrine');
-      $proxy = 'Doctrine\Common\Persistence\Proxy';
-      return new DoctrineRegistry('doctrine', $connections, $managers, $connections[0], $managers['doctrine'], $proxy);
-    });
+		$this->app->singleton('doctrine.registry', function ($app) {
+			$connections = array('doctrine.connection');
+			$managers = array('doctrine' => 'doctrine');
+			$proxy = 'Doctrine\Common\Persistence\Proxy';
+			return new DoctrineRegistry('doctrine', $connections, $managers, $connections[0], $managers['doctrine'], $proxy);
+		});
 
 		//
 		// String name re-bindings.
@@ -155,28 +187,28 @@ class ServiceProvider extends Base {
 		$this->app->singleton('doctrine.metadata-factory', function ($app) {
 			return $app['Doctrine\ORM\Mapping\ClassMetadataFactory'];
 		});
-		
+
 		$this->app->singleton('doctrine.metadata', function($app) {
 			return $app['doctrine.metadata-factory']->getAllMetadata();
 		});
-		
+
 		// After binding EntityManager, the DIC can inject this via the constructor type hint!
 		$this->app->singleton('doctrine.schema-tool', function ($app) {
 			return $app['Doctrine\ORM\Tools\SchemaTool'];
 		});
 
-    // Registering the doctrine connection to the IoC container.
-    $this->app->singleton('doctrine.connection', function ($app) {
-      return $app['doctrine']->getConnection();
-    });
+		// Registering the doctrine connection to the IoC container.
+		$this->app->singleton('doctrine.connection', function ($app) {
+			return $app['doctrine']->getConnection();
+		});
 
 		//
 		// Commands
 		//
 		$this->commands(
 			array('Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand',
-			'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
-			'Atrauzzi\LaravelDoctrine\Console\DropSchemaCommand')
+				'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
+				'Atrauzzi\LaravelDoctrine\Console\DropSchemaCommand')
 		);
 
 	}
@@ -187,16 +219,16 @@ class ServiceProvider extends Base {
 	 * @return array
 	 */
 	public function provides() {
-    return array(
-      'doctrine',
-      'Doctrine\ORM\EntityManager',
-      'doctrine.metadata-factory',
-      'Doctrine\ORM\Mapping\ClassMetadataFactory',
-      'doctrine.metadata',
-      'doctrine.schema-tool',
-      'Doctrine\ORM\Tools\SchemaTool',
-      'doctrine.registry'
-    );
+		return array(
+			'doctrine',
+			'Doctrine\ORM\EntityManager',
+			'doctrine.metadata-factory',
+			'Doctrine\ORM\Mapping\ClassMetadataFactory',
+			'doctrine.metadata',
+			'doctrine.schema-tool',
+			'Doctrine\ORM\Tools\SchemaTool',
+			'doctrine.registry'
+		);
 	}
 
 }

@@ -45,7 +45,7 @@ $helperSet = new HelperSet(array(
 
 $migrations_config = new Configuration($em->getConnection());
 $migrations_config->setName(Config::get('laravel-doctrine::doctrine.migrations.name', 'Doctrine Sandbox Migrations'));
-$migrations_config->setMigrationsNamespace('DoctrineMigrations');
+$migrations_config->setMigrationsNamespace(Config::get('laravel-doctrine::doctrine.migrations.namespace', 'DoctrineMigrations'));
 $migrations_config->setMigrationsTableName(Config::get('laravel-doctrine::doctrine.migrations.table_name', 'doctrine_migration_versions'));
 
 $migrations_directory = App::make('path').Config::get('laravel-doctrine::doctrine.migrations.directory', '/database/doctrine-migrations');
