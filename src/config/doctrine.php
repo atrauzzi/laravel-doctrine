@@ -76,6 +76,7 @@ return array(
 
 	'migrations' => array(
 		'directory' => '/database/doctrine-migrations',
+        'namespace'  => 'DoctrineMigrations',
 		'table_name' => 'doctrine_migration_versions'
 	),
 
@@ -86,6 +87,14 @@ return array(
 	|--------------------------------------------------------------------------
 	*/
    'defaultRepository' => '\Doctrine\ORM\EntityRepository',
+
+    /*
+     |--------------------------------------------------------------------------
+     | Annotation Reader
+     | https://github.com/doctrine/doctrine2/blob/master/lib/Doctrine/ORM/Tools/Setup.php
+     |--------------------------------------------------------------------------
+     */
+    'use_simple_annotation_reader' => FALSE,
 
  	/*
 	|--------------------------------------------------------------------------
