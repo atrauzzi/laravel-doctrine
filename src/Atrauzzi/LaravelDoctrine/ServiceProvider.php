@@ -6,6 +6,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\ORM\Mapping\Driver\DriverChain;
 
 
 class ServiceProvider extends Base {
@@ -116,14 +117,25 @@ class ServiceProvider extends Base {
 				}
 			}
 
-			$doctrine_config = Setup::createAnnotationMetadataConfiguration(
-				$config->get('laravel-doctrine::doctrine.metadata'),
-				$devMode,
-				$config->get('laravel-doctrine::doctrine.proxy_classes.directory'),
-                NULL,
-                $config->get('laravel-doctrine::doctrine.use_simple_annotation_reader')
-			);
-
+                        $doctrine_config = Setup::createConfiguration(
+                            $devMode,
+                            $config->get('laravel-doctrine::doctrine.proxy_classes.directory'),
+                            NULL
+                        );
+                        
+                        $annotation_driver = $doctrine_config->newDefaultAnnotationDriver(
+                            $config->get('laravel-doctrine::doctrine.metadata'), 
+                            $config->get('laravel-doctrine::doctrine.use_simple_annotation_reader')
+                        );
+                        
+                        if ($config->get('laravel-doctrine::doctrine.driverChain.enabled')) {
+                            $driver_chain = new DriverChain();
+                            $driver_chain->addDriver($annotation_driver, $config->get('laravel-doctrine::doctrine.driverChain.defaultNamespace'));
+                            $doctrine_config->setMetadataDriverImpl($driver_chain);
+                        } else {
+                            $doctrine_config->setMetadataDriverImpl($annotation_driver);
+                        }  
+                        
 			/*
 			 * set cache implementations
 			 * must occur after Setup::createAnnotationMetadataConfiguration() in order to set custom namespaces properly
@@ -153,7 +165,7 @@ class ServiceProvider extends Base {
 			if (isset($connection['prefix']) && !empty($connection['prefix'])) {
 				$evm->addEventListener(Events::loadClassMetadata, new Listener\Metadata\TablePrefix($connection['prefix']));
 			}
-
+                        
 			// Obtain an EntityManager from Doctrine.
 			return EntityManager::create($connection, $doctrine_config, $evm);
 
