@@ -4,3 +4,5 @@
 
 [Thiago Campmany](https://github.com/TCampmany)
 
+[Alayn Gortazar Huete](https://github.com/arraintxo)
+
