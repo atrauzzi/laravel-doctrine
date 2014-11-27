@@ -116,6 +116,6 @@ return array(
         */
         'driverChain' => array(
             'enabled' => false,
-            'defaultNamespace' => 'Entity'
+            'defaultNamespace' => 'Entities'
         ),
 );
