@@ -76,6 +76,15 @@ class ServiceProvider extends Base {
 						}
 						break;
 
+					case 'memcached':
+						if(extension_loaded('memcached')) {
+							$memcache = new \Memcached();
+							$memcache->addServer($cache_provider_config['host'], $cache_provider_config['port']);
+							$cache = new \Doctrine\Common\Cache\MemcachedCache();
+							$cache->setMemcached($memcache);
+						}
+						break;
+
 					case 'couchbase':
 						if(extension_loaded('couchbase')) {
 							$couchbase = new \Couchbase(
