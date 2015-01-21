@@ -7,9 +7,10 @@ return array(
 	| Database Connection
 	|--------------------------------------------------------------------------
 	|
-	| This array passes right through to the EntityManager factory.
+	| This array passes right through to the EntityManager factory. For 
+	| example, here you can set additional connection details like "charset".
 	|
-	| http://www.doctrine-project.org/documentation/manual/2_0/en/dbal
+	| http://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html#connection-details
 	|
 	*/
 
@@ -82,18 +83,19 @@ return array(
  	/*
 	|--------------------------------------------------------------------------
 	| Use to specify the default repository
-    | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.7
+        | http://doctrine-orm.readthedocs.org/en/latest/reference/working-with-objects.html#custom-repositories
 	|--------------------------------------------------------------------------
 	*/
-   'defaultRepository' => '\Doctrine\ORM\EntityRepository',
+        'defaultRepository' => '\Doctrine\ORM\EntityRepository',
 
  	/*
 	|--------------------------------------------------------------------------
 	| Use to specify the SQL Logger
-    | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.2.6
-    | To use with \Doctrine\DBAL\Logging\EchoSQLLogger, do:
-    | 'sqlLogger' => new \Doctrine\DBAL\Logging\EchoSQLLogger();
+        | To use with \Doctrine\DBAL\Logging\EchoSQLLogger, do:
+        | 'sqlLogger' => new \Doctrine\DBAL\Logging\EchoSQLLogger();
+        |
+        | http://doctrine-orm.readthedocs.org/en/latest/reference/advanced-configuration.html#sql-logger-optional
 	|--------------------------------------------------------------------------
 	*/
-   'sqlLogger' => null,
+        'sqlLogger' => null,
 );
