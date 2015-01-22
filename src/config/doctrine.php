@@ -7,9 +7,10 @@ return array(
 	| Database Connection
 	|--------------------------------------------------------------------------
 	|
-	| This array passes right through to the EntityManager factory.
+	| This array passes right through to the EntityManager factory. For
+	| example, here you can set additional connection details like "charset".
 	|
-	| http://www.doctrine-project.org/documentation/manual/2_0/en/dbal
+	| http://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html#connection-details
 	|
 	*/
 
@@ -83,39 +84,40 @@ return array(
  	/*
 	|--------------------------------------------------------------------------
 	| Use to specify the default repository
-        | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.7
+    | http://doctrine-orm.readthedocs.org/en/latest/reference/working-with-objects.html#custom-repositories
 	|--------------------------------------------------------------------------
 	*/
-        'defaultRepository' => '\Doctrine\ORM\EntityRepository',
+	'defaultRepository' => '\Doctrine\ORM\EntityRepository',
 
-        /*
-         |--------------------------------------------------------------------------
-         | Annotation Reader
-         | https://github.com/doctrine/doctrine2/blob/master/lib/Doctrine/ORM/Tools/Setup.php
-         |--------------------------------------------------------------------------
-         */
-        'use_simple_annotation_reader' => FALSE,
+	/*
+	 |--------------------------------------------------------------------------
+	 | Annotation Reader
+	 | https://github.com/doctrine/doctrine2/blob/master/lib/Doctrine/ORM/Tools/Setup.php
+	 |--------------------------------------------------------------------------
+	 */
+	'use_simple_annotation_reader' => FALSE,
 
-        /*
-        |--------------------------------------------------------------------------
-        | Use to specify the SQL Logger
-        | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.2.6
-        | To use with \Doctrine\DBAL\Logging\EchoSQLLogger, do:
-        | 'sqlLogger' => new \Doctrine\DBAL\Logging\EchoSQLLogger();
-        |--------------------------------------------------------------------------
-        */
-        'sqlLogger' => null,
-    
-        /*
-        |--------------------------------------------------------------------------
-        | Use to specify the DriverChain driver to allow Multiple Metadata Sources
-        | http://docs.doctrine-project.org/en/latest/reference/advanced-configuration.html#multiple-metadata-sources
-        | 
-        | laravel-doctrine will automatically add the annotations driver with specified defaultNamespace
-        |--------------------------------------------------------------------------
-        */
-        'driverChain' => array(
-            'enabled' => false,
-            'defaultNamespace' => 'Entities'
-        ),
+	/*
+	|--------------------------------------------------------------------------
+	| Use to specify the SQL Logger
+	| To use with \Doctrine\DBAL\Logging\EchoSQLLogger, do:
+	| 'sqlLogger' => new \Doctrine\DBAL\Logging\EchoSQLLogger();
+	|
+	| http://doctrine-orm.readthedocs.org/en/latest/reference/advanced-configuration.html#sql-logger-optional
+	|--------------------------------------------------------------------------
+	*/
+	'sqlLogger' => null,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Use to specify the DriverChain driver to allow Multiple Metadata Sources
+	| http://docs.doctrine-project.org/en/latest/reference/advanced-configuration.html#multiple-metadata-sources
+	|
+	| laravel-doctrine will automatically add the annotations driver with specified defaultNamespace
+	|--------------------------------------------------------------------------
+	*/
+	'driverChain' => array(
+		'enabled' => false,
+		'defaultNamespace' => 'Entities'
+	),
 );
