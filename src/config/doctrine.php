@@ -84,7 +84,7 @@ return array(
 	/*
     |--------------------------------------------------------------------------
     | Use to specify the default repository
-        | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.7
+    | http://doctrine-orm.readthedocs.org/en/latest/reference/working-with-objects.html#custom-repositories
     |--------------------------------------------------------------------------
     */
 	'defaultRepository' => '\Doctrine\ORM\EntityRepository',
@@ -100,7 +100,7 @@ return array(
 	/*
     |--------------------------------------------------------------------------
     | Use to specify the SQL Logger
-    | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.2.6
+    | http://doctrine-orm.readthedocs.org/en/latest/reference/advanced-configuration.html#sql-logger-optional
     | To use with \Doctrine\DBAL\Logging\EchoSQLLogger, do:
     | 'sqlLogger' => new \Doctrine\DBAL\Logging\EchoSQLLogger();
     |--------------------------------------------------------------------------
