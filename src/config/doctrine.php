@@ -7,10 +7,9 @@ return array(
 	| Database Connection
 	|--------------------------------------------------------------------------
 	|
-	| This array passes right through to the EntityManager factory. For
-	| example, here you can set additional connection details like "charset".
+	| This array passes right through to the EntityManager factory.
 	|
-	| http://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html#connection-details
+	| http://www.doctrine-project.org/documentation/manual/2_0/en/dbal
 	|
 	*/
 
@@ -53,13 +52,13 @@ return array(
 		'directory' => null,
 		'namespace' => null,
 	),
-
-	/*
-    |--------------------------------------------------------------------------
-    | Cache providers, supports apc, xcache, memcache, redis
-    | Only redis and memcache have additionals configurations
-    |--------------------------------------------------------------------------
-    */
+ 
+ 	/*
+	|--------------------------------------------------------------------------
+	| Cache providers, supports apc, xcache, memcache, redis
+	| Only redis and memcache have additionals configurations
+	|--------------------------------------------------------------------------
+	*/
 	'cache' => array(
 		'provider' => 'redis',
 
@@ -70,53 +69,53 @@ return array(
 		),
 
 		'memcache' => array(
-			'host' => '127.0.0.1',
+			'host' => '127.0.0.1', 
 			'port' => 11211
 		)
 	),
 
 	'migrations' => array(
 		'directory' => '/database/doctrine-migrations',
-		'namespace'  => 'DoctrineMigrations',
+                'namespace'  => 'DoctrineMigrations',
 		'table_name' => 'doctrine_migration_versions'
 	),
 
-	/*
-    |--------------------------------------------------------------------------
-    | Use to specify the default repository
-    | http://doctrine-orm.readthedocs.org/en/latest/reference/working-with-objects.html#custom-repositories
-    |--------------------------------------------------------------------------
-    */
-	'defaultRepository' => '\Doctrine\ORM\EntityRepository',
+ 	/*
+	|--------------------------------------------------------------------------
+	| Use to specify the default repository
+        | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.7
+	|--------------------------------------------------------------------------
+	*/
+        'defaultRepository' => '\Doctrine\ORM\EntityRepository',
 
-	/*
-     |--------------------------------------------------------------------------
-     | Annotation Reader
-     | https://github.com/doctrine/doctrine2/blob/master/lib/Doctrine/ORM/Tools/Setup.php
-     |--------------------------------------------------------------------------
-     */
-	'use_simple_annotation_reader' => FALSE,
+        /*
+         |--------------------------------------------------------------------------
+         | Annotation Reader
+         | https://github.com/doctrine/doctrine2/blob/master/lib/Doctrine/ORM/Tools/Setup.php
+         |--------------------------------------------------------------------------
+         */
+        'use_simple_annotation_reader' => FALSE,
 
-	/*
-    |--------------------------------------------------------------------------
-    | Use to specify the SQL Logger
-    | http://doctrine-orm.readthedocs.org/en/latest/reference/advanced-configuration.html#sql-logger-optional
-    | To use with \Doctrine\DBAL\Logging\EchoSQLLogger, do:
-    | 'sqlLogger' => new \Doctrine\DBAL\Logging\EchoSQLLogger();
-    |--------------------------------------------------------------------------
-    */
-	'sqlLogger' => null,
-
-	/*
-    |--------------------------------------------------------------------------
-    | Use to specify the DriverChain driver to allow Multiple Metadata Sources
-    | http://docs.doctrine-project.org/en/latest/reference/advanced-configuration.html#multiple-metadata-sources
-    |
-    | laravel-doctrine will automatically add the annotations driver with specified defaultNamespace
-    |--------------------------------------------------------------------------
-    */
-	'driverChain' => array(
-		'enabled' => false,
-		'defaultNamespace' => 'Entities'
-	),
+        /*
+        |--------------------------------------------------------------------------
+        | Use to specify the SQL Logger
+        | http://docs.doctrine-project.org/en/2.1/reference/configuration.html item 3.2.6
+        | To use with \Doctrine\DBAL\Logging\EchoSQLLogger, do:
+        | 'sqlLogger' => new \Doctrine\DBAL\Logging\EchoSQLLogger();
+        |--------------------------------------------------------------------------
+        */
+        'sqlLogger' => null,
+    
+        /*
+        |--------------------------------------------------------------------------
+        | Use to specify the DriverChain driver to allow Multiple Metadata Sources
+        | http://docs.doctrine-project.org/en/latest/reference/advanced-configuration.html#multiple-metadata-sources
+        | 
+        | laravel-doctrine will automatically add the annotations driver with specified defaultNamespace
+        |--------------------------------------------------------------------------
+        */
+        'driverChain' => array(
+            'enabled' => false,
+            'defaultNamespace' => 'Entities'
+        ),
 );
