@@ -16,7 +16,7 @@
         "doctrine/migrations": "dev-master#46a031ddaea47d0685200027cfe8c83b02aee6f6"
     },
     "autoload": {
-        "psr-4": {
+        "psr-0": {
             "Atrauzzi\\LaravelDoctrine": "src/"
         }
     },
