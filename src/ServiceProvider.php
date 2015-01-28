@@ -94,11 +94,6 @@
 				return $app->make('Doctrine\ORM\EntityManager')->getConnection();
 			});
 
-			// This is an array, so maybe we should just get the instance strongly typed and request it when desired.
-			//$this->app->singleton('doctrine.metadata',function (Application $app) {
-			//	return $app->make('Doctrine\ORM\Mapping\ClassMetadataFactory')->getAllMetadata();
-			//});
-
 		}
 
 		/**
