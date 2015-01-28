@@ -1,29 +1,50 @@
-<?php
-
-return array(
+<?php return [
 
 	/*
-	|--------------------------------------------------------------------------
-	| Database Connection
-	|--------------------------------------------------------------------------
-	|
-	| This array passes right through to the EntityManager factory. For
-	| example, here you can set additional connection details like "charset".
-	|
-	| http://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html#connection-details
-	|
+	 * By default, this package mimics the database configuration from Laravel.
+	 *
+	 * You can override it in whole or in part here.
+	 *
+	 * This array passes right through to the EntityManager factory. For
+	 * example, here you can set additional connection details like "charset".
+	 *
+	 * http://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html#connection-details
+	 */
+	/*
+	'connection' => [
+
+		'driver' => '',
+		'user' => '',
+		'password' => '',
+		'dbname' => '',
+		'host' => '',
+		'prefix' => ''
+
+	],
 	*/
 
-	'connection' => array(
+	/*
+	 * By default, this package mimics the cache configuration from Laravel.
+	 *
+	 * Cache providers, supports apc, xcache, memcache, redis.
+	 */
+	/*
+	'cache' => [
 
-		'driver'    => 'pdo_mysql',
-		'user'		=> 'root',
-		'password'	=> '',
-		'dbname'	=> 'database',
-		'host'		=> 'localhost',
-		'prefix'	=> ''
+		'provider' => 'redis',
 
-	),
+		'redis' => [
+			'host'     => '127.0.0.1',
+			'port'     => 6379,
+			'database' => 1
+		],
+
+		'memcache' => [
+			'host' => '127.0.0.1',
+			'port' => 11211
+		]
+	],
+	*/
 
 	/*
 	|--------------------------------------------------------------------------
@@ -35,9 +56,11 @@ return array(
 	| http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/configuration.html
 	|
 	*/
-	'metadata' => array(
-		__DIR__.'/../../../../../app/models'
-	),
+	/*
+	'metadata' => [
+		__DIR__ . '/../../../app/'
+	],
+	*/
 
 	/*
 	|--------------------------------------------------------------------------
@@ -48,38 +71,20 @@ return array(
 	| http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/configuration.html
 	|
 	*/
-	'proxy_classes' => array(
+	/*
+	'proxy_classes' => [
 		'auto_generate' => false,
 		'directory' => null,
 		'namespace' => null,
-	),
- 
- 	/*
-	|--------------------------------------------------------------------------
-	| Cache providers, supports apc, xcache, memcache, redis
-	| Only redis and memcache have additionals configurations
-	|--------------------------------------------------------------------------
+	],
 	*/
-	'cache' => array(
-		'provider' => 'redis',
 
-		'redis' => array(
-			'host'     => '127.0.0.1',
-			'port'     => 6379,
-			'database' => 1
-		),
 
-		'memcache' => array(
-			'host' => '127.0.0.1', 
-			'port' => 11211
-		)
-	),
-
-	'migrations' => array(
+	'migrations' => [
 		'directory' => '/database/doctrine-migrations',
-                'namespace'  => 'DoctrineMigrations',
+		'namespace'  => 'DoctrineMigrations',
 		'table_name' => 'doctrine_migration_versions'
-	),
+	],
 
  	/*
 	|--------------------------------------------------------------------------
@@ -87,7 +92,9 @@ return array(
     | http://doctrine-orm.readthedocs.org/en/latest/reference/working-with-objects.html#custom-repositories
 	|--------------------------------------------------------------------------
 	*/
-	'defaultRepository' => '\Doctrine\ORM\EntityRepository',
+	/*
+	'default_repository' => '\Doctrine\ORM\EntityRepository',
+	*/
 
 	/*
 	 |--------------------------------------------------------------------------
@@ -95,7 +102,7 @@ return array(
 	 | https://github.com/doctrine/doctrine2/blob/master/lib/Doctrine/ORM/Tools/Setup.php
 	 |--------------------------------------------------------------------------
 	 */
-	'use_simple_annotation_reader' => FALSE,
+	'use_simple_annotation_reader' => false,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -106,7 +113,9 @@ return array(
 	| http://doctrine-orm.readthedocs.org/en/latest/reference/advanced-configuration.html#sql-logger-optional
 	|--------------------------------------------------------------------------
 	*/
-	'sqlLogger' => null,
+	/*
+	'sql_logger' => null,
+	*/
 
 	/*
 	|--------------------------------------------------------------------------
@@ -116,8 +125,11 @@ return array(
 	| laravel-doctrine will automatically add the annotations driver with specified defaultNamespace
 	|--------------------------------------------------------------------------
 	*/
-	'driverChain' => array(
+	/*
+	'driver_chain' => [
 		'enabled' => false,
-		'defaultNamespace' => 'Entities'
-	),
-);
+		'default_namespace' => 'App'
+	]
+	*/
+
+];
