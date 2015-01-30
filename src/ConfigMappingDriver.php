@@ -21,6 +21,9 @@
 
 			$builder = new ClassMetadataBuilder($metadata);
 
+			if(!empty($mapping['abstract']))
+				$builder->setMappedSuperClass();
+
 			if(!empty($mapping['table']))
 				$builder->setTable($mapping['table']);
 

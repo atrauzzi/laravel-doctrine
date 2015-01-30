@@ -29,6 +29,8 @@
 
 			'table' => 'my_model',
 
+			'abstract' => false,
+
 			'repository' => 'App\Repository\MyModel',
 
 			'fields' => [
