@@ -3,11 +3,13 @@
 	use Illuminate\Support\ServiceProvider as Base;
 	//
 	use Illuminate\Contracts\Foundation\Application;
+	use Doctrine\ORM\Configuration as DoctrineConfig;
 	use Doctrine\Common\EventManager;
 	use Doctrine\ORM\Tools\Setup;
 	use Doctrine\ORM\Events;
 	use Doctrine\ORM\EntityManager;
 	use Doctrine\ORM\Tools\SchemaTool;
+	use RuntimeException;
 
 
 	class ServiceProvider extends Base {
@@ -32,22 +34,32 @@
 					null
 				);
 
-				$annotationDriver = $doctrineConfig->newDefaultAnnotationDriver(
-					config('doctrine.metadata', app_path()),
-					config('doctrine.use_simple_annotation_reader')
-				);
+				$metadataConfig = config('doctrine.metadata', [
+					'driver' => 'config'
+				]);
 
-				if(config('doctrine.driver_chain.enabled')) {
-					$driverChain = new \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain();
-					$driverChain->addDriver(
-						$annotationDriver,
-						config('doctrine.driver_chain.default_namespace', 'App')
-					);
-					$doctrineConfig->setMetadataDriverImpl($driverChain);
+				if(!empty($metadataConfig) && is_array($metadataConfig[0])) {
+
+					$metadataDriver = new \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain();
+
+					foreach($metadataConfig as $subDriverConfig) {
+
+						if(!is_array($subDriverConfig))
+							continue;
+
+						$metadataDriver->addDriver(
+							$this->createMetadataDriver($doctrineConfig, $subDriverConfig),
+							array_get($subDriverConfig, 'namespace', 'App')
+						);
+
+					}
+
 				}
 				else {
-					$doctrineConfig->setMetadataDriverImpl($annotationDriver);
+					$this->createMetadataDriver($doctrineConfig, $metadataConfig);
 				}
+
+				$doctrineConfig->setMetadataDriverImpl($metadataDriver);
 
 				// Note: These must occur after Setup::createAnnotationMetadataConfiguration() in order to set custom namespaces properly
 				if($cache) {
@@ -103,6 +115,10 @@
 		 */
 		public function register() {
 
+			$this->publishes([
+				__DIR__ . '/../config/doctrine.php' => config_path('doctrine.php')
+			]);
+
 			$this->commands([
 				'Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand',
 				'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
@@ -118,20 +134,51 @@
 		 */
 		public function provides() {
 			return [
-				'doctrine',
 				'Doctrine\ORM\EntityManager',
-				'doctrine.metadata-factory',
 				'Doctrine\ORM\Mapping\ClassMetadataFactory',
-				'doctrine.metadata',
-				'doctrine.schema-tool',
 				'Doctrine\ORM\Tools\SchemaTool',
-				'doctrine.registry'
 			];
 		}
 
 		//
 		//
 		//
+
+		/**
+		 * Takes care of building any drivers we wish to support.
+		 *
+		 * Note: Chain is handled above, it's special.
+		 *
+		 * @param DoctrineConfig $config
+		 * @param array $driverConfig
+		 * @return \Doctrine\Common\Persistence\Mapping\Driver\MappingDriver
+		 */
+		protected function createMetadataDriver(DoctrineConfig $config, $driverConfig) {
+
+			switch($driver = array_get($driverConfig, 'driver')) {
+
+				case 'config':
+					return new ConfigMappingDriver();
+				break;
+
+				case 'annotation':
+					return $config->newDefaultAnnotationDriver(
+						array_get($driverConfig, 'paths', app_path()),
+						array_get($driverConfig, 'simple', false)
+					);
+				break;
+
+				case null:
+					throw new RuntimeException('Metadata driver has unspecified type.');
+				break;
+
+				default:
+					throw new RuntimeException(sprintf('Unsupported driver: %s', $driver));
+				break;
+
+			}
+
+		}
 
 		/**
 		 * Selects the best caching implementation for the current environment.
@@ -219,7 +266,6 @@
 
 			}
 
-			// optionally set cache namespace
 			if(
 				$cache instanceof \Doctrine\Common\Cache\CacheProvider
 				&& $namespace = config('doctrine.cache.namespace', config('cache.prefix'))

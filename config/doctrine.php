@@ -1,6 +1,59 @@
 <?php return [
 
 	/*
+	 * Metadata Driver Configuration
+	 */
+	/*
+	'metadata' => [
+
+		'driver' => 'config',
+
+		//
+		// Alternatively, if you want to use a chain, specify multiple drivers as nested arrays.
+		//
+		[
+			'driver' => 'config'
+		],
+		[
+			'driver' => 'annotation'
+		]
+		//
+		// ...accepting PRs for more!
+
+	],
+	*/
+
+	'mappings' => [
+
+		'App\MyModel' => [
+
+			'table' => 'my_model',
+
+			'repository' => 'App\Repository\MyModel',
+
+			'fields' => [
+
+				'id' => [
+					'type' => 'integer',
+					'strategy' => 'identity'
+				],
+
+				'name' => [
+					'type' => 'string',
+					'nullable' => false,
+				]
+
+			],
+
+			'indexes' => [
+				'name'
+			],
+
+		],
+
+	],
+
+	/*
 	 * By default, this package mimics the database configuration from Laravel.
 	 *
 	 * You can override it in whole or in part here.
@@ -48,22 +101,6 @@
 
 	/*
 	|--------------------------------------------------------------------------
-	| Metadata Sources
-	|--------------------------------------------------------------------------
-	|
-	| This array passes right through to the EntityManager factory.
-	|
-	| http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/configuration.html
-	|
-	*/
-	/*
-	'metadata' => [
-		__DIR__ . '/../../../app/'
-	],
-	*/
-
-	/*
-	|--------------------------------------------------------------------------
 	| Sets the directory where Doctrine generates any proxy classes, including
 	| with which namespace.
 	|--------------------------------------------------------------------------
@@ -95,14 +132,6 @@
 	/*
 	'default_repository' => '\Doctrine\ORM\EntityRepository',
 	*/
-
-	/*
-	 |--------------------------------------------------------------------------
-	 | Annotation Reader
-	 | https://github.com/doctrine/doctrine2/blob/master/lib/Doctrine/ORM/Tools/Setup.php
-	 |--------------------------------------------------------------------------
-	 */
-	'use_simple_annotation_reader' => false,
 
 	/*
 	|--------------------------------------------------------------------------
