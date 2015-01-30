@@ -2,6 +2,7 @@
 
 	use Illuminate\Support\ServiceProvider as Base;
 	//
+	use Doctrine\DBAL\Types\Type;
 	use Illuminate\Contracts\Foundation\Application;
 	use Doctrine\ORM\Configuration as DoctrineConfig;
 	use Doctrine\Common\EventManager;
@@ -20,6 +21,8 @@
 		 * @return void
 		 */
 		public function boot() {
+
+			Type::addType('json', '\Atrauzzi\LaravelDoctrine\Type\Json');
 
 			$this->app->singleton('Doctrine\ORM\EntityManager', function (Application $app) {
 
