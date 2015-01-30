@@ -21,7 +21,7 @@
 		 */
 		public function boot() {
 
-			$this->app->singleton('Doctrine\ORM\EntityManager',	function (Application $app) {
+			$this->app->singleton('Doctrine\ORM\EntityManager', function (Application $app) {
 
 				$debug = config('app.debug');
 
