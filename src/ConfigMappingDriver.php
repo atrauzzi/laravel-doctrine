@@ -3,8 +3,6 @@
 	use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 	use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 	use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
-	use Doctrine\ORM\Mapping\ClassMetadataInfo;
-	use RuntimeException;
 
 
 	class ConfigMappingDriver implements MappingDriver {
@@ -22,8 +20,6 @@
 			$mapping = config(sprintf('doctrine.mappings.%s', $className));
 
 			$builder = new ClassMetadataBuilder($metadata);
-
-			$table = [];
 
 			if(!empty($mapping['table']))
 				$builder->setTable($mapping['table']);
