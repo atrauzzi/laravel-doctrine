@@ -146,19 +146,4 @@
 	'sql_logger' => null,
 	*/
 
-	/*
-	|--------------------------------------------------------------------------
-	| Use to specify the DriverChain driver to allow Multiple Metadata Sources
-	| http://docs.doctrine-project.org/en/latest/reference/advanced-configuration.html#multiple-metadata-sources
-	|
-	| laravel-doctrine will automatically add the annotations driver with specified defaultNamespace
-	|--------------------------------------------------------------------------
-	*/
-	/*
-	'driver_chain' => [
-		'enabled' => false,
-		'default_namespace' => 'App'
-	]
-	*/
-
 ];
