@@ -58,7 +58,7 @@
 		 * @return boolean
 		 */
 		public function isTransient($className) {
-			return true;
+			return array_key_exists($className, config('doctrine.mappings', []));
 		}
 
 		//
