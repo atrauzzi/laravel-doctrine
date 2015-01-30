@@ -56,7 +56,7 @@
 
 				}
 				else {
-					$this->createMetadataDriver($doctrineConfig, $metadataConfig);
+					$metadataDriver = $this->createMetadataDriver($doctrineConfig, $metadataConfig);
 				}
 
 				$doctrineConfig->setMetadataDriverImpl($metadataDriver);
