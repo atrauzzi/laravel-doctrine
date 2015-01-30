@@ -2,11 +2,12 @@
 
 ### An ORM for a Framework for Web Artisans
 
-Laravel's Eloquent ORM is nice for lightweight use, however there's little out there that can beat [Doctrine](http://goo.gl/oWVD3) when you need a more full-featured ORM.
+Laravel's Eloquent ORM is excellent for lightweight use, however there's little out there that can beat [Doctrine](http://goo.gl/oWVD3) when you need a more full-featured ORM.
 
-This is an integration of Doctrine 2.x to Laravel as a [composer](http://goo.gl/gp9HO) package. Doctrine's `EntityManager` instance is accessible through a facade named `Doctrine`.
+This is an integration of Doctrine 2.x to Laravel as a [composer](http://goo.gl/gp9HO) package. Doctrine's `EntityManager` instance is accessible through a facade named `Doctrine` as well as via dependency injection.
 
-Metadata is currently obtained via the [annotation driver](http://goo.gl/dHy9a).
+Metadata is obtained via the [annotation driver](http://goo.gl/dHy9a) or a custom _config_ driver that leverages a Laravel-like configuration syntax. 
+
 
 #### Installation
 
@@ -16,23 +17,20 @@ Insert the following in the packages section of your `composer.json` file and ru
 
     "atrauzzi/laravel-doctrine": "dev-master",
 
-Add the service provider to your Laravel application in `app/config/app.php`. In the `providers` array add:
+Add the service provider to your Laravel application in `config/app.php`. In the `providers` array add:
 
     'Atrauzzi\LaravelDoctrine\ServiceProvider',
 
-Then add the following to your `facades` array in the same file:
+If desired, add the following to your `facades` array in the same file:
 
     'Doctrine' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
 
-You'll likely want to configure the database connection, which you can do by overriding the bundle's defaults with the following command:
+You can also take a copy of the package's configuration by publishing package assets as per normal.
 
-    ./artisan config:publish atrauzzi/laravel-doctrine
-
-This should get you a fresh copy of the configuration file in the directory `app/config/packages/vendor/atrauzzi/laravel-doctrine`.
 
 #### Usage
 
-Most of Doctrine's functionality derives from defining your schema (via annotations in your model classes in this case), performing manipulations on instances and then persisting them through the `EntityManager`.  You can obtain the `EntityManager` instance for your connection simply by using the `Doctrine` facade:
+You can obtain the `EntityManager` instance for your connection simply by using the `Doctrine` facade:
 
 Adapted from [Doctrine's documentation](http://goo.gl/XQ3qg):
 
