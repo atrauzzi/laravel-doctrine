@@ -26,7 +26,7 @@
 
 			$this->app->singleton('Doctrine\ORM\EntityManager', function (Application $app) {
 
-				$debug = config('app.debug');
+				$debug = config('doctrine.debug', config('app.debug', false));
 
 				$cache = $debug ? null : $this->createCache();
 

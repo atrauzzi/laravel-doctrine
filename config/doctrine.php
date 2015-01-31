@@ -148,4 +148,9 @@
 	'sql_logger' => null,
 	*/
 
+	/*
+	 * In some circumstances, you may wish to diverge from what's configured in Laravel.
+ 	 */
+	//'debug' => false,
+
 ];
