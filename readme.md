@@ -1,4 +1,5 @@
 ## Laravel Doctrine
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/atrauzzi/laravel-doctrine/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/atrauzzi/laravel-doctrine/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/atrauzzi/laravel-doctrine/badges/build.png?b=master)](https://scrutinizer-ci.com/g/atrauzzi/laravel-doctrine/build-status/master)
 
 ### An ORM for a Framework for Web Artisans
 
