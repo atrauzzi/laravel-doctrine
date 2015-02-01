@@ -9,30 +9,35 @@ use Doctrine\Common\Persistence\AbstractManagerRegistry;
  */
 class DoctrineRegistry extends AbstractManagerRegistry {
 
-  /**
-   * Returns the service name, for our purposes this will
-   * almost always return the Doctrine facade, our access to the
-   * entity manager.
-   */
-  public function getService($name) {
-    return \App::make($name);
-  }
+	/**
+	 * Returns the service name, for our purposes this will
+	 * almost always return the Doctrine facade, our access to the
+	 * entity manager.
+	 */
+	public function getService($name) {
+		return app($name);
+	}
 
-  /**
-   * Essentially sets the entity manager to null in the ioc.
-   */
-  public function resetService($name) {
-    $app = app();
-    $app[$name] = null;
-  }
+	/**
+	 * @param string $name
+	 */
+	public function resetService($name) {
+		app()->forgetInstance($name);
+	}
 
-  public function getAliasNamespace($namespaceAlias) {}
+	/**
+	 * @param string $namespaceAlias
+	 * @return string|void
+	 */
+	public function getAliasNamespace($namespaceAlias) {
+	}
 
-  /**
-   * TODO This will have to adjusted at some point if we need to implement
-   * multiple entity managers.
-   */
-  public function getManagerForClass($class) {
-    return $this->getService('doctrine');
-  }
+	/**
+	 * @param string $class
+	 * @return mixed|object
+	 */
+	public function getManagerForClass($class) {
+		return $this->getService('doctrine');
+	}
+
 }

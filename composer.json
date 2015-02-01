@@ -1,7 +1,11 @@
 {
 	"name": "atrauzzi/laravel-doctrine",
 	"description": "An ORM for a Framework for Web Artisans",
-	"keywords": ["doctrine", "laravel", "orm"],
+	"keywords": [
+		"doctrine",
+		"laravel",
+		"orm"
+	],
 	"license": "MIT",
 	"authors": [
 		{
@@ -10,9 +14,10 @@
 		}
 	],
 	"require": {
-		"laravel/framework": "5.0.*@dev",
+		"php": ">=5.4.0",
+		"laravel/framework": "~5.0",
 		"doctrine/orm": "2.4.*",
-        	"doctrine/migrations": "dev-master#46a031ddaea47d0685200027cfe8c83b02aee6f6"
+		"doctrine/migrations": "dev-master#46a031ddaea47d0685200027cfe8c83b02aee6f6"
 	},
 	"autoload": {
 		"psr-4": {
@@ -20,7 +25,7 @@
 		}
 	},
 	"bin": [
-		"bin/doctrine-laravel", 
+		"bin/doctrine-laravel",
 		"bin/doctrine-laravel.php"
 	]
 }
