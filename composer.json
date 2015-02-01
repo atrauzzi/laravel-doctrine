@@ -1,25 +1,26 @@
 {
-    "name": "atrauzzi/laravel-doctrine",
-    "description": "An ORM for a Framework for Web Artisans",
-    "keywords": ["doctrine", "laravel", "orm"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Alexander Trauzzi",
-            "email": "atrauzzi@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.4.0",
-        "laravel/framework": "~5.0",
-	    "doctrine/orm": "2.4.*",
-        "doctrine/migrations": "dev-master#46a031ddaea47d0685200027cfe8c83b02aee6f6"
-    },
-    "autoload": {
-        "psr-4": {
-            "Atrauzzi\\LaravelDoctrine\\": "src/"
-        }
-    },
-
-    "bin": ["bin/doctrine-laravel", "bin/doctrine-laravel.php"]
+	"name": "atrauzzi/laravel-doctrine",
+	"description": "An ORM for a Framework for Web Artisans",
+	"keywords": ["doctrine", "laravel", "orm"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Alexander Trauzzi",
+			"email": "atrauzzi@gmail.com"
+		}
+	],
+	"require": {
+		"illuminate/support": "~5.0",
+		"doctrine/orm": "2.4.*",
+        	"doctrine/migrations": "dev-master#46a031ddaea47d0685200027cfe8c83b02aee6f6"
+	},
+	"autoload": {
+		"psr-4": {
+			"Atrauzzi\\LaravelDoctrine\\": "src/"
+		}
+	},
+	"bin": [
+		"bin/doctrine-laravel", 
+		"bin/doctrine-laravel.php"
+	]
 }
