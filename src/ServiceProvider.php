@@ -23,6 +23,22 @@
 		public function boot() {
 
 			Type::addType('json', '\Atrauzzi\LaravelDoctrine\Type\Json');
+			$this->publishes([
+				__DIR__ . '/../config/doctrine.php' => config_path('doctrine.php')
+			]);
+			$this->commands([
+				'Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand',
+				'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
+				'Atrauzzi\LaravelDoctrine\Console\DropSchemaCommand'
+			]);
+		}
+
+		/**
+		 * Register the service provider.
+		 *
+		 * @return void
+		 */
+		public function register() {
 
 			$this->app->singleton('Doctrine\ORM\EntityManager', function (Application $app) {
 
@@ -41,7 +57,7 @@
 					'driver' => 'config'
 				]);
 
-				if(!empty($metadataConfig) && is_array($metadataConfig[0])) {
+				if(!empty($metadataConfig) && isset($metadataConfig[0]) && is_array($metadataConfig[0])) {
 
 					$metadataDriver = new \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain();
 
@@ -108,26 +124,6 @@
 			$this->app->singleton('doctrine.connection', function (Application $app) {
 				return $app->make('Doctrine\ORM\EntityManager')->getConnection();
 			});
-
-		}
-
-		/**
-		 * Register the service provider.
-		 *
-		 * @return void
-		 */
-		public function register() {
-
-			$this->publishes([
-				__DIR__ . '/../config/doctrine.php' => config_path('doctrine.php')
-			]);
-
-			$this->commands([
-				'Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand',
-				'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
-				'Atrauzzi\LaravelDoctrine\Console\DropSchemaCommand'
-			]);
-
 		}
 
 		/**

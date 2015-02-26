@@ -15,7 +15,8 @@
 			'driver' => 'config'
 		],
 		[
-			'driver' => 'annotation'
+			'driver' => 'annotation',
+			'namespace' => 'App'
 		]
 		//
 		// ...accepting PRs for more!
@@ -65,18 +66,15 @@
 	 *
 	 * http://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html#connection-details
 	 */
-	/*
 	'connection' => [
 
-		'driver' => '',
-		'user' => '',
-		'password' => '',
-		'dbname' => '',
-		'host' => '',
+		'driver' => 'mysqli',
+		'host'      => env('DB_HOST', 'localhost'),
+		'dbname'  => env('DB_DATABASE', 'forge'),
+		'user'  => env('DB_USERNAME', 'forge'),
+		'password'  => env('DB_PASSWORD', ''),
 		'prefix' => ''
-
 	],
-	*/
 
 	/*
 	 * By default, this package mimics the cache configuration from Laravel.
