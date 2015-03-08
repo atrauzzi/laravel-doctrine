@@ -50,9 +50,10 @@ It is recommended that you read through all of the [ORM documentation](http://go
 
 Enjoy!
 
+
 #### Doctrine Console
 
-If you need run [ORM commands](http://doctrine-orm.readthedocs.org/en/latest/reference/tools.html?highlight=command#command-overview) it is necessary a `cli-config.php` file at root project folder having the following implementation:
+If you need to run [ORM commands](http://doctrine-orm.readthedocs.org/en/latest/reference/tools.html?highlight=command#command-overview) it is necessary a `cli-config.php` file at root project folder having the following implementation:
 
 ```php
 <?php
