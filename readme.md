@@ -38,15 +38,48 @@ You can obtain the `EntityManager` instance for your connection simply by using 
 
 Adapted from [Doctrine's documentation](http://goo.gl/XQ3qg):
 
-    <?php
-    $user = new User;
-    $user->setName('Mr.Right');
-    Doctrine::persist($user);
-    Doctrine::flush();
+```php
+<?php
+$user = new User;
+$user->setName('Mr.Right');
+Doctrine::persist($user);
+Doctrine::flush();
+```
 
 It is recommended that you read through all of the [ORM documentation](http://goo.gl/kpAeX).  Try using Laravel's console to experiment and go through the tutorials.
 
 Enjoy!
+
+
+#### Doctrine Console
+
+If you need to run [ORM commands](http://doctrine-orm.readthedocs.org/en/latest/reference/tools.html?highlight=command#command-overview) it is necessary a `cli-config.php` file at root project folder having the following implementation:
+
+```php
+<?php
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Illuminate\Foundation\Application;
+
+require __DIR__.'/bootstrap/autoload.php';
+
+/** @var Application $app */
+$app = require_once __DIR__.'/bootstrap/app.php';
+
+/** @var Illuminate\Contracts\Http\Kernel $kernel */
+$kernel = $app->make('Illuminate\Contracts\Console\Kernel');
+$kernel->bootstrap();
+
+$app->boot();
+
+$entityManager = $app->make('Doctrine\ORM\EntityManager');
+return ConsoleRunner::createHelperSet($entityManager);
+```
+
+For validate your schema, you can do:
+
+```bash
+$ vendor/bin/doctrine orm:validate-schema
+```
 
 
 ### License
