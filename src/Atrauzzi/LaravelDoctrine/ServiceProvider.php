@@ -43,7 +43,7 @@ class ServiceProvider extends Base {
 			// Retrieve our configuration.
 			$config = $app['config'];
 			$connection = $config->get('laravel-doctrine::doctrine.connection');
-			$devMode = $config->get('laravel-doctrine::devMode');
+			$devMode = $config->get('laravel-doctrine::doctrine.devMode');
 
 			$cache = null; // Default, let Doctrine decide.
 
