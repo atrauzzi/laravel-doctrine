@@ -4,6 +4,19 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Development Mode
+	|--------------------------------------------------------------------------
+	| When true, caching is done in memory with the ArrayCache. Proxy objects are recreated on every request.
+	|
+	| http://doctrine-orm.readthedocs.org/en/latest/reference/configuration.html#obtaining-an-entitymanager
+	|
+	| If not set, the value from Laravel's app.debug will be used.
+	|
+	*/
+	//'devMode' => false,
+
+	/*
+	|--------------------------------------------------------------------------
 	| Database Connection
 	|--------------------------------------------------------------------------
 	|

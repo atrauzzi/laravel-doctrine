@@ -41,9 +41,10 @@ class ServiceProvider extends Base {
 		$this->app->singleton('Doctrine\ORM\EntityManager', function ($app) {
 
 			// Retrieve our configuration.
+			/** @var \Illuminate\Config\Repository $config */
 			$config = $app['config'];
 			$connection = $config->get('laravel-doctrine::doctrine.connection');
-			$devMode = $config->get('app.debug');
+			$devMode = $config->get('laravel-doctrine::doctrine.devMode', $config->get('app.debug'));
 
 			$cache = null; // Default, let Doctrine decide.
 
