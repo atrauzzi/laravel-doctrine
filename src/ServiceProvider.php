@@ -23,9 +23,7 @@
 		public function boot() {
 
 			Type::addType('json', '\Atrauzzi\LaravelDoctrine\Type\Json');
-			$this->publishes([
-				__DIR__ . '/../config/doctrine.php' => config_path('doctrine.php')
-			]);
+                        $this->publishes([__DIR__ .'/..'. '/config/doctrine.php'=> config_path('doctrine.php')], 'config');
 			$this->commands([
 				'Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand',
 				'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
