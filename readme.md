@@ -29,7 +29,9 @@ If desired, add the following to your `facades` array in the same file:
 
     'Doctrine' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
 
-You can also take a copy of the package's configuration by publishing package assets as per normal.
+You need to run this command publish package configuration.
+
+`php artisan vendor:publish --provider="Vendor\atrauzzi\LaravelDoctrine\src\ServiceProvider" --tag="config"`
 
 
 #### Usage
