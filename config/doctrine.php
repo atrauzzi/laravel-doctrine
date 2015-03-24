@@ -3,7 +3,7 @@
 	/*
 	 * Metadata Driver Configuration
 	 */
-	/*
+
 	'metadata' => [
 
 		'driver' => 'config',
@@ -16,13 +16,13 @@
 		],
 		[
 			'driver' => 'annotation',
-			'namespace' => 'App'
+		//	'namespace' => 'App'
 		]
 		//
 		// ...accepting PRs for more!
 
 	],
-	*/
+	/*
 
 	'mappings' => [
 
@@ -55,7 +55,7 @@
 		],
 
 	],
-
+*/
 	/*
 	 * By default, this package mimics the database configuration from Laravel.
 	 *
