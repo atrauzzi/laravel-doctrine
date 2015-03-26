@@ -47,6 +47,61 @@ $user->setName('Mr.Right');
 Doctrine::persist($user);
 Doctrine::flush();
 ```
+Sample Entity in Laravel 5:
+
+```
+
+namespace App\Lib\Domain\Entities;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="Post")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class Post
+{
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $title;
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $body;
+    public function __construct($input)
+    {
+        $this->setTitle($input['title']);
+        $this->setBody($input['body']);
+    }
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function getTitle()
+    {
+        return $this->title;
+    }
+    public function setTitle($title)
+    {
+        $this->title=$title;
+    }
+    public function setBody($body)
+    {
+        $this->body=$body;
+    }
+    public function getBody()
+    {
+        return $this->body;
+    }
+}
+```
 
 It is recommended that you read through all of the [ORM documentation](http://goo.gl/kpAeX).  Try using Laravel's console to experiment and go through the tutorials.
 
