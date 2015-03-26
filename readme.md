@@ -53,7 +53,7 @@ Sample Entity in Laravel 5:
 
 namespace App\Lib\Domain\Entities;
 use Doctrine\ORM\Mapping as ORM;
-
+use Atrauzzi\LaravelDoctrine\Trait\Time;
 /**
  * @ORM\Entity
  * @ORM\Table(name="Post")
@@ -61,6 +61,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Post
 {
+    use Time;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
