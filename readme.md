@@ -27,7 +27,7 @@ Add the service provider to your Laravel application in `config/app.php`. In the
 
 If desired, add the following to your `facades` array in the same file:
 
-    'Doctrine' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
+    'EntityManager' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
 
 You need to run this command publish package configuration.
 
