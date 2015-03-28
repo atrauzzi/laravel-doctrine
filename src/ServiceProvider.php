@@ -11,6 +11,8 @@
 	use Doctrine\ORM\EntityManager;
 	use Doctrine\ORM\Tools\SchemaTool;
 	use RuntimeException;
+    use Doctrine\ORM\Mapping\Driver\YamlDriver;
+    use Doctrine\ORM\Mapping\Driver\XmlDriver;
 
 
 	class ServiceProvider extends Base {
@@ -164,6 +166,16 @@
 						array_get($driverConfig, 'simple', false)
 					);
 				break;
+
+                case 'yaml':
+                    $driver = new YamlDriver(array_get($driverConfig, 'paths', app_path()));
+                    $config->setMetadataDriverImpl($driver);
+                break;
+
+                case 'xml':
+                    $driver = new XmlDriver(array_get($driverConfig, 'paths', app_path()));
+                    $config->setMetadataDriverImpl($driver);
+                break;
 
 				case null:
 					throw new RuntimeException('Metadata driver has unspecified type.');

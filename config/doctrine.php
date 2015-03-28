@@ -17,7 +17,13 @@
 		[
 			'driver' => 'annotation',
 		//	'namespace' => 'App'
-		]
+		],
+        [
+            'driver'=>'yaml',
+        ],
+        [
+            'driver'=>'xml'
+        ]
 		//
 		// ...accepting PRs for more!
 
