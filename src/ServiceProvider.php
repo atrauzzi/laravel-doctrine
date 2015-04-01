@@ -182,13 +182,11 @@
 				break;
 
                 case 'yaml':
-                    $driver = new YamlDriver(array_get($driverConfig, 'paths', app_path()));
-                    $config->setMetadataDriverImpl($driver);
+                    return new YamlDriver(array_get($driverConfig, 'paths', app_path()));
                 break;
 
                 case 'xml':
-                    $driver = new XmlDriver(array_get($driverConfig, 'paths', app_path()));
-                    $config->setMetadataDriverImpl($driver);
+                    return new XmlDriver(array_get($driverConfig, 'paths', app_path()));
                 break;
 
 				case null:
