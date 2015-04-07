@@ -18,12 +18,12 @@
 			'driver' => 'annotation',
 		//	'namespace' => 'App'
 		],
-        [
-            'driver'=>'yaml',
-        ],
-        [
-            'driver'=>'xml'
-        ]
+		[
+			'driver'=>'yaml',
+		],
+		[
+			'driver'=>'xml'
+		]
 		//
 		// ...accepting PRs for more!
 
@@ -129,10 +129,10 @@
 		'table_name' => 'doctrine_migration_versions'
 	],
 
- 	/*
+	/*
 	|--------------------------------------------------------------------------
 	| Use to specify the default repository
-    | http://doctrine-orm.readthedocs.org/en/latest/reference/working-with-objects.html#custom-repositories
+	| http://doctrine-orm.readthedocs.org/en/latest/reference/working-with-objects.html#custom-repositories
 	|--------------------------------------------------------------------------
 	*/
 	/*
@@ -154,7 +154,7 @@
 
 	/*
 	 * In some circumstances, you may wish to diverge from what's configured in Laravel.
- 	 */
+	 */
 	//'debug' => false,
 
 ];
