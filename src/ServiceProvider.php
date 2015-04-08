@@ -11,6 +11,8 @@
 	use Doctrine\ORM\EntityManager;
 	use Doctrine\ORM\Tools\SchemaTool;
 	use RuntimeException;
+	use Doctrine\ORM\Mapping\Driver\YamlDriver;
+	use Doctrine\ORM\Mapping\Driver\XmlDriver;
 
 
 	class ServiceProvider extends Base {
@@ -23,7 +25,7 @@
 		public function boot() {
 
 			Type::addType('json', '\Atrauzzi\LaravelDoctrine\Type\Json');
-                        $this->publishes([__DIR__ .'/..'. '/config/doctrine.php'=> config_path('doctrine.php')], 'config');
+						$this->publishes([__DIR__ .'/..'. '/config/doctrine.php'=> config_path('doctrine.php')], 'config');
 			$this->commands([
 				'Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand',
 				'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
@@ -77,6 +79,20 @@
 				}
 
 				$doctrineConfig->setMetadataDriverImpl($metadataDriver);
+
+				//add in trig functions to doctrine for mysql
+				$doctrineConfig->setCustomNumericFunctions(array(
+					'ACOS'    => 'DoctrineExtensions\Query\Mysql\Acos',
+					'ASIN'    => 'DoctrineExtensions\Query\Mysql\Asin',
+					'ATAN'    => 'DoctrineExtensions\Query\Mysql\Atan',
+					'ATAN2'   => 'DoctrineExtensions\Query\Mysql\Atan2',
+					'COS'     => 'DoctrineExtensions\Query\Mysql\Cos',
+					'COT'     => 'DoctrineExtensions\Query\Mysql\Cot',
+					'DEGREES' => 'DoctrineExtensions\Query\Mysql\Degrees',
+					'RADIANS' => 'DoctrineExtensions\Query\Mysql\Radians',
+					'SIN'     => 'DoctrineExtensions\Query\Mysql\Sin',
+					'TAN'     => 'DoctrineExtensions\Query\Mysql\Tan'
+				));
 
 				// Note: These must occur after Setup::createAnnotationMetadataConfiguration() in order to set custom namespaces properly
 				if($cache) {
@@ -163,6 +179,14 @@
 						array_get($driverConfig, 'paths', app_path()),
 						array_get($driverConfig, 'simple', false)
 					);
+				break;
+
+				case 'yaml':
+					return new YamlDriver(array_get($driverConfig, 'paths', app_path()));
+				break;
+
+				case 'xml':
+					return new XmlDriver(array_get($driverConfig, 'paths', app_path()));
 				break;
 
 				case null:
