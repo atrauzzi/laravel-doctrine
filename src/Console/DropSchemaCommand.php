@@ -1,5 +1,7 @@
 <?php namespace Atrauzzi\LaravelDoctrine\Console;
 
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
+use Doctrine\ORM\Tools\SchemaTool;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Support\Facades\App;
@@ -21,14 +23,27 @@ class DropSchemaCommand extends Command {
 	 */
 	protected $description = 'Drop the complete database schema of EntityManager Storage Connection.';
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
-	public function __construct() {
+    /**
+     * @var SchemaTool
+     */
+    private $schemaTool;
+
+    /**
+     * @var ClassMetadataFactory
+     */
+    private $classMetadataFactory;
+
+    /**
+     * Create a new command instance.
+     *
+     * @param SchemaTool $schemaTool
+     * @param ClassMetadataFactory $classMetadataFactory
+     */
+	public function __construct(SchemaTool $schemaTool, ClassMetadataFactory $classMetadataFactory) {
 		parent::__construct();
-	}
+        $this->schemaTool = $schemaTool;
+        $this->classMetadataFactory = $classMetadataFactory;
+    }
 
 	/**
 	 * Execute the console command.
@@ -42,9 +57,9 @@ class DropSchemaCommand extends Command {
 		$this->comment('ATTENTION: This operation should not be executed in a production environment.');
 
 		$this->info('Obtaining metadata from your models...');
-		$metadata = App::make('doctrine.metadata');
+		$metadata = $this->classMetadataFactory->getAllMetadata();
 
-		$schemaTool = App::make('doctrine.schema-tool');
+		$schemaTool = $this->schemaTool;
 
 		$sqlToRun = $schemaTool->getDropSchemaSql($metadata);
 
@@ -71,8 +86,8 @@ class DropSchemaCommand extends Command {
 	 * @return array
 	 */
 	protected function getArguments() {
-		return array(
-		);
+		return [
+		];
 	}
 
 	/**
@@ -81,9 +96,9 @@ class DropSchemaCommand extends Command {
 	 * @return array
 	 */
 	protected function getOptions()	{
-		return array(
-			array('sql', null, InputOption::VALUE_NONE, 'Dumps the generated SQL statements to the screen (does not execute them).')
-		);
+		return [
+			['sql', null, InputOption::VALUE_NONE, 'Dumps the generated SQL statements to the screen (does not execute them).']
+		];
 	}
 
 }

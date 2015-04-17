@@ -124,6 +124,9 @@
 				return new SchemaTool($app['Doctrine\ORM\EntityManager']);
 			});
 
+
+
+
 			$this->app->singleton('Doctrine\ORM\Mapping\ClassMetadataFactory', function (Application $app) {
 				return $app->make('Doctrine\ORM\EntityManager')->getMetadataFactory();
 			});
