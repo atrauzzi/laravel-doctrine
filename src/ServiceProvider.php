@@ -123,17 +123,10 @@
 			$this->app->singleton('Doctrine\ORM\Tools\SchemaTool', function (Application $app) {
 				return new SchemaTool($app['Doctrine\ORM\EntityManager']);
 			});
-
-
-
-
+            
 			$this->app->singleton('Doctrine\ORM\Mapping\ClassMetadataFactory', function (Application $app) {
 				return $app->make('Doctrine\ORM\EntityManager')->getMetadataFactory();
 			});
-
-            $this->app->singleton('doctrine.metadata', function($app) {
-                return $app['Doctrine\ORM\Mapping\ClassMetadataFactory']->getAllMetadata();
-            });
 
 			$this->app->singleton('Doctrine\Common\Persistence\ManagerRegistry', function (Application $app) {
 				$connections = ['doctrine.connection'];
