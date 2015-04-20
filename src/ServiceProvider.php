@@ -1,7 +1,6 @@
 <?php namespace Atrauzzi\LaravelDoctrine {
 
 	use Illuminate\Support\ServiceProvider as Base;
-	//
 	use Doctrine\DBAL\Types\Type;
 	use Illuminate\Contracts\Foundation\Application;
 	use Doctrine\ORM\Configuration as DoctrineConfig;
@@ -14,7 +13,6 @@
 	use Doctrine\ORM\Mapping\Driver\YamlDriver;
 	use Doctrine\ORM\Mapping\Driver\XmlDriver;
 
-
 	class ServiceProvider extends Base {
 
 		/**
@@ -23,9 +21,8 @@
 		 * @return void
 		 */
 		public function boot() {
-
 			Type::addType('json', '\Atrauzzi\LaravelDoctrine\Type\Json');
-						$this->publishes([__DIR__ .'/..'. '/config/doctrine.php'=> config_path('doctrine.php')], 'config');
+			$this->publishes([__DIR__ . '/..' . '/config/doctrine.php' => config_path('doctrine.php')], 'config');
 			$this->commands([
 				'Atrauzzi\LaravelDoctrine\Console\CreateSchemaCommand',
 				'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
@@ -57,13 +54,13 @@
 					'driver' => 'config'
 				]);
 
-				if(!empty($metadataConfig) && isset($metadataConfig[0]) && is_array($metadataConfig[0])) {
+				if (!empty($metadataConfig) && isset($metadataConfig[0]) && is_array($metadataConfig[0])) {
 
 					$metadataDriver = new \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain();
 
-					foreach($metadataConfig as $subDriverConfig) {
+					foreach ($metadataConfig as $subDriverConfig) {
 
-						if(!is_array($subDriverConfig))
+						if (!is_array($subDriverConfig))
 							continue;
 
 						$metadataDriver->addDriver(
@@ -73,15 +70,14 @@
 
 					}
 
-				}
-				else {
+				} else {
 					$metadataDriver = $this->createMetadataDriver($doctrineConfig, $metadataConfig);
 				}
 
 				$doctrineConfig->setMetadataDriverImpl($metadataDriver);
 
 				//add in trig functions to doctrine for mysql
-				$doctrineConfig->setCustomNumericFunctions(array(
+				$doctrineConfig->setCustomNumericFunctions([
 					'ACOS'    => 'DoctrineExtensions\Query\Mysql\Acos',
 					'ASIN'    => 'DoctrineExtensions\Query\Mysql\Asin',
 					'ATAN'    => 'DoctrineExtensions\Query\Mysql\Atan',
@@ -92,10 +88,10 @@
 					'RADIANS' => 'DoctrineExtensions\Query\Mysql\Radians',
 					'SIN'     => 'DoctrineExtensions\Query\Mysql\Sin',
 					'TAN'     => 'DoctrineExtensions\Query\Mysql\Tan'
-				));
+				]);
 
 				// Note: These must occur after Setup::createAnnotationMetadataConfiguration() in order to set custom namespaces properly
-				if($cache) {
+				if ($cache) {
 					$doctrineConfig->setMetadataCacheImpl($cache);
 					$doctrineConfig->setQueryCacheImpl($cache);
 					$doctrineConfig->setResultCacheImpl($cache);
@@ -105,12 +101,12 @@
 				$doctrineConfig->setDefaultRepositoryClassName(config('doctrine.default_repository', '\Doctrine\ORM\EntityRepository'));
 				$doctrineConfig->setSQLLogger(config('doctrine.sql_logger'));
 
-				if($proxyClassNamespace = config('doctrine.proxy_classes.namespace'))
+				if ($proxyClassNamespace = config('doctrine.proxy_classes.namespace'))
 					$doctrineConfig->setProxyNamespace($proxyClassNamespace);
 
 				// Trap doctrine events, to support entity table prefix
 				$eventManager = new EventManager();
-				if($prefix = config('doctrine.connection.prefix'))
+				if ($prefix = config('doctrine.connection.prefix'))
 					$eventManager->addEventListener(Events::loadClassMetadata, new Listener\Metadata\TablePrefix($prefix));
 
 				//
@@ -132,6 +128,7 @@
 				$connections = ['doctrine.connection'];
 				$managers = ['doctrine' => 'doctrine'];
 				$proxy = 'Doctrine\Common\Persistence\Proxy';
+
 				return new DoctrineRegistry('doctrine', $connections, $managers, $connections[0], $managers['doctrine'], $proxy);
 			});
 
@@ -153,10 +150,6 @@
 			];
 		}
 
-		//
-		//
-		//
-
 		/**
 		 * Takes care of building any drivers we wish to support.
 		 *
@@ -168,34 +161,34 @@
 		 */
 		protected function createMetadataDriver(DoctrineConfig $config, $driverConfig) {
 
-			switch($driver = array_get($driverConfig, 'driver')) {
+			switch ($driver = array_get($driverConfig, 'driver')) {
 
 				case 'config':
 					return new ConfigMappingDriver();
-				break;
+					break;
 
 				case 'annotation':
 					return $config->newDefaultAnnotationDriver(
 						array_get($driverConfig, 'paths', app_path()),
 						array_get($driverConfig, 'simple', false)
 					);
-				break;
+					break;
 
 				case 'yaml':
 					return new YamlDriver(array_get($driverConfig, 'paths', app_path()));
-				break;
+					break;
 
 				case 'xml':
 					return new XmlDriver(array_get($driverConfig, 'paths', app_path()));
-				break;
+					break;
 
 				case null:
 					throw new RuntimeException('Metadata driver has unspecified type.');
-				break;
+					break;
 
 				default:
 					throw new RuntimeException(sprintf('Unsupported driver: %s', $driver));
-				break;
+					break;
 
 			}
 
@@ -210,7 +203,7 @@
 
 			$cacheProvider = config('doctrine.cache.provider', config('cache.default'));
 
-			switch($cacheProvider) {
+			switch ($cacheProvider) {
 
 				case 'memcache':
 
@@ -224,7 +217,7 @@
 
 					$cache->setMemcache($memcache);
 
-				break;
+					break;
 
 				case 'memcached':
 
@@ -238,7 +231,7 @@
 
 					$cache->setMemcached($memcache);
 
-				break;
+					break;
 
 				case 'couchbase':
 
@@ -254,7 +247,7 @@
 
 					$cache->setCouchbase($couchbase);
 
-				break;
+					break;
 
 				case 'redis':
 
@@ -264,30 +257,30 @@
 						config('doctrine.cache.redis.port', config('database.redis.default.port'))
 					);
 
-					if($database = config('doctrine.cache.redis.database', config('database.redis.default.database')))
+					if ($database = config('doctrine.cache.redis.database', config('database.redis.default.database')))
 						$redis->select($database);
 
 					$cache = new \Doctrine\Common\Cache\RedisCache();
 
 					$cache->setRedis($redis);
 
-				break;
+					break;
 
 				case 'apc':
 					$cache = new \Doctrine\Common\Cache\ApcCache();
-				break;
+					break;
 
 				case 'xcache':
 					$cache = new \Doctrine\Common\Cache\XcacheCache();
-				break;
+					break;
 
 				default:
 					$cache = new \Doctrine\Common\Cache\ArrayCache();
-				break;
+					break;
 
 			}
 
-			if(
+			if (
 				$cache instanceof \Doctrine\Common\Cache\CacheProvider
 				&& $namespace = config('doctrine.cache.namespace', config('cache.prefix'))
 			)

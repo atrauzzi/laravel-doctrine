@@ -1,8 +1,8 @@
 <?php namespace Atrauzzi\LaravelDoctrine\Console;
 
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
+use Doctrine\ORM\Tools\SchemaTool;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\App;
-
 
 class CreateSchemaCommand extends Command {
 
@@ -21,12 +21,25 @@ class CreateSchemaCommand extends Command {
 	protected $description = 'Creates your database schema according to your models.';
 
 	/**
+	 * @var SchemaTool
+	 */
+	private $schemaTool;
+
+	/**
+	 * @var ClassMetadataFactory
+	 */
+	private $classMetadataFactory;
+
+	/**
 	 * Create a new command instance.
 	 *
-	 * @return void
+	 * @param SchemaTool $schemaTool
+	 * @param ClassMetadataFactory $classMetadataFactory
 	 */
-	public function __construct() {
+	public function __construct(SchemaTool $schemaTool, ClassMetadataFactory $classMetadataFactory) {
 		parent::__construct();
+		$this->schemaTool = $schemaTool;
+		$this->classMetadataFactory = $classMetadataFactory;
 	}
 
 	/**
@@ -39,9 +52,9 @@ class CreateSchemaCommand extends Command {
 		$this->comment('ATTENTION: This operation should not be executed in a production environment.');
 
 		$this->info('Obtaining metadata...');
-		$metadata = App::make('doctrine.metadata');
+		$metadata = $this->classMetadataFactory->getAllMetadata();
 		$this->info('Creating database schema...');
-		App::make('doctrine.schema-tool')->createSchema($metadata);
+		$this->schemaTool->createSchema($metadata);
 		$this->info('Database schema created successfully!');
 
 	}
@@ -52,8 +65,8 @@ class CreateSchemaCommand extends Command {
 	 * @return array
 	 */
 	protected function getArguments() {
-		return array(
-		);
+		return [
+		];
 	}
 
 	/**
@@ -61,9 +74,9 @@ class CreateSchemaCommand extends Command {
 	 *
 	 * @return array
 	 */
-	protected function getOptions()	{
-		return array(
-		);
+	protected function getOptions() {
+		return [
+		];
 	}
 
 }
