@@ -5,8 +5,7 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
-class DropSchemaCommand extends Command
-{
+class DropSchemaCommand extends Command {
 
 	/**
 	 * The console command name.
@@ -38,8 +37,7 @@ class DropSchemaCommand extends Command
 	 * @param SchemaTool $schemaTool
 	 * @param ClassMetadataFactory $classMetadataFactory
 	 */
-	public function __construct(SchemaTool $schemaTool, ClassMetadataFactory $classMetadataFactory)
-	{
+	public function __construct(SchemaTool $schemaTool, ClassMetadataFactory $classMetadataFactory) {
 		parent::__construct();
 		$this->schemaTool = $schemaTool;
 		$this->classMetadataFactory = $classMetadataFactory;
@@ -50,8 +48,7 @@ class DropSchemaCommand extends Command
 	 *
 	 * @return void
 	 */
-	public function fire()
-	{
+	public function fire() {
 
 		$sqlOnly = $this->option('sql');
 
@@ -86,8 +83,7 @@ class DropSchemaCommand extends Command
 	 *
 	 * @return array
 	 */
-	protected function getArguments()
-	{
+	protected function getArguments() {
 		return [
 		];
 	}
@@ -97,8 +93,7 @@ class DropSchemaCommand extends Command
 	 *
 	 * @return array
 	 */
-	protected function getOptions()
-	{
+	protected function getOptions() {
 		return [
 			['sql', null, InputOption::VALUE_NONE, 'Dumps the generated SQL statements to the screen (does not execute them).']
 		];

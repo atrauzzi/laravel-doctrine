@@ -4,8 +4,7 @@ use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Doctrine\ORM\Tools\SchemaTool;
 use Illuminate\Console\Command;
 
-class CreateSchemaCommand extends Command
-{
+class CreateSchemaCommand extends Command {
 
 	/**
 	 * The console command name.
@@ -37,8 +36,7 @@ class CreateSchemaCommand extends Command
 	 * @param SchemaTool $schemaTool
 	 * @param ClassMetadataFactory $classMetadataFactory
 	 */
-	public function __construct(SchemaTool $schemaTool, ClassMetadataFactory $classMetadataFactory)
-	{
+	public function __construct(SchemaTool $schemaTool, ClassMetadataFactory $classMetadataFactory) {
 		parent::__construct();
 		$this->schemaTool = $schemaTool;
 		$this->classMetadataFactory = $classMetadataFactory;
@@ -49,8 +47,7 @@ class CreateSchemaCommand extends Command
 	 *
 	 * @return void
 	 */
-	public function fire()
-	{
+	public function fire() {
 
 		$this->comment('ATTENTION: This operation should not be executed in a production environment.');
 
@@ -67,8 +64,7 @@ class CreateSchemaCommand extends Command
 	 *
 	 * @return array
 	 */
-	protected function getArguments()
-	{
+	protected function getArguments() {
 		return [
 		];
 	}
@@ -78,8 +74,7 @@ class CreateSchemaCommand extends Command
 	 *
 	 * @return array
 	 */
-	protected function getOptions()
-	{
+	protected function getOptions() {
 		return [
 		];
 	}

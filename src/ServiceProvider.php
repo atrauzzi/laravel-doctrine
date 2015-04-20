@@ -13,16 +13,14 @@
 	use Doctrine\ORM\Mapping\Driver\YamlDriver;
 	use Doctrine\ORM\Mapping\Driver\XmlDriver;
 
-	class ServiceProvider extends Base
-	{
+	class ServiceProvider extends Base {
 
 		/**
 		 * Bootstrap the application events.
 		 *
 		 * @return void
 		 */
-		public function boot()
-		{
+		public function boot() {
 			Type::addType('json', '\Atrauzzi\LaravelDoctrine\Type\Json');
 			$this->publishes([__DIR__ . '/..' . '/config/doctrine.php' => config_path('doctrine.php')], 'config');
 			$this->commands([
@@ -37,8 +35,7 @@
 		 *
 		 * @return void
 		 */
-		public function register()
-		{
+		public function register() {
 
 			$this->app->singleton('Doctrine\ORM\EntityManager', function (Application $app) {
 
@@ -145,8 +142,7 @@
 		 *
 		 * @return array
 		 */
-		public function provides()
-		{
+		public function provides() {
 			return [
 				'Doctrine\ORM\EntityManager',
 				'Doctrine\ORM\Mapping\ClassMetadataFactory',
@@ -163,8 +159,7 @@
 		 * @param array $driverConfig
 		 * @return \Doctrine\Common\Persistence\Mapping\Driver\MappingDriver
 		 */
-		protected function createMetadataDriver(DoctrineConfig $config, $driverConfig)
-		{
+		protected function createMetadataDriver(DoctrineConfig $config, $driverConfig) {
 
 			switch ($driver = array_get($driverConfig, 'driver')) {
 
@@ -204,8 +199,7 @@
 		 *
 		 * @return \Doctrine\Common\Cache\CacheProvider|null
 		 */
-		protected function createCache()
-		{
+		protected function createCache() {
 
 			$cacheProvider = config('doctrine.cache.provider', config('cache.default'));
 

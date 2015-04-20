@@ -5,8 +5,7 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
-class UpdateSchemaCommand extends Command
-{
+class UpdateSchemaCommand extends Command {
 
 	/**
 	 * The console command name.
@@ -38,8 +37,7 @@ class UpdateSchemaCommand extends Command
 	 * @param SchemaTool $schemaTool
 	 * @param ClassMetadataFactory $classMetadataFactory
 	 */
-	public function __construct(SchemaTool $schemaTool, ClassMetadataFactory $classMetadataFactory)
-	{
+	public function __construct(SchemaTool $schemaTool, ClassMetadataFactory $classMetadataFactory) {
 		parent::__construct();
 		$this->schemaTool = $schemaTool;
 		$this->classMetadataFactory = $classMetadataFactory;
@@ -50,8 +48,7 @@ class UpdateSchemaCommand extends Command
 	 *
 	 * @return void
 	 */
-	public function fire()
-	{
+	public function fire() {
 
 		$complete = $this->option('complete');
 		$sqlOnly = $this->option('sql');
@@ -87,8 +84,7 @@ class UpdateSchemaCommand extends Command
 	 *
 	 * @return array
 	 */
-	protected function getArguments()
-	{
+	protected function getArguments() {
 		return [
 		];
 	}
@@ -98,8 +94,7 @@ class UpdateSchemaCommand extends Command
 	 *
 	 * @return array
 	 */
-	protected function getOptions()
-	{
+	protected function getOptions() {
 		return [
 			['complete', null, InputOption::VALUE_OPTIONAL, 'If defined, all assets of the database which are not relevant to the current metadata will be dropped.', false],
 			['sql', null, InputOption::VALUE_NONE, 'Dumps the generated SQL statements to the screen (does not execute them).']
