@@ -1,6 +1,6 @@
 <?php 
 
-namespace Atrauzzi\LaravelDoctrine\Trait;
+namespace Atrauzzi\LaravelDoctrine\Util;
 use Doctrine\ORM\Mapping AS ORM;
 use DateTime;
 
