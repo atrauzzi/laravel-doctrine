@@ -17,6 +17,7 @@
 		[
 			'driver' => 'annotation',
 		//	'namespace' => 'App'
+		//  'alias'  => 'DoctrineModel'
 		],
 		[
 			'driver'=>'yaml',

@@ -70,7 +70,9 @@
 							$this->createMetadataDriver($doctrineConfig, $subDriverConfig),
 							array_get($subDriverConfig, 'namespace', 'App')
 						);
-
+						if (isset($subDriverConfig['namespace']) && isset($subDriverConfig['alias'])) {
+							$doctrineConfig->addEntityNamespace($subDriverConfig['alias'],$subDriverConfig['namespace']);
+						}
 					}
 
 				}
