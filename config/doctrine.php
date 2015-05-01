@@ -158,4 +158,14 @@
 	 */
 	//'debug' => false,
 
+    /*
+    | ---------------------------------
+    | Add custom Doctrine types here
+    | For more information: http://doctrine-dbal.readthedocs.org/en/latest/reference/types.html#custom-mapping-types
+    | ---------------------------------
+    */
+    'custom_types' => [
+        'json' => 'Atrauzzi\LaravelDoctrine\Type\Json'
+    ]
+
 ];
