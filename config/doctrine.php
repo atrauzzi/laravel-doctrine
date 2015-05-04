@@ -84,14 +84,18 @@
 	],
 
 	/*
-	 * By default, this package mimics the cache configuration from Laravel.
-	 *
-	 * Cache providers, supports apc, xcache, memcache, redis.
+    | ---------------------------------
+	| By default, this package mimics the cache configuration from Laravel.
+	|
+	| You can create your own cache provider by extending the
+	| Atrauzzi\LaravelDoctrine\CacheProvider\CacheProvider class.
+	|
+	| Each provider requires a like named section with an array of configuration options.
+	| ----------------------------------
 	 */
-	/*
 	'cache' => [
-
-		'provider' => 'redis',
+        // Remove or set to null for no cache
+		'provider' => 'array',
 
 		'redis' => [
 			'host'     => '127.0.0.1',
@@ -102,9 +106,20 @@
 		'memcache' => [
 			'host' => '127.0.0.1',
 			'port' => 11211
-		]
+		],
+
+        'providers' => [
+            'memcache' => 'Atrauzzi\LaravelDoctrine\CacheProvider\MemcacheProvider',
+            'memcached' => 'Atrauzzi\LaravelDoctrine\CacheProvider\MemcachedProvider',
+            'couchbase' => 'Atrauzzi\LaravelDoctrine\CacheProvider\CouchebaseProvider',
+            'redis' => 'Atrauzzi\LaravelDoctrine\CacheProvider\RedisProvider',
+            'apc' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ApcProvider',
+            'xcache' => 'Atrauzzi\LaravelDoctrine\CacheProvider\XcacheProvider',
+            'array' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ArrayProvider'
+            //'custom' => 'Path\To\Your\Class'
+        ]
 	],
-	*/
+
 
 	/*
 	|--------------------------------------------------------------------------
