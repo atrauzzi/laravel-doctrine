@@ -20,7 +20,7 @@ class CacheFactory {
         $providers = config('doctrine.cache.providers');
         if (! array_key_exists($type, $providers))
         {
-            throw new \Exception('Unsupported Doctrine cache provider specified: ' . $type . '. Check your configuration.');
+            throw new \RuntimeException('Unsupported Doctrine cache provider specified: ' . $type . '. Check your configuration.');
         }
 
         if (class_exists($providers[$type]))
