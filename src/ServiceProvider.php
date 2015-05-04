@@ -45,7 +45,7 @@
 
 				$debug = config('doctrine.debug', config('app.debug', false));
 
-				$cache = $debug ? null : $this->createCache();
+				$cache = $this->createCache();
 
 				$doctrineConfig = Setup::createConfiguration(
 					$debug,
@@ -204,20 +204,28 @@
 
 		}
 
-		/**
-		 * Selects the best caching implementation for the current environment.
-		 *
-		 * @return \Doctrine\Common\Cache\CacheProvider|null
-		 */
-		protected function createCache() {
-			$cacheProvider = config('doctrine.cache.provider', config('cache.default','Array'));
+
+        /**
+         * Initializes cache. Defaults to Array cache.
+         *
+         * @return \Doctrine\Common\Cache\CacheProvider
+         * @throws \Exception
+         * @throws \Symfony\Component\Debug\Exception\ClassNotFoundException
+         */
+        protected function createCache() {
+            if(is_null(config('doctrine.cache.provider'))) return null;
+
+			$cacheProvider = config('doctrine.cache.provider');
             $namespace = config('doctrine.cache.namespace', config('cache.prefix'));
 
-            $cache = CacheFactory::getInstance($cacheProvider, $namespace);
+            $cache = CacheFactory::getCacheProvider($cacheProvider, $namespace);
 
             return $cache;
 		}
 
+        /**
+         * @throws \Doctrine\DBAL\DBALException
+         */
         protected function registerCustomTypes()
         {
             foreach(config('doctrine.custom_types',array()) as $name=>$class)
