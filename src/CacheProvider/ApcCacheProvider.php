@@ -13,7 +13,7 @@ class ApcCacheProvider extends CacheProvider{
      * @param $config
      * @return \Doctrine\Common\Cache\CacheProvider
      */
-    protected static function initialize($config)
+    protected function initialize($config)
     {
         return new ApcCache();
     }
