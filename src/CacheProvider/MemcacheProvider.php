@@ -15,7 +15,7 @@ class MemcacheProvider extends CacheProvider{
      * @param $config
      * @return \Doctrine\Common\Cache\CacheProvider
      */
-    protected static function initialize($config)
+    protected function initialize($config)
     {
         $memcache = new \Memcache();
         $memcache->connect($config['host'], $config['port']);

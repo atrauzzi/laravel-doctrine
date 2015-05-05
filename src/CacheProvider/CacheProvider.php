@@ -4,6 +4,11 @@ abstract class CacheProvider {
 
     protected static $required_configurations = [];
 
+
+    protected function __construct()
+    {
+    }
+
     /**
      * @param $config
      * @return \Doctrine\Common\Cache\CacheProvider
@@ -16,7 +21,8 @@ abstract class CacheProvider {
             throw new \InvalidArgumentException('Missing one or more required parameters ['.implode(', ',static::$required_configurations).']');
         }
 
-        return static::initialize($config);
+        //return static::initialize($config);
+        return (new static)->initialize($config);
     }
 
     protected static function hasValidParameters($params)
@@ -32,5 +38,5 @@ abstract class CacheProvider {
      * @param $config
      * @return \Doctrine\Common\Cache\CacheProvider
      */
-    abstract protected static function initialize($config);
+    abstract protected function initialize($config);
 }

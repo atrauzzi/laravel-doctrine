@@ -8,6 +8,8 @@ use Symfony\Component\Debug\Exception\ClassNotFoundException;
  */
 class CacheFactory {
 
+    protected static $supportedProviders = [];
+
     /**
      * @param $type
      * @param $namespace
@@ -15,24 +17,30 @@ class CacheFactory {
      * @throws \Symfony\Component\Debug\Exception\ClassNotFoundException
      * @throws \Exception
      */
-    public static function getCacheProvider($type, $namespace)
+    public static function getCacheProvider($type, $configuration, $namespace = null, $providers = [])
     {
-        $providers = config('doctrine.cache.providers');
+        $providers = array_merge(static::$supportedProviders, $providers);
+
         if (! array_key_exists($type, $providers))
         {
-            throw new \Exception('Unsupported Doctrine cache provider specified: ' . $type . '. Check your configuration.');
+            throw new \RuntimeException('Unsupported Doctrine cache provider specified: ' . $type . '. Check your configuration.');
         }
 
         if (class_exists($providers[$type]))
         {
-            $cache = $providers[$type]::getCacheProvider(config('doctrine.cache.' . $type));
+            $cache = $providers[$type]::getCacheProvider($configuration);
         } else
         {
-            throw new ClassNotFoundException('Class not found [' . $providers[$type] . ']', null);
+            throw new ClassNotFoundException('Class not found [' . $providers[$type] . ']', new \ErrorException());
         }
 
-        $cache->setNamespace(config('doctrine.cache.namespace'));
+        $cache->setNamespace($namespace);
 
         return $cache;
+    }
+
+    public static function setProviders($providersArray)
+    {
+        static::$supportedProviders = $providersArray;
     }
 }
