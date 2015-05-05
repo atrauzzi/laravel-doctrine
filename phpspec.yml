@@ -1,0 +1,4 @@
+suites:
+  laraveldoctrine_suite:
+    namespace: Atrauzzi\LaravelDoctrine
+    psr4_prefix: Atrauzzi\LaravelDoctrine

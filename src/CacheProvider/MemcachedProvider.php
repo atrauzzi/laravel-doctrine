@@ -1,6 +1,6 @@
 <?php  namespace Atrauzzi\LaravelDoctrine\CacheProvider;
 
-use Doctrine\Common\Cache\MemcacheCached;
+use Doctrine\Common\Cache\MemcachedCache;
 
 /**
  * Class MemcachedProvider
