@@ -20,6 +20,9 @@
 		"doctrine/migrations": "dev-master#46a031ddaea47d0685200027cfe8c83b02aee6f6",
 		"beberlei/DoctrineExtensions": "1.0.*@dev"
 	},
+    "require-dev":{
+        "phpspec/phpspec": "2.2.*"
+    },
 	"autoload": {
 		"psr-4": {
 			"Atrauzzi\\LaravelDoctrine\\": "src/"
