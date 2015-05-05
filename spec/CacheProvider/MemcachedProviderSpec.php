@@ -17,4 +17,5 @@ class MemcachedProviderSpec extends ObjectBehavior
         $this->shouldHaveType('\Doctrine\Common\Cache\CacheProvider');
         $this->shouldHaveType('Doctrine\Common\Cache\MemcachedCache');
     }
+
 }

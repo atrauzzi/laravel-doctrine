@@ -216,11 +216,15 @@
             if(is_null(config('doctrine.cache.provider'))) return null;
 
 			$cacheProvider = config('doctrine.cache.provider');
+
+            $supportedProviders = config('doctrine.cache.providers',[]);
+
+            $cacheConfiguration = config('doctrine.cache.' . $cacheProvider);
+
             $namespace = config('doctrine.cache.namespace', config('cache.prefix'));
 
-            $cache = CacheFactory::getCacheProvider($cacheProvider, $namespace);
-
-            return $cache;
+            CacheFactory::setProviders($supportedProviders);
+            return CacheFactory::getCacheProvider($cacheProvider, $cacheConfiguration, $namespace);
 		}
 
         /**
