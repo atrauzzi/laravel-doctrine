@@ -37,10 +37,14 @@ Most of Doctrine's functionality derives from defining your schema (via annotati
 Adapted from [Doctrine's documentation](http://goo.gl/XQ3qg):
 
     <?php
+    
+    // for Laravel files, you need to include the facade
+    use EntityManager;
+    
     $user = new User;
     $user->setName('Mr.Right');
-    Doctrine::persist($user);
-    Doctrine::flush();
+    EntityManager::persist($user);
+    EntityManager::flush();
 
 It is recommended that you read through all of the [ORM documentation](http://goo.gl/kpAeX).  Try using Laravel's console to experiment and go through the tutorials.
 
