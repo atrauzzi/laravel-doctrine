@@ -1,5 +1,6 @@
 <?php namespace Atrauzzi\LaravelDoctrine;
 
+use Psy\Exception\ErrorException;
 use Symfony\Component\Debug\Exception\ClassNotFoundException;
 
 /**
@@ -15,7 +16,7 @@ class CacheFactory {
      * @throws \Symfony\Component\Debug\Exception\ClassNotFoundException
      * @throws \Exception
      */
-    public static function getCacheProvider($type, $namespace)
+    public static function getCacheProvider($type, $namespace = null)
     {
         $providers = config('doctrine.cache.providers');
         if (! array_key_exists($type, $providers))
@@ -28,10 +29,10 @@ class CacheFactory {
             $cache = $providers[$type]::getCacheProvider(config('doctrine.cache.' . $type));
         } else
         {
-            throw new ClassNotFoundException('Class not found [' . $providers[$type] . ']', null);
+            throw new ClassNotFoundException('Class not found [' . $providers[$type] . ']', new \ErrorException());
         }
 
-        $cache->setNamespace(config('doctrine.cache.namespace'));
+        $cache->setNamespace($namespace);
 
         return $cache;
     }

@@ -24,4 +24,5 @@ class MemcachedProvider extends CacheProvider{
 
         return $cache;
     }
+
 }
