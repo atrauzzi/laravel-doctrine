@@ -15,7 +15,7 @@ class RedisProvider extends CacheProvider{
      * @param $config
      * @return \Doctrine\Common\Cache\CacheProvider
      */
-    protected static function initialize($config)
+    protected function initialize($config)
     {
         $redis = new \Redis();
         $redis->connect($config['host'],$config['port']);
