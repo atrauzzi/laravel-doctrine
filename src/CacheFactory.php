@@ -1,6 +1,5 @@
 <?php namespace Atrauzzi\LaravelDoctrine;
 
-use Psy\Exception\ErrorException;
 use Symfony\Component\Debug\Exception\ClassNotFoundException;
 
 /**
