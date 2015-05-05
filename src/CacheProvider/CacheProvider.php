@@ -11,17 +11,20 @@ abstract class CacheProvider {
      */
     public static function getCacheProvider($config)
     {
-        if(self::hasValidParameters($config))
+        if(!static::hasValidParameters($config))
         {
-            throw new \InvalidArgumentException('Missing one or more required parameters ['.implode(', ',self::$required_configurations).']');
+            throw new \InvalidArgumentException('Missing one or more required parameters ['.implode(', ',static::$required_configurations).']');
         }
 
-        return self::initialize($config);
+        return static::initialize($config);
     }
 
     protected static function hasValidParameters($params)
     {
-        return count(array_intersect(array_flip(static::$required_configurations), $params)) !== count(static::$required_configurations);
+        if(count(static::$required_configurations) <= 0) return true;
+
+        $params = is_null($params) ? [] : $params;
+        return count(array_intersect_key(array_flip(static::$required_configurations), $params)) === count(static::$required_configurations);
     }
 
     /**
