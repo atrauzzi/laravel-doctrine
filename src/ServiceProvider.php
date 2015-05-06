@@ -234,10 +234,13 @@
         {
             foreach(config('doctrine.custom_types',array()) as $name=>$class)
             {
-                Type::addType($name, $class);
+                if(!Type::hasType($name)){
+                    Type::addType($name, $class);
+                }
+                else{
+                    Type::overrideType($name, $class);
+                }
             }
         }
-
     }
-
 }
