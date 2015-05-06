@@ -66,21 +66,40 @@
 	/*
 	 * By default, this package mimics the database configuration from Laravel.
 	 *
-	 * You can override it in whole or in part here.
+	 * You can override it in whole or in part here. The 'database' and 'username'
+	 * laravel settings will be automatically converted to the proper doctrine 'dbname'
+	 * and 'user' settings. Other custom laravel to doctrine mappings can be added on
+	 * a per configuration basis by including a 'mappings' entry with 'laravel'=>'doctrine'
+	 * mappings (see the sqlite configuration for an example).
 	 *
 	 * This array passes right through to the EntityManager factory. For
 	 * example, here you can set additional connection details like "charset".
 	 *
 	 * http://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html#connection-details
 	 */
-	'connection' => [
+	'connections' => [
+        // Override your laravel environment database selection here if desired
+        // 'default' => 'mysql',
 
-		'driver' => 'mysqli',
-		'host'      => env('DB_HOST', 'localhost'),
-		'dbname'  => env('DB_DATABASE', 'forge'),
-		'user'  => env('DB_USERNAME', 'forge'),
-		'password'  => env('DB_PASSWORD', ''),
-		'prefix' => ''
+        // Override your laravel values here if desired.
+        /*'mysql' => [
+            'driver' => 'mysqli',
+            'host'      => env('DB_HOST', 'localhost'),
+            'dbname'  => env('DB_DATABASE', 'forge'),
+            'user'  => env('DB_USERNAME', 'forge'),
+            'password'  => env('DB_PASSWORD', ''),
+            'prefix' => ''
+        ],*/
+
+        // Some preset configurations to map laravel sqlite configs to doctrine
+        'sqlite' => [
+            'driver' => 'pdo_sqlite',
+            'mappings' => [
+                'database' => 'path'
+            ]
+        ]
+
+
 	],
 
 	/*
