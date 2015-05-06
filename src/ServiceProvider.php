@@ -252,7 +252,50 @@
          */
         protected function getDoctrineConnection()
         {
-            return config('doctrine.connection');
+            $database = config('doctrine.connections.default', config('database.default'));
+            if(empty($database)) throw new \Exception("Database type not set");
+
+            $laravel_database_configuration = config('database.connections.'.$database, []);
+            $doctrine_database_overrides = config('doctrine.connections.'.$database, []);
+
+            $configurations = $this->mapToDoctrineConfigs(array_merge($laravel_database_configuration, $doctrine_database_overrides));
+            return $configurations;
+        }
+
+        /**
+         * @param $config
+         * @return mixed
+         */
+        private function mapToDoctrineConfigs($config)
+        {
+            $mappings = [
+                'database' => 'dbname',
+                'username' => 'user'
+            ];
+
+            if(array_key_exists('mappings',$config))
+            {
+                $mappings = array_merge($mappings, $config['mappings']);
+                unset($config['mappings']);
+            }
+
+            foreach($mappings as $laravel => $doctrine)
+            {
+                // If both are already set, use the doctrine setting and remove the laravel one
+                if(array_key_exists($doctrine,$config)){
+                    unset($config[$laravel]);
+                }
+
+                // Otherwise replace the laravel setting with properly named doctrine setting
+                elseif(array_key_exists($laravel,$config))
+                {
+                    $config[$doctrine] = $config[$laravel];
+                    unset($config[$laravel]);
+                }
+
+            }
+
+            return $config;
         }
 
     }
