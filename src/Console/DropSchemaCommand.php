@@ -21,14 +21,6 @@ class DropSchemaCommand extends Command {
 	 */
 	protected $description = 'Drop the complete database schema of EntityManager Storage Connection.';
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
 
 	/**
 	 * Execute the console command.
@@ -42,9 +34,10 @@ class DropSchemaCommand extends Command {
 		$this->comment('ATTENTION: This operation should not be executed in a production environment.');
 
 		$this->info('Obtaining metadata from your models...');
-		$metadata = App::make('doctrine.metadata');
 
-		$schemaTool = App::make('doctrine.schema-tool');
+		$metadata = $this->laravel->make('Doctrine\ORM\Mapping\ClassMetadataFactory')->getAllMetadata();
+
+		$schemaTool = $this->laravel->make('Doctrine\ORM\Tools\SchemaTool');
 
 		$sqlToRun = $schemaTool->getDropSchemaSql($metadata);
 
@@ -62,18 +55,8 @@ class DropSchemaCommand extends Command {
 			$schemaTool->dropSchema($metadata);
 			$this->info('Database schema updated successfully!');
 		}
-
 	}
 
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments() {
-		return array(
-		);
-	}
 
 	/**
 	 * Get the console command options.
