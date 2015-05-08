@@ -37,9 +37,9 @@ class CreateSchemaCommand extends Command {
 	public function fire() {
 		$this->comment('ATTENTION: This operation should not be executed in a production environment.');
 		$this->info('Obtaining metadata...');
-        $metadata = $this->laravel->make('Doctrine\ORM\Mapping\ClassMetadataFactory')->getAllMetadata();
+        $metadata = $this->laravel->make('\Doctrine\ORM\Mapping\ClassMetadataFactory')->getAllMetadata();
 		$this->info('Creating database schema...');
-        $schemaTool = $this->laravel->make('Doctrine\ORM\Tools\SchemaTool');
+        $schemaTool = $this->laravel->make('\Doctrine\ORM\Tools\SchemaTool');
         $schemaTool->createSchema($metadata);
 		$this->info('Database schema created successfully!');
     }

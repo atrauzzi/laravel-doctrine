@@ -36,9 +36,9 @@ class UpdateSchemaCommand extends Command {
 		$this->comment('ATTENTION: This operation should not be executed in a production environment.');
 
 		$this->info('Obtaining metadata from your models...');
-        $metadata = $this->laravel->make('Doctrine\ORM\Mapping\ClassMetadataFactory')->getAllMetadata();
+        $metadata = $this->laravel->make('\Doctrine\ORM\Mapping\ClassMetadataFactory')->getAllMetadata();
 
-        $schemaTool = $this->laravel->make('Doctrine\ORM\Tools\SchemaTool');
+        $schemaTool = $this->laravel->make('\Doctrine\ORM\Tools\SchemaTool');
 
 		$sqlToRun = $schemaTool->getUpdateSchemaSql($metadata, $complete);
 

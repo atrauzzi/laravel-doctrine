@@ -45,7 +45,7 @@
 		 */
 		public function register() {
 
-			$this->app->singleton('Doctrine\ORM\EntityManager', function (Application $app) {
+			$this->app->singleton('\Doctrine\ORM\EntityManager', function (Application $app) {
 
                 return EntityManager::create(
                     $this->getDoctrineConnection(),
@@ -54,23 +54,23 @@
                 );
 			});
 
-			$this->app->singleton('Doctrine\ORM\Tools\SchemaTool', function (Application $app) {
-				return new SchemaTool($app['Doctrine\ORM\EntityManager']);
+			$this->app->singleton('\Doctrine\ORM\Tools\SchemaTool', function (Application $app) {
+				return new SchemaTool($app['\Doctrine\ORM\EntityManager']);
 			});
 
-			$this->app->singleton('Doctrine\ORM\Mapping\ClassMetadataFactory', function (Application $app) {
-				return $app->make('Doctrine\ORM\EntityManager')->getMetadataFactory();
+			$this->app->singleton('\Doctrine\ORM\Mapping\ClassMetadataFactory', function (Application $app) {
+				return $app->make('\Doctrine\ORM\EntityManager')->getMetadataFactory();
 			});
 
-			$this->app->singleton('Doctrine\Common\Persistence\ManagerRegistry', function (Application $app) {
+			$this->app->singleton('\Doctrine\Common\Persistence\ManagerRegistry', function (Application $app) {
 				$connections = ['doctrine.connection'];
 				$managers = ['doctrine' => 'doctrine'];
-				$proxy = 'Doctrine\Common\Persistence\Proxy';
+				$proxy = '\Doctrine\Common\Persistence\Proxy';
 				return new DoctrineRegistry('doctrine', $connections, $managers, $connections[0], $managers['doctrine'], $proxy);
 			});
 
 			$this->app->singleton('doctrine.connection', function (Application $app) {
-				return $app->make('Doctrine\ORM\EntityManager')->getConnection();
+				return $app->make('\Doctrine\ORM\EntityManager')->getConnection();
 			});
 		}
 
@@ -81,9 +81,9 @@
 		 */
 		public function provides() {
 			return [
-				'Doctrine\ORM\EntityManager',
-				'Doctrine\ORM\Mapping\ClassMetadataFactory',
-				'Doctrine\ORM\Tools\SchemaTool',
+				'\Doctrine\ORM\EntityManager',
+				'\Doctrine\ORM\Mapping\ClassMetadataFactory',
+				'\Doctrine\ORM\Tools\SchemaTool',
 			];
 		}
 
