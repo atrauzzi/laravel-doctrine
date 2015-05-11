@@ -35,35 +35,13 @@ class CreateSchemaCommand extends Command {
 	 * @return void
 	 */
 	public function fire() {
-
 		$this->comment('ATTENTION: This operation should not be executed in a production environment.');
-
 		$this->info('Obtaining metadata...');
-		$metadata = App::make('doctrine.metadata');
+        $metadata = $this->laravel->make('\Doctrine\ORM\Mapping\ClassMetadataFactory')->getAllMetadata();
 		$this->info('Creating database schema...');
-		App::make('doctrine.schema-tool')->createSchema($metadata);
+        $schemaTool = $this->laravel->make('\Doctrine\ORM\Tools\SchemaTool');
+        $schemaTool->createSchema($metadata);
 		$this->info('Database schema created successfully!');
-
-	}
-
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments() {
-		return array(
-		);
-	}
-
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()	{
-		return array(
-		);
-	}
+    }
 
 }

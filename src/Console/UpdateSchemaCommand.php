@@ -21,14 +21,7 @@ class UpdateSchemaCommand extends Command {
 	 */
 	protected $description = 'Updates your database schema to match your models.';
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
-	public function __construct() {
-		parent::__construct();
-	}
+
 
 	/**
 	 * Execute the console command.
@@ -43,9 +36,9 @@ class UpdateSchemaCommand extends Command {
 		$this->comment('ATTENTION: This operation should not be executed in a production environment.');
 
 		$this->info('Obtaining metadata from your models...');
-		$metadata = App::make('doctrine.metadata');
+        $metadata = $this->laravel->make('\Doctrine\ORM\Mapping\ClassMetadataFactory')->getAllMetadata();
 
-		$schemaTool = App::make('doctrine.schema-tool');
+        $schemaTool = $this->laravel->make('\Doctrine\ORM\Tools\SchemaTool');
 
 		$sqlToRun = $schemaTool->getUpdateSchemaSql($metadata, $complete);
 
@@ -66,15 +59,6 @@ class UpdateSchemaCommand extends Command {
 
 	}
 
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments() {
-		return array(
-		);
-	}
 
 	/**
 	 * Get the console command options.

@@ -5,3 +5,5 @@ composer.lock
 .*~
 .idea
 atlassian-ide-plugin.xml
+.vagrant
+Vagrantfile

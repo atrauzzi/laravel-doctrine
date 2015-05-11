@@ -3,7 +3,7 @@
 	/*
 	 * Metadata Driver Configuration
 	 */
-	/*
+
 	'metadata' => [
 
 		'driver' => 'config',
@@ -16,13 +16,20 @@
 		],
 		[
 			'driver' => 'annotation',
-			'namespace' => 'App'
+		//	'namespace' => 'App'
+		//  'alias'  => 'DoctrineModel'
+		],
+		[
+			'driver'=>'yaml',
+		],
+		[
+			'driver'=>'xml'
 		]
 		//
 		// ...accepting PRs for more!
 
 	],
-	*/
+	/*
 
 	'mappings' => [
 
@@ -55,36 +62,59 @@
 		],
 
 	],
-
+*/
 	/*
 	 * By default, this package mimics the database configuration from Laravel.
 	 *
-	 * You can override it in whole or in part here.
+	 * You can override it in whole or in part here. The 'database' and 'username'
+	 * laravel settings will be automatically converted to the proper doctrine 'dbname'
+	 * and 'user' settings. Other custom laravel to doctrine mappings can be added on
+	 * a per configuration basis by including a 'mappings' entry with 'laravel'=>'doctrine'
+	 * mappings (see the sqlite configuration for an example).
 	 *
 	 * This array passes right through to the EntityManager factory. For
 	 * example, here you can set additional connection details like "charset".
 	 *
 	 * http://doctrine-dbal.readthedocs.org/en/latest/reference/configuration.html#connection-details
 	 */
-	'connection' => [
+	'connections' => [
+        // Override your laravel environment database selection here if desired
+        // 'default' => 'mysql',
 
-		'driver' => 'mysqli',
-		'host'      => env('DB_HOST', 'localhost'),
-		'dbname'  => env('DB_DATABASE', 'forge'),
-		'user'  => env('DB_USERNAME', 'forge'),
-		'password'  => env('DB_PASSWORD', ''),
-		'prefix' => ''
+        // Override your laravel values here if desired.
+        /*'mysql' => [
+            'driver' => 'mysqli',
+            'host'      => env('DB_HOST', 'localhost'),
+            'dbname'  => env('DB_DATABASE', 'forge'),
+            'user'  => env('DB_USERNAME', 'forge'),
+            'password'  => env('DB_PASSWORD', ''),
+            'prefix' => ''
+        ],*/
+
+        // Some preset configurations to map laravel sqlite configs to doctrine
+        'sqlite' => [
+            'driver' => 'pdo_sqlite',
+            'mappings' => [
+                'database' => 'path'
+            ]
+        ]
+
+
 	],
 
 	/*
-	 * By default, this package mimics the cache configuration from Laravel.
-	 *
-	 * Cache providers, supports apc, xcache, memcache, redis.
+    | ---------------------------------
+	| By default, this package mimics the cache configuration from Laravel.
+	|
+	| You can create your own cache provider by extending the
+	| Atrauzzi\LaravelDoctrine\CacheProvider\CacheProvider class.
+	|
+	| Each provider requires a like named section with an array of configuration options.
+	| ----------------------------------
 	 */
-	/*
 	'cache' => [
-
-		'provider' => 'redis',
+        // Remove or set to null for no cache
+		'provider' => 'array',
 
 		'redis' => [
 			'host'     => '127.0.0.1',
@@ -95,9 +125,20 @@
 		'memcache' => [
 			'host' => '127.0.0.1',
 			'port' => 11211
-		]
+		],
+
+        'providers' => [
+            'memcache' => 'Atrauzzi\LaravelDoctrine\CacheProvider\MemcacheProvider',
+            'memcached' => 'Atrauzzi\LaravelDoctrine\CacheProvider\MemcachedProvider',
+            'couchbase' => 'Atrauzzi\LaravelDoctrine\CacheProvider\CouchebaseProvider',
+            'redis' => 'Atrauzzi\LaravelDoctrine\CacheProvider\RedisProvider',
+            'apc' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ApcProvider',
+            'xcache' => 'Atrauzzi\LaravelDoctrine\CacheProvider\XcacheProvider',
+            'array' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ArrayProvider'
+            //'custom' => 'Path\To\Your\Class'
+        ]
 	],
-	*/
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -123,10 +164,10 @@
 		'table_name' => 'doctrine_migration_versions'
 	],
 
- 	/*
+	/*
 	|--------------------------------------------------------------------------
 	| Use to specify the default repository
-    | http://doctrine-orm.readthedocs.org/en/latest/reference/working-with-objects.html#custom-repositories
+	| http://doctrine-orm.readthedocs.org/en/latest/reference/working-with-objects.html#custom-repositories
 	|--------------------------------------------------------------------------
 	*/
 	/*
@@ -148,7 +189,17 @@
 
 	/*
 	 * In some circumstances, you may wish to diverge from what's configured in Laravel.
- 	 */
+	 */
 	//'debug' => false,
+
+    /*
+    | ---------------------------------
+    | Add custom Doctrine types here
+    | For more information: http://doctrine-dbal.readthedocs.org/en/latest/reference/types.html#custom-mapping-types
+    | ---------------------------------
+    */
+    'custom_types' => [
+        'json' => 'Atrauzzi\LaravelDoctrine\Type\Json'
+    ]
 
 ];

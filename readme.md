@@ -27,9 +27,11 @@ Add the service provider to your Laravel application in `config/app.php`. In the
 
 If desired, add the following to your `facades` array in the same file:
 
-    'Doctrine' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
+    'EntityManager' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
 
-You can also take a copy of the package's configuration by publishing package assets as per normal.
+You need to run this command publish package configuration.
+
+`php artisan vendor:publish --provider="Vendor\atrauzzi\LaravelDoctrine\src\ServiceProvider" --tag="config"`
 
 
 #### Usage
@@ -44,6 +46,63 @@ $user = new User;
 $user->setName('Mr.Right');
 Doctrine::persist($user);
 Doctrine::flush();
+```
+Sample Entity in Laravel 5:
+
+```
+
+namespace App\Lib\Domain\Entities;
+use Doctrine\ORM\Mapping as ORM;
+use Atrauzzi\LaravelDoctrine\Trait\Time;
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="Post")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class Post
+{
+    use Time;
+
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $title;
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $body;
+    public function __construct($input)
+    {
+        $this->setTitle($input['title']);
+        $this->setBody($input['body']);
+    }
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function getTitle()
+    {
+        return $this->title;
+    }
+    public function setTitle($title)
+    {
+        $this->title=$title;
+    }
+    public function setBody($body)
+    {
+        $this->body=$body;
+    }
+    public function getBody()
+    {
+        return $this->body;
+    }
+}
 ```
 
 It is recommended that you read through all of the [ORM documentation](http://goo.gl/kpAeX).  Try using Laravel's console to experiment and go through the tutorials.
