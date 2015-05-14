@@ -200,6 +200,11 @@
     */
     'custom_types' => [
         'json' => 'Atrauzzi\LaravelDoctrine\Type\Json'
+    ],
+
+    'auth' => [
+        //'authenticator' => 'Atrauzzi\LaravelDoctrine\DoctrineAuthenticator',
+        //'model' => 'App\Models\User',
     ]
 
 ];
