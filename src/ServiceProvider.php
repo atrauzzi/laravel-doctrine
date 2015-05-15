@@ -36,6 +36,9 @@
 				'Atrauzzi\LaravelDoctrine\Console\UpdateSchemaCommand',
 				'Atrauzzi\LaravelDoctrine\Console\DropSchemaCommand'
 			]);
+
+            $this->extendsAuth();
+
 		}
 
 		/**
@@ -245,6 +248,16 @@
             if ($prefix = config('doctrine.connection.prefix'))
                 $eventManager->addEventListener(Events::loadClassMetadata, new TablePrefix($prefix));
             return $eventManager;
+        }
+
+        protected function extendsAuth(){
+            $authenticator = config('doctrine.auth.authenticator', null);
+
+            if (!is_null($authenticator) && class_exists($authenticator)){
+                \Auth::extend('doctrine.auth', function(Application $app) use ($authenticator){
+                    return $app->make($authenticator, [config('doctrine.auth.model')]);
+                });
+            }
         }
 
         /**

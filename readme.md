@@ -140,6 +140,151 @@ For validate your schema, you can do:
 $ vendor/bin/doctrine orm:validate-schema
 ```
 
+#### Authentication driver
+
+This package allows you to customize the authentication driver using your own user model. In order to use doctrine
+driver authentication driver you need to keep in mind the following structure.
+
+* Having **user model** representing an authenticatable user into your application
+* Edit `/config/doctrine.php` config file to set authentication model and user provider
+* Edit `/config/auth.php` config file to set authentication driver. 
+
+Now, let's understand how this driver works.
+
+#####User model
+Your application must has a model implementing `Illuminate\Contracts\Auth\Authenticatable`. By default, this package
+comes with a Doctrine Authentication provider that works with a model using its `email` and `password` as unique valid
+ credentials. The code below shows a valid user model:
+ 
+```php
+<?php namespace App\Models;
+
+use Illuminate\Contracts\Auth\Authenticatable;
+
+/**
+ * Class User
+ * @entity
+ * @table(name="users")
+ */
+class User implements Authenticatable {
+
+    /**
+     * @var int
+     * @column(type="integer", name="id_user")
+     * @generatedValue(strategy="AUTO")
+     * @id
+     */
+    protected $id;
+
+    /**
+     * @var string
+     * @column(type="string", unique=true)
+     */
+    protected $email;
+
+    /**
+     * @var string
+     * @column(type="string")
+     */
+    protected $password;
+
+    /**
+     * @var string
+     * @column(type="string")
+     */
+    protected $token;
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+
+    /**
+     * Get the unique identifier for the user.
+     *
+     * @return mixed
+     */
+    public function getAuthIdentifier()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get the password for the user.
+     *
+     * @return string
+     */
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Get the token value for the "remember me" session.
+     *
+     * @return string
+     */
+    public function getRememberToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Set the token value for the "remember me" session.
+     *
+     * @param  string $value
+     * @return void
+     */
+    public function setRememberToken($value)
+    {
+        $this->token = $value;
+    }
+
+    /**
+     * Get the column name for the "remember me" token.
+     *
+     * @return string
+     */
+    public function getRememberTokenName()
+    {
+        return $this->token;
+    }
+}
+```
+
+It is important to know that laravel needs that our model accomplishes with some rules provided by this interface:
+
+* getAuthIdentifier()
+* getRememberToken()
+* setRememberToken($value)
+* getRememberTokenName()
+                                                        
+#####doctrine.php
+Once you have created a valid user model, you are able to specify it in doctrine config file as below:
+
+```php
+'auth' => [
+    'authenticator' => 'Atrauzzi\LaravelDoctrine\DoctrineAuthenticator',
+    'model' => 'App\Models\User',
+]
+```
+
+* If you want to base your authentication system by `email` and `password` you can use the default doctrine authenticator.
+* If you need to implement your own doctrine authenticator then set `authenticator` key by passing the classname.
+* If you want to use the native laravel auth driver, then set `authenticator` key a `null` value or just comment it.
+
+#####auth.php
+Finally, to set doctrine driver as default authentication system you need to set the value as `doctrine.auth`:
+ 
+```php
+'driver' => 'doctrine.auth',
+```
 
 ### License
 
