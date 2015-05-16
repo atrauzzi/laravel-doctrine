@@ -134,7 +134,7 @@
             'redis' => 'Atrauzzi\LaravelDoctrine\CacheProvider\RedisProvider',
             'apc' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ApcProvider',
             'xcache' => 'Atrauzzi\LaravelDoctrine\CacheProvider\XcacheProvider',
-            'array' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ArrayProvider'
+            'array' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ArrayCacheProvider'
             //'custom' => 'Path\To\Your\Class'
         ]
 	],
