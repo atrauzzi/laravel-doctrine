@@ -24,6 +24,9 @@
 		],
 		[
 			'driver'=>'xml'
+		],
+		[
+			'driver'=>'static'
 		]
 		//
 		// ...accepting PRs for more!
