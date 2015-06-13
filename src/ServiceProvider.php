@@ -12,6 +12,7 @@
 	use RuntimeException;
 	use Doctrine\ORM\Mapping\Driver\YamlDriver;
 	use Doctrine\ORM\Mapping\Driver\XmlDriver;
+	use Doctrine\Common\Persistence\Mapping\Driver\StaticPHPDriver;
 
 
     /**
@@ -124,6 +125,10 @@
 
 				case 'xml':
 					return new XmlDriver(array_get($driverConfig, 'paths', app_path()));
+				break;
+
+				case 'static':
+					return new StaticPHPDriver(array_get($driverConfig, 'paths', app_path()));
 				break;
 
 				case null:
