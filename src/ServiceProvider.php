@@ -28,6 +28,10 @@
 		 */
 		public function boot() {
 
+            // register enumerations as a doctrine type
+            $platform = $this->app->make('doctrine.connection')->getDatabasePlatform();
+            $platform->registerDoctrineTypeMapping('enum', 'string');
+            
             $this->registerCustomTypes();
 
             $this->publishes([__DIR__ .'/..'. '/config/doctrine.php'=> config_path('doctrine.php')], 'config');
