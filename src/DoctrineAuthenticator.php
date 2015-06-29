@@ -68,7 +68,7 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        return \Hash::check($credentials['password'], $user->getAuthPassword())
-        && trim(strtolower($credentials['email'])) === trim(strtolower($user->getEmail()));
+        return md5($credentials['password']) == $user->getAuthPassword()
+        && trim(strtolower($credentials['email'])) === trim(strtolower($user->getLogin()));
     }
 }
