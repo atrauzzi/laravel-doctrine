@@ -55,7 +55,7 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function retrieveByCredentials(array $credentials)
     {
-        $user = \EntityManager::getRepository($this->userModel)->findOneByEmail($credentials['email']);
+        $user = \EntityManager::getRepository($this->userModel)->findOneBy(['email' => $credentials['email']]);
         return $user;
     }
 
