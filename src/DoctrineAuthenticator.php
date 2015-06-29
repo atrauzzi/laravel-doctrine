@@ -55,7 +55,14 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function retrieveByCredentials(array $credentials)
     {
-        $user = \EntityManager::getRepository($this->userModel)->findOneBy(['email' => $credentials['email']]);
+        if($this->userModel instanceof CustomKeyAuthenticable) {
+            $field = $this->userModel->getAuthKeyName();
+        } else {
+            $field = 'email';
+        }
+
+        $user = \EntityManager::getRepository($this->userModel)->findOneBy([$field => $credentials['email']]);
+        
         return $user;
     }
 
@@ -68,7 +75,13 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
+        if($user instanceof CustomKeyAuthenticable) {
+            $method = 'get' . ucfirst($user->getAuthKeyName());
+        } else {
+            $method = 'getEmail';
+        }
+        
         return \Hash::check($credentials['password'], $user->getAuthPassword())
-        && trim(strtolower($credentials['email'])) === trim(strtolower($user->getEmail()));
+        && trim(strtolower($credentials['email'])) === trim(strtolower($user->{$method()}));
     }
 }
