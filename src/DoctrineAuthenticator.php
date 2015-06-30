@@ -19,7 +19,7 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function retrieveById($identifier)
     {
-        return \EntityManager::find($this->userModel, $identifier);
+        return app('\Doctrine\ORM\EntityManager')->find($this->userModel, $identifier);
     }
 
     /**
@@ -31,7 +31,7 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function retrieveByToken($identifier, $token)
     {
-        return \EntityManager::find($this->userModel, $identifier);
+        return app('\Doctrine\ORM\EntityManager')->find($this->userModel, $identifier);
     }
 
     /**
@@ -44,7 +44,7 @@ class DoctrineAuthenticator  implements UserProvider{
     public function updateRememberToken(Authenticatable $user, $token)
     {
         $user->setToken($token);
-        \EntityManager::flush($user);
+        app('\Doctrine\ORM\EntityManager')->flush($user);
     }
 
     /**
@@ -61,7 +61,7 @@ class DoctrineAuthenticator  implements UserProvider{
             $field = 'email';
         }
 
-        $user = \EntityManager::getRepository($this->userModel)->findOneBy([$field => $credentials['email']]);
+        $user = app('\Doctrine\ORM\EntityManager')->getRepository($this->userModel)->findOneBy([$field => $credentials['email']]);
         
         return $user;
     }
@@ -81,7 +81,7 @@ class DoctrineAuthenticator  implements UserProvider{
             $method = 'getEmail';
         }
         
-        return \Hash::check($credentials['password'], $user->getAuthPassword())
+        return app('hash')->check($credentials['password'], $user->getAuthPassword())
         && trim(strtolower($credentials['email'])) === trim(strtolower($user->{$method()}));
     }
 }
