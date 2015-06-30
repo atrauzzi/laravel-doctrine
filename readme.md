@@ -17,17 +17,32 @@ Metadata is obtained via the [annotation driver](http://goo.gl/dHy9a) or a custo
 
 Installation is the usual for Laravel packages.
 
-Insert the following in the packages section of your `composer.json` file and run an update:
+Insert the following configs in your `composer.json`:
 
-    "atrauzzi/laravel-doctrine": "dev-master",
+```php
+"minimum-stability": "dev",
+"prefer-stable": true
+```
+
+In the packages section (require):
+
+```php
+"atrauzzi/laravel-doctrine": "dev-master"
+```
+
+After that, just run a `composer update`
 
 Add the service provider to your Laravel application in `config/app.php`. In the `providers` array add:
 
-    'Atrauzzi\LaravelDoctrine\ServiceProvider',
+```php
+Atrauzzi\LaravelDoctrine\ServiceProvider::class,
+```
 
 If desired, add the following to your `facades` array in the same file:
 
-    'EntityManager' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
+```php
+'EntityManager' => Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::class,
+```
 
 You need to run this command publish package configuration.
 
@@ -49,11 +64,12 @@ Doctrine::flush();
 ```
 Sample Entity in Laravel 5:
 
-```
-
+```php
 namespace App\Lib\Domain\Entities;
+
 use Doctrine\ORM\Mapping as ORM;
 use Atrauzzi\LaravelDoctrine\Trait\Time;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="Post")
@@ -131,6 +147,7 @@ $kernel->bootstrap();
 $app->boot();
 
 $entityManager = $app->make('Doctrine\ORM\EntityManager');
+
 return ConsoleRunner::createHelperSet($entityManager);
 ```
 
@@ -142,8 +159,8 @@ $ vendor/bin/doctrine orm:validate-schema
 
 #### Authentication driver
 
-This package allows you to customize the authentication driver using your own user model. In order to use doctrine
-driver authentication driver you need to keep in mind the following structure.
+This package allows you to customize the authentication driver using your own user model.
+In order to use doctrine authentication driver you need to keep in mind the following structure.
 
 * Having **user model** representing an authenticatable user into your application
 * Edit `/config/doctrine.php` config file to set authentication model and user provider
@@ -157,7 +174,7 @@ comes with a Doctrine Authentication provider that works with a model using its 
  credentials. The code below shows a valid user model:
  
 ```php
-<?php namespace App\Models;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -253,7 +270,7 @@ class User implements Authenticatable {
      */
     public function getRememberTokenName()
     {
-        return $this->token;
+        return 'remember_me_token';
     }
 }
 ```

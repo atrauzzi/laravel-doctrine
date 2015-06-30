@@ -3,11 +3,11 @@
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 
-class DoctrineAuthenticator  implements UserProvider{
+class DoctrineAuthenticator implements UserProvider {
 
     protected $userModel;
 
-    public function __construct($userModel){
+    public function __construct($userModel) {
         $this->userModel = $userModel;
     }
 
@@ -17,9 +17,8 @@ class DoctrineAuthenticator  implements UserProvider{
      * @param  mixed $identifier
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function retrieveById($identifier)
-    {
-        return \EntityManager::find($this->userModel, $identifier);
+    public function retrieveById($identifier) {
+        return app('\Doctrine\ORM\EntityManager')->find($this->userModel, $identifier);
     }
 
     /**
@@ -31,7 +30,7 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function retrieveByToken($identifier, $token)
     {
-        return \EntityManager::find($this->userModel, $identifier);
+        return app('\Doctrine\ORM\EntityManager')->find($this->userModel, $identifier);
     }
 
     /**
@@ -44,7 +43,7 @@ class DoctrineAuthenticator  implements UserProvider{
     public function updateRememberToken(Authenticatable $user, $token)
     {
         $user->setToken($token);
-        \EntityManager::flush($user);
+        app('\Doctrine\ORM\EntityManager')->flush($user);
     }
 
     /**
@@ -55,7 +54,19 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function retrieveByCredentials(array $credentials)
     {
-        $user = \EntityManager::getRepository($this->userModel)->findOneByEmail($credentials['email']);
+        // Check for the interface on the Model
+        if(in_array(CustomKeyAuthenticable::class, class_implements($this->userModel))) {
+            // Get the field name
+            $userObj = new $this->userModel;
+            $field = $userObj->getAuthKeyName();
+            unset($userObj);
+        } else {
+            // Default approach
+            $field = 'email';
+        }
+
+        $user = app('\Doctrine\ORM\EntityManager')->getRepository($this->userModel)->findOneBy([$field => $credentials['email']]);
+        
         return $user;
     }
 
@@ -68,7 +79,13 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-        return \Hash::check($credentials['password'], $user->getAuthPassword())
-        && trim(strtolower($credentials['email'])) === $user->getEmail();
+        if($user instanceof CustomKeyAuthenticable) {
+            $method = 'get' . ucfirst($user->getAuthKeyName());
+        } else {
+            $method = 'getEmail';
+        }
+        
+        return app('hash')->check($credentials['password'], $user->getAuthPassword())
+        && trim(strtolower($credentials['email'])) === trim(strtolower($user->{$method}()));
     }
 }
