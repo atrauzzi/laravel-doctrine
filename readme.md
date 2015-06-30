@@ -65,10 +65,11 @@ Doctrine::flush();
 Sample Entity in Laravel 5:
 
 ```php
-
 namespace App\Lib\Domain\Entities;
+
 use Doctrine\ORM\Mapping as ORM;
 use Atrauzzi\LaravelDoctrine\Trait\Time;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="Post")
@@ -146,6 +147,7 @@ $kernel->bootstrap();
 $app->boot();
 
 $entityManager = $app->make('Doctrine\ORM\EntityManager');
+
 return ConsoleRunner::createHelperSet($entityManager);
 ```
 
@@ -172,7 +174,7 @@ comes with a Doctrine Authentication provider that works with a model using its 
  credentials. The code below shows a valid user model:
  
 ```php
-<?php namespace App\Models;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 
