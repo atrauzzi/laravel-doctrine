@@ -17,17 +17,26 @@ Metadata is obtained via the [annotation driver](http://goo.gl/dHy9a) or a custo
 
 Installation is the usual for Laravel packages.
 
-Insert the following in the packages section of your `composer.json` file and run an update:
+Insert the following configs in your `composer.json`:
 
-    "atrauzzi/laravel-doctrine": "dev-master",
+```php
+    "minimum-stability": "dev",
+    "prefer-stable": true
+```
+
+In the packages section (require):
+
+    "atrauzzi/laravel-doctrine": "dev-master"
+
+After that, just run a `composer update`
 
 Add the service provider to your Laravel application in `config/app.php`. In the `providers` array add:
 
-    'Atrauzzi\LaravelDoctrine\ServiceProvider',
+    Atrauzzi\LaravelDoctrine\ServiceProvider::class,
 
 If desired, add the following to your `facades` array in the same file:
 
-    'EntityManager' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
+    'EntityManager' => Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::class,
 
 You need to run this command publish package configuration.
 
@@ -142,8 +151,8 @@ $ vendor/bin/doctrine orm:validate-schema
 
 #### Authentication driver
 
-This package allows you to customize the authentication driver using your own user model. In order to use doctrine
-driver authentication driver you need to keep in mind the following structure.
+This package allows you to customize the authentication driver using your own user model.
+In order to use doctrine authentication driver you need to keep in mind the following structure.
 
 * Having **user model** representing an authenticatable user into your application
 * Edit `/config/doctrine.php` config file to set authentication model and user provider
@@ -253,7 +262,7 @@ class User implements Authenticatable {
      */
     public function getRememberTokenName()
     {
-        return $this->token;
+        return 'remember_me_token';
     }
 }
 ```
