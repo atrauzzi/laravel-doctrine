@@ -20,14 +20,14 @@ Installation is the usual for Laravel packages.
 Insert the following configs in your `composer.json`:
 
 ```php
-    "minimum-stability": "dev",
-    "prefer-stable": true
+"minimum-stability": "dev",
+"prefer-stable": true
 ```
 
 In the packages section (require):
 
 ```php
-    "atrauzzi/laravel-doctrine": "dev-master"
+"atrauzzi/laravel-doctrine": "dev-master"
 ```
 
 After that, just run a `composer update`
@@ -35,13 +35,13 @@ After that, just run a `composer update`
 Add the service provider to your Laravel application in `config/app.php`. In the `providers` array add:
 
 ```php
-    Atrauzzi\LaravelDoctrine\ServiceProvider::class,
+Atrauzzi\LaravelDoctrine\ServiceProvider::class,
 ```
 
 If desired, add the following to your `facades` array in the same file:
 
 ```php
-    'EntityManager' => Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::class,
+'EntityManager' => Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::class,
 ```
 
 You need to run this command publish package configuration.
