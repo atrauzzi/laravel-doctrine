@@ -55,8 +55,10 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function retrieveByCredentials(array $credentials)
     {
-        if($this->userModel instanceof CustomKeyAuthenticable) {
-            $field = $this->userModel->getAuthKeyName();
+        if(in_array(CustomKeyAuthenticable::class, class_implements($this->userModel))) {
+            $userObj = new $this->userModel;
+            $field = $userObj->getAuthKeyName();
+            unset($userObj);
         } else {
             $field = 'email';
         }
@@ -82,6 +84,6 @@ class DoctrineAuthenticator  implements UserProvider{
         }
         
         return app('hash')->check($credentials['password'], $user->getAuthPassword())
-        && trim(strtolower($credentials['email'])) === trim(strtolower($user->{$method()}));
+        && trim(strtolower($credentials['email'])) === trim(strtolower($user->{$method}()));
     }
 }
