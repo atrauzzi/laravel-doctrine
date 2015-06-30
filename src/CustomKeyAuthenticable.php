@@ -22,11 +22,4 @@ interface CustomKeyAuthenticable extends Authenticatable {
      * @return string
      */
     public function getAuthKeyName();
-    
-    /**
-     * This method must return the field's value that will be used for the auth
-     * 
-     * @return string
-     */
-    public function getAuthKeyValue();
 }
