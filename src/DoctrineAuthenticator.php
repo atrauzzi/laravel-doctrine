@@ -3,11 +3,11 @@
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 
-class DoctrineAuthenticator  implements UserProvider{
+class DoctrineAuthenticator implements UserProvider {
 
     protected $userModel;
 
-    public function __construct($userModel){
+    public function __construct($userModel) {
         $this->userModel = $userModel;
     }
 
@@ -17,8 +17,7 @@ class DoctrineAuthenticator  implements UserProvider{
      * @param  mixed $identifier
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function retrieveById($identifier)
-    {
+    public function retrieveById($identifier) {
         return app('\Doctrine\ORM\EntityManager')->find($this->userModel, $identifier);
     }
 
@@ -55,11 +54,14 @@ class DoctrineAuthenticator  implements UserProvider{
      */
     public function retrieveByCredentials(array $credentials)
     {
+        // Check for the interface on the Model
         if(in_array(CustomKeyAuthenticable::class, class_implements($this->userModel))) {
+            // Get the field name
             $userObj = new $this->userModel;
             $field = $userObj->getAuthKeyName();
             unset($userObj);
         } else {
+            // Default approach
             $field = 'email';
         }
 
