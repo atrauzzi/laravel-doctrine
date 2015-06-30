@@ -26,17 +26,23 @@ Insert the following configs in your `composer.json`:
 
 In the packages section (require):
 
+```php
     "atrauzzi/laravel-doctrine": "dev-master"
+```
 
 After that, just run a `composer update`
 
 Add the service provider to your Laravel application in `config/app.php`. In the `providers` array add:
 
+```php
     Atrauzzi\LaravelDoctrine\ServiceProvider::class,
+```
 
 If desired, add the following to your `facades` array in the same file:
 
+```php
     'EntityManager' => Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::class,
+```
 
 You need to run this command publish package configuration.
 
@@ -58,7 +64,7 @@ Doctrine::flush();
 ```
 Sample Entity in Laravel 5:
 
-```
+```php
 
 namespace App\Lib\Domain\Entities;
 use Doctrine\ORM\Mapping as ORM;
