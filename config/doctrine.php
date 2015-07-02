@@ -138,9 +138,9 @@
         'providers' => [
             'memcache' => Atrauzzi\LaravelDoctrine\CacheProvider\MemcacheProvider::class,
             'memcached' => Atrauzzi\LaravelDoctrine\CacheProvider\MemcachedProvider::class,
-            'couchbase' => Atrauzzi\LaravelDoctrine\CacheProvider\CouchebaseProvider::class,
+            'couchbase' => Atrauzzi\LaravelDoctrine\CacheProvider\CouchbaseProvider::class,
             'redis' => Atrauzzi\LaravelDoctrine\CacheProvider\RedisProvider::class,
-            'apc' => Atrauzzi\LaravelDoctrine\CacheProvider\ApcProvider::class,
+            'apc' => Atrauzzi\LaravelDoctrine\CacheProvider\ApcCacheProvider::class,
             'xcache' => Atrauzzi\LaravelDoctrine\CacheProvider\XcacheProvider::class,
             'array' => Atrauzzi\LaravelDoctrine\CacheProvider\ArrayCacheProvider::class,
             'file' => Atrauzzi\LaravelDoctrine\CacheProvider\FilesystemCacheProvider::class,
