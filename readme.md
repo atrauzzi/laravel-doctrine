@@ -59,8 +59,8 @@ Adapted from [Doctrine's documentation](http://goo.gl/XQ3qg):
 <?php
 $user = new User;
 $user->setName('Mr.Right');
-Doctrine::persist($user);
-Doctrine::flush();
+EntityManager::persist($user);
+EntityManager::flush();
 ```
 Sample Entity in Laravel 5:
 
@@ -73,7 +73,6 @@ use Atrauzzi\LaravelDoctrine\Trait\Time;
 /**
  * @ORM\Entity
  * @ORM\Table(name="Post")
- * @ORM\HasLifecycleCallbacks()
  */
 class Post
 {
