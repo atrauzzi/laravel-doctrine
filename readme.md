@@ -46,7 +46,7 @@ If desired, add the following to your `facades` array in the same file:
 
 You need to run this command publish package configuration.
 
-`php artisan vendor:publish --provider="Vendor\atrauzzi\LaravelDoctrine\src\ServiceProvider" --tag="config"`
+`php artisan vendor:publish --provider="Atrauzzi\LaravelDoctrine\ServiceProvider" --tag="config"`
 
 
 #### Usage
