@@ -106,7 +106,7 @@
 	],
 
 	/*
-    | ---------------------------------
+	| ---------------------------------
 	| By default, this package mimics the cache configuration from Laravel.
 	|
 	| You can create your own cache provider by extending the
@@ -117,8 +117,13 @@
 	 */
 	'cache' => [
         // Remove or set to null for no cache
-		'provider' => 'array',
+		'provider' => env('CACHE_DRIVER', 'array'),
 
+                'file' => [
+                    'directory' => storage_path('framework/cache'),
+                    'extension' => '.doctrinecache.data'
+                ],
+            
 		'redis' => [
 			'host'     => '127.0.0.1',
 			'port'     => 6379,
@@ -131,13 +136,14 @@
 		],
 
         'providers' => [
-            'memcache' => 'Atrauzzi\LaravelDoctrine\CacheProvider\MemcacheProvider',
-            'memcached' => 'Atrauzzi\LaravelDoctrine\CacheProvider\MemcachedProvider',
-            'couchbase' => 'Atrauzzi\LaravelDoctrine\CacheProvider\CouchebaseProvider',
-            'redis' => 'Atrauzzi\LaravelDoctrine\CacheProvider\RedisProvider',
-            'apc' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ApcProvider',
-            'xcache' => 'Atrauzzi\LaravelDoctrine\CacheProvider\XcacheProvider',
-            'array' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ArrayCacheProvider'
+            'memcache' => Atrauzzi\LaravelDoctrine\CacheProvider\MemcacheProvider::class,
+            'memcached' => Atrauzzi\LaravelDoctrine\CacheProvider\MemcachedProvider::class,
+            'couchbase' => Atrauzzi\LaravelDoctrine\CacheProvider\CouchbaseProvider::class,
+            'redis' => Atrauzzi\LaravelDoctrine\CacheProvider\RedisProvider::class,
+            'apc' => Atrauzzi\LaravelDoctrine\CacheProvider\ApcCacheProvider::class,
+            'xcache' => Atrauzzi\LaravelDoctrine\CacheProvider\XcacheProvider::class,
+            'array' => Atrauzzi\LaravelDoctrine\CacheProvider\ArrayCacheProvider::class,
+            'file' => Atrauzzi\LaravelDoctrine\CacheProvider\FilesystemCacheProvider::class,
             //'custom' => 'Path\To\Your\Class'
         ]
 	],
