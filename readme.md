@@ -46,7 +46,7 @@ If desired, add the following to your `facades` array in the same file:
 
 You need to run this command publish package configuration.
 
-`php artisan vendor:publish --provider="Vendor\atrauzzi\LaravelDoctrine\src\ServiceProvider" --tag="config"`
+`php artisan vendor:publish --provider="Atrauzzi\LaravelDoctrine\ServiceProvider" --tag="config"`
 
 
 #### Usage
@@ -59,8 +59,8 @@ Adapted from [Doctrine's documentation](http://goo.gl/XQ3qg):
 <?php
 $user = new User;
 $user->setName('Mr.Right');
-Doctrine::persist($user);
-Doctrine::flush();
+EntityManager::persist($user);
+EntityManager::flush();
 ```
 Sample Entity in Laravel 5:
 
@@ -73,7 +73,6 @@ use Atrauzzi\LaravelDoctrine\Trait\Time;
 /**
  * @ORM\Entity
  * @ORM\Table(name="Post")
- * @ORM\HasLifecycleCallbacks()
  */
 class Post
 {
