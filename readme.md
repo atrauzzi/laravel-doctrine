@@ -35,14 +35,16 @@ After that, just run a `composer update`
 Add the service provider to your Laravel application in `config/app.php`. In the `providers` array add:
 
 ```php
-Atrauzzi\LaravelDoctrine\ServiceProvider::class,
+'Atrauzzi\LaravelDoctrine\ServiceProvider',
 ```
 
 If desired, add the following to your `facades` array in the same file:
 
 ```php
-'EntityManager' => Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::class,
+'EntityManager' => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
 ```
+
+Configure your database connection in `config/database.php`
 
 You need to run this command publish package configuration.
 
@@ -59,8 +61,8 @@ Adapted from [Doctrine's documentation](http://goo.gl/XQ3qg):
 <?php
 $user = new User;
 $user->setName('Mr.Right');
-EntityManager::persist($user);
-EntityManager::flush();
+\EntityManager::persist($user);
+\EntityManager::flush();
 ```
 Sample Entity in Laravel 5:
 

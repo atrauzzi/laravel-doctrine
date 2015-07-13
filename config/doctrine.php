@@ -136,14 +136,14 @@
 		],
 
         'providers' => [
-            'memcache' => Atrauzzi\LaravelDoctrine\CacheProvider\MemcacheProvider::class,
-            'memcached' => Atrauzzi\LaravelDoctrine\CacheProvider\MemcachedProvider::class,
-            'couchbase' => Atrauzzi\LaravelDoctrine\CacheProvider\CouchbaseProvider::class,
-            'redis' => Atrauzzi\LaravelDoctrine\CacheProvider\RedisProvider::class,
-            'apc' => Atrauzzi\LaravelDoctrine\CacheProvider\ApcCacheProvider::class,
-            'xcache' => Atrauzzi\LaravelDoctrine\CacheProvider\XcacheProvider::class,
-            'array' => Atrauzzi\LaravelDoctrine\CacheProvider\ArrayCacheProvider::class,
-            'file' => Atrauzzi\LaravelDoctrine\CacheProvider\FilesystemCacheProvider::class,
+            'memcache' => 'Atrauzzi\LaravelDoctrine\CacheProvider\MemcacheProvider',
+            'memcached' => 'Atrauzzi\LaravelDoctrine\CacheProvider\MemcachedProvider',
+            'couchbase' => 'Atrauzzi\LaravelDoctrine\CacheProvider\CouchbaseProvider',
+            'redis' => 'Atrauzzi\LaravelDoctrine\CacheProvider\RedisProvider',
+            'apc' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ApcCacheProvider',
+            'xcache' => 'Atrauzzi\LaravelDoctrine\CacheProvider\XcacheProvider',
+            'array' => 'Atrauzzi\LaravelDoctrine\CacheProvider\ArrayCacheProvider',
+            'file' => 'Atrauzzi\LaravelDoctrine\CacheProvider\FilesystemCacheProvider',
             //'custom' => 'Path\To\Your\Class'
         ]
 	],
