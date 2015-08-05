@@ -211,6 +211,19 @@
         'json' => 'Atrauzzi\LaravelDoctrine\Type\Json'
     ],
 
+	'custom_numeric_functions' => [
+		'ACOS' => 'DoctrineExtensions\Query\Mysql\Acos',
+		'ASIN' => 'DoctrineExtensions\Query\Mysql\Asin',
+		'ATAN' => 'DoctrineExtensions\Query\Mysql\Atan',
+		'ATAN2' => 'DoctrineExtensions\Query\Mysql\Atan2',
+		'COS' => 'DoctrineExtensions\Query\Mysql\Cos',
+		'COT' => 'DoctrineExtensions\Query\Mysql\Cot',
+		'DEGREES' => 'DoctrineExtensions\Query\Mysql\Degrees',
+		'RADIANS' => 'DoctrineExtensions\Query\Mysql\Radians',
+		'SIN' => 'DoctrineExtensions\Query\Mysql\Sin',
+		'TAN' => 'DoctrineExtensions\Query\Mysql\Tan'
+	],
+
     'auth' => [
         //'authenticator' => 'Atrauzzi\LaravelDoctrine\DoctrineAuthenticator',
         //'model' => 'App\Models\User',
