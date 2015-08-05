@@ -220,18 +220,7 @@
             }
             $doctrineConfig->setMetadataDriverImpl($metadataDriver);
             //add in trig functions to doctrine for mysql
-            $doctrineConfig->setCustomNumericFunctions(array(
-                'ACOS'    => 'DoctrineExtensions\Query\Mysql\Acos',
-                'ASIN'    => 'DoctrineExtensions\Query\Mysql\Asin',
-                'ATAN'    => 'DoctrineExtensions\Query\Mysql\Atan',
-                'ATAN2'   => 'DoctrineExtensions\Query\Mysql\Atan2',
-                'COS'     => 'DoctrineExtensions\Query\Mysql\Cos',
-                'COT'     => 'DoctrineExtensions\Query\Mysql\Cot',
-                'DEGREES' => 'DoctrineExtensions\Query\Mysql\Degrees',
-                'RADIANS' => 'DoctrineExtensions\Query\Mysql\Radians',
-                'SIN'     => 'DoctrineExtensions\Query\Mysql\Sin',
-                'TAN'     => 'DoctrineExtensions\Query\Mysql\Tan'
-            ));
+            $doctrineConfig->setCustomNumericFunctions(config('doctrine.custom_numeric_functions'));
             // Note: These must occur after Setup::createAnnotationMetadataConfiguration() in order to set custom namespaces properly
             if ($cache)
             {
