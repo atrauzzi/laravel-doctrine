@@ -220,7 +220,9 @@
             }
             $doctrineConfig->setMetadataDriverImpl($metadataDriver);
             //add in trig functions to doctrine for mysql
-            $doctrineConfig->setCustomNumericFunctions(config('doctrine.custom_numeric_functions'));
+            $doctrineConfig->setCustomDatetimeFunctions(config('doctrine.custom_datetime_functions') ?: []);
+            $doctrineConfig->setCustomNumericFunctions(config('doctrine.custom_numeric_functions') ?: []);
+            $doctrineConfig->setCustomStringFunctions(config('doctrine.custom_string_functions') ?: []);
             // Note: These must occur after Setup::createAnnotationMetadataConfiguration() in order to set custom namespaces properly
             if ($cache)
             {

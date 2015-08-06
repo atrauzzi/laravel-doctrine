@@ -211,6 +211,13 @@
         'json' => 'Atrauzzi\LaravelDoctrine\Type\Json'
     ],
 
+	'custom_datetime_functions' => [
+		'DATEADD' => 'DoctrineExtensions\Query\Mysql\DateAdd',
+		'DATEDIFF' => 'DoctrineExtensions\Query\Mysql\DateDiff',
+		'DATESUB' => 'DoctrineExtensions\Query\Mysql\DateSub',
+		'FROM_UNIXTIME' => 'DoctrineExtensions\Query\Mysql\FromUnixtime'
+    ],
+
 	'custom_numeric_functions' => [
 		'ACOS' => 'DoctrineExtensions\Query\Mysql\Acos',
 		'ASIN' => 'DoctrineExtensions\Query\Mysql\Asin',
@@ -222,6 +229,17 @@
 		'RADIANS' => 'DoctrineExtensions\Query\Mysql\Radians',
 		'SIN' => 'DoctrineExtensions\Query\Mysql\Sin',
 		'TAN' => 'DoctrineExtensions\Query\Mysql\Tan'
+	],
+
+	'custom_string_functions' => [
+		'CHAR_LENGTH' => 'DoctrineExtensions\Query\Mysql\CharLength',
+		'CONCAT_WS' => 'DoctrineExtensions\Query\Mysql\ConcatWs',
+		'FIELD' => 'DoctrineExtensions\Query\Mysql\Field',
+		'FIND_IN_SET' => 'DoctrineExtensions\Query\Mysql\FindInSet',
+		'REPLACE' => 'DoctrineExtensions\Query\Mysql\Replace',
+		'SOUNDEX' => 'DoctrineExtensions\Query\Mysql\Soundex',
+		'STR_TO_DATE' => 'DoctrineExtensions\Query\Mysql\StrToDate',
+		'SUBSTRING_INDEX' => 'DoctrineExtensions\Query\Mysql\SubstringIndex'
 	],
 
     'auth' => [
