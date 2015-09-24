@@ -4,6 +4,10 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/atrauzzi/laravel-doctrine/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/atrauzzi/laravel-doctrine/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/atrauzzi/laravel-doctrine/badges/build.png?b=master)](https://scrutinizer-ci.com/g/atrauzzi/laravel-doctrine/build-status/master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/aafa61ff-7e01-4c1a-be61-793f5b04cd35/mini.png)](https://insight.sensiolabs.com/projects/aafa61ff-7e01-4c1a-be61-793f5b04cd35)
 
+### This library is succeeded by [laravel-doctrine/orm](https://github.com/laravel-doctrine/orm)
+
+#### Though this library is NOT abandoned a more feature-complete and up to date alternative is available at **[laravel-doctrine/orm](https://github.com/laravel-doctrine/orm)**. Check it out!
+
 ### An ORM for a Framework for Web Artisans
 
 Laravel's Eloquent ORM is excellent for lightweight use, however there's little out there that can beat [Doctrine](http://goo.gl/oWVD3) when you need a more full-featured ORM.
