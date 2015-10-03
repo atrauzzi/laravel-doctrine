@@ -55,7 +55,7 @@ class DoctrineAuthenticator implements UserProvider {
     public function retrieveByCredentials(array $credentials)
     {
         // Check for the interface on the Model
-        if(in_array(CustomKeyAuthenticable::class, class_implements($this->userModel))) {
+        if(in_array('Atrauzzi\LaravelDoctrine\CustomKeyAuthenticable', class_implements($this->userModel))) {
             // Get the field name
             $userObj = new $this->userModel;
             $field = $userObj->getAuthKeyName();
