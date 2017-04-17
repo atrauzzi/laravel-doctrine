@@ -171,7 +171,7 @@ In order to use doctrine authentication driver you need to keep in mind the foll
 
 Now, let's understand how this driver works.
 
-#####User model
+##### User model
 Your application must has a model implementing `Illuminate\Contracts\Auth\Authenticatable`. By default, this package
 comes with a Doctrine Authentication provider that works with a model using its `email` and `password` as unique valid
  credentials. The code below shows a valid user model:
@@ -285,7 +285,7 @@ It is important to know that laravel needs that our model accomplishes with some
 * setRememberToken($value)
 * getRememberTokenName()
                                                         
-#####doctrine.php
+##### doctrine.php
 Once you have created a valid user model, you are able to specify it in doctrine config file as below:
 
 ```php
@@ -299,7 +299,7 @@ Once you have created a valid user model, you are able to specify it in doctrine
 * If you need to implement your own doctrine authenticator then set `authenticator` key by passing the classname.
 * If you want to use the native laravel auth driver, then set `authenticator` key a `null` value or just comment it.
 
-#####auth.php
+##### auth.php
 Finally, to set doctrine driver as default authentication system you need to set the value as `doctrine.auth`:
  
 ```php
