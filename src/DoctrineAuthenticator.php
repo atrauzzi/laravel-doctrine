@@ -42,7 +42,7 @@ class DoctrineAuthenticator implements UserProvider {
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
-        $user->setToken($token);
+        $user->setRememberToken($token);
         app('\Doctrine\ORM\EntityManager')->flush($user);
     }
 
