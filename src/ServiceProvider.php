@@ -284,6 +284,11 @@
          */
         private function mapToDoctrineConfigs($config)
         {
+            if ($config['driver'] == 'mysql')
+            {
+                $config['driver'] = 'pdo_mysql';
+            }
+			
             $mappings = [
                 'database' => 'dbname',
                 'username' => 'user'
